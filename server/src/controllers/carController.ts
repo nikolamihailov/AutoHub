@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { carService } from '../services/carService';
 import { trimBody } from '../middlewares/trimBody';
+import { extractErrors } from '../utils/errParse';
 
 const carsController = Router();
 
@@ -18,7 +19,8 @@ carsController.post('/', trimBody, async (req: Request, res: Response) => {
     const newCar = await carService.createCar({ ...req.body });
     res.status(201).json(newCar);
   } catch (error) {
-    res.status(400).json({ error });
+    const errors = extractErrors(error);
+    res.status(400).json({ errors });
   }
 });
 
