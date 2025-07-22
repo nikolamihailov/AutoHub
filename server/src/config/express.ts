@@ -11,7 +11,7 @@ export const startServer = () => {
   app.use(express.json());
   app.use(cors);
 
-  app.get('/', (req, res) => {
+  app.get('/', (_, res) => {
     res.send('working');
   });
 
