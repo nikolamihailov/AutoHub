@@ -1,5 +1,10 @@
-// import mongoose from 'mongoose';
-
+import { connectDb } from './config/db';
 import { startServer } from './config/express';
 
-startServer();
+connectDb()
+  .then(() => {
+    startServer();
+  })
+  .catch(() => {
+    console.error('The API is shit');
+  });
