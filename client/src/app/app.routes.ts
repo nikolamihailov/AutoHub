@@ -1,9 +1,19 @@
 import { Routes } from '@angular/router';
 import { ErrorPage, Home } from './pages';
+import { Layout } from './shared/components';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: Home },
+  {
+    path: '',
+    component: Layout,
+    children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: Home },
+      { path: 'not-found', component: ErrorPage },
+      { path: '**', redirectTo: 'not-found' },
+    ],
+  },
+
   /*  { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'logout', redirectTo: 'home', pathMatch: 'full' },
@@ -35,6 +45,4 @@ export const routes: Routes = [
         { path: 'car-offers', component: AdminCarOffersComponent },
       ],
     }, */
-  { path: 'not-found', component: ErrorPage },
-  { path: '**', redirectTo: 'not-found' },
 ];
