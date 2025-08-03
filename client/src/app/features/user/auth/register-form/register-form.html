@@ -29,8 +29,9 @@
       type="email"
       id="email"
       formControlName="email"
+      (input)="resetUserAlreadyExists()"
       [class.valid]="isValid('email')"
-      [class.invalid]="isInvalid('email')"
+      [class.invalid]="isInvalid('email') || userAlreadyExists"
     />
     <form-err-messages [form]="registerForm" field="email" [messages]="errorMessages['email']!" />
   </div>

@@ -16,8 +16,13 @@
         <mat-icon>account_circle</mat-icon>
       </button>
       <mat-menu #profileMenu="matMenu">
+        @if (authService.isLoggedIn()) {
+        <button mat-menu-item routerLink="/profile">Profile</button>
+        <button mat-menu-item (click)="authService.logout()">Logout</button>
+        } @else {
         <button mat-menu-item routerLink="/login">Login</button>
         <button mat-menu-item routerLink="/register">Register</button>
+        }
       </mat-menu>
     </div>
   </nav>

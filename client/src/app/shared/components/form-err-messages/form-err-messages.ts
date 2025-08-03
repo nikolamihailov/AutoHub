@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
   template: `
     @if (isInvalid) {
     <div class="validation-message">
-      @for (err of errorKeys; track err) {
+      @for (err of errorKeys; track $index) {
       <span>{{ getErrorMessage(err) }}</span>
       }
     </div>

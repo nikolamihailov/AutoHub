@@ -28,6 +28,7 @@ html {
 
 body {
   box-sizing: border-box;
+  font-size: 1.6rem;
 }
 
 #root {
@@ -76,13 +77,13 @@ form {
 }
 label {
   display: block;
+  font-size: 1.4rem;
 }
 input,
 select {
   display: block;
-  padding: 0.65rem 1rem;
-  margin-bottom: 0.3rem;
-  font-size: 1rem;
+  padding: 0.7rem 1.4rem;
+  font-size: 1.4rem;
   border: 2px solid #ddd;
   border-radius: 6px;
   outline: none;
@@ -102,7 +103,7 @@ select.invalid {
 }
 .validation-message {
   color: #c00;
-  font-size: 0.97rem;
+  font-size: 1.2rem;
   margin-bottom: 0.7rem;
 }
 
@@ -131,6 +132,10 @@ button[type='submit']:disabled {
   input {
     width: 100%;
   }
+
+  .material-icons {
+    font-size: 2rem;
+  }
 }
 .eye-btn {
   position: absolute;
@@ -140,7 +145,7 @@ button[type='submit']:disabled {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #666;
   padding: 0;
   display: flex;
