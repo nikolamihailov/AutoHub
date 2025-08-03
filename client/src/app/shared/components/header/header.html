@@ -1,17 +1,24 @@
 <header>
-    <nav>
-        <div>
-            <app-logo></app-logo>
-        </div>
-        <ul>
-            <ul>
-                <li><a routerLink="/car-offers">Car Offers</a></li>
-                <li><a routerLink="/categories">Categories</a></li>
-                <li><a routerLink="/about">About Us</a></li>
-                <li><a routerLink="/contacts">Contacts</a></li>
-            </ul>
-
-        </ul>
-        <div></div>
-    </nav>
+  <nav class="navbar">
+    <div class="navbar-left">
+      <a routerLink="/home" class="logo-link">
+        <app-logo></app-logo>
+      </a>
+      <ul class="nav-links">
+        <li><a routerLink="/car-offers">Car Offers</a></li>
+        <li><a routerLink="/categories">Categories</a></li>
+        <li><a routerLink="/about">About Us</a></li>
+        <li><a routerLink="/contacts">Contacts</a></li>
+      </ul>
+    </div>
+    <div class="navbar-right">
+      <button mat-icon-button class="profile-btn" [matMenuTriggerFor]="profileMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item routerLink="/login">Login</button>
+        <button mat-menu-item routerLink="/register">Register</button>
+      </mat-menu>
+    </div>
+  </nav>
 </header>
