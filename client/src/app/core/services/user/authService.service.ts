@@ -44,19 +44,19 @@ export class AuthService {
   }
 
   public saveToken(token: string): void {
-    localStorage.setItem('jwtToken', token);
+    localStorage.setItem('autohub-token', token);
     this.setUser(token);
   }
 
   public getToken(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('jwtToken');
+      return localStorage.getItem('autohub-token');
     }
     return null;
   }
 
   public logout(): void {
-    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('autohub-token');
     this._isLoggedIn.set(false);
     this._currentUser.set(null);
   }
