@@ -1,14 +1,15 @@
 import { Routes } from '@angular/router';
-import { ErrorPage, Home } from './pages';
+import { ErrorPage, Home, Login, Register } from './pages';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: Home },
+  { path: 'login', component: Login },
+  { path: 'register', component: Register },
   { path: 'not-found', component: ErrorPage },
   { path: '**', redirectTo: 'not-found' },
 
-  /*  { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
+  /*  ,
     { path: 'logout', redirectTo: 'home', pathMatch: 'full' },
     { path: 'profile', component: ProfileComponent },
     {
