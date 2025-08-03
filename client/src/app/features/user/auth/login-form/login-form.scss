@@ -1,0 +1,43 @@
+input {
+  display: block;
+  max-width: 400px;
+  padding: 0.65rem 1rem;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+input.valid {
+  border-color: #37b24d;
+  background: #f6fff8;
+}
+
+input.invalid {
+  border-color: #c00;
+  background: #fff6f6;
+}
+
+.validation-message {
+  color: #c00;
+  font-size: 0.97rem;
+  margin-bottom: 0.7rem;
+}
+
+button[type='submit'] {
+  background: #2f73da;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+button[type='submit']:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

@@ -1,0 +1,101 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="firstName">First Name *</label>
+    <input
+      type="text"
+      id="firstName"
+      formControlName="firstName"
+      [class.valid]="isValid('firstName')"
+      [class.invalid]="isInvalid('firstName')"
+    />
+    <form-err-messages [form]="registerForm" field="firstName" [messages]="errorMessages['firstName']!" />
+  </div>
+
+  <div class="form-group">
+    <label for="lastName">Last Name *</label>
+    <input
+      type="text"
+      id="lastName"
+      formControlName="lastName"
+      [class.valid]="isValid('lastName')"
+      [class.invalid]="isInvalid('lastName')"
+    />
+    <form-err-messages [form]="registerForm" field="lastName" [messages]="errorMessages['lastName']!" />
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email *</label>
+    <input
+      type="email"
+      id="email"
+      formControlName="email"
+      [class.valid]="isValid('email')"
+      [class.invalid]="isInvalid('email')"
+    />
+    <form-err-messages [form]="registerForm" field="email" [messages]="errorMessages['email']!" />
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password *</label>
+    <div class="input-wrapper">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        id="password"
+        formControlName="password"
+        [class.valid]="isValid('password')"
+        [class.invalid]="isInvalid('password')"
+      />
+      <button
+        type="button"
+        class="icon-btn eye-btn"
+        (click)="togglePassVisibility()"
+        [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+        tabindex="-1"
+        mat-icon-button
+      >
+        <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    </div>
+    <form-err-messages [form]="registerForm" field="password" [messages]="errorMessages['password']!" />
+  </div>
+
+  <div class="form-group">
+    <label for="accounType">Account Type *</label>
+    <select
+      id="accounType"
+      formControlName="accounType"
+      [class.valid]="isValid('accounType')"
+      [class.invalid]="isInvalid('accounType')"
+    >
+      <option value="" disabled>Select account type</option>
+      @for (type of accountTypes; track type.value) {
+      <option [value]="type.value">{{ type.label }}</option>
+      }
+    </select>
+    <form-err-messages [form]="registerForm" field="accounType" [messages]="errorMessages['accounType']!" />
+
+    <div class="account-info">
+      <span>Accounts Information</span>
+      <button
+        type="button"
+        class="icon-btn info-btn"
+        (click)="toggleShowInfoBtn()"
+        tabindex="-1"
+        aria-label="Account type info"
+        mat-icon-button
+      >
+        <mat-icon>info</mat-icon>
+      </button>
+    </div>
+
+    @if (showAccountInfo) {
+    <div class="account-info-text">
+      <strong>Private Account:</strong> You can post only 1 offer, and others can’t see your account.<br /><br />
+      <strong>Dealership:</strong> No posting limit. All your offers are visible to others.
+    </div>
+    }
+  </div>
+
+  <button type="submit" [disabled]="registerForm.invalid">Register</button>
+  <p>Alrey have an account? <a routerLink="/login">Login</a></p>
+</form>
