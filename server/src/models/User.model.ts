@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 export interface UserI {
+  _id: mongoose.Types.ObjectId;
   firstName: string;
   lastName: string;
   email: string;

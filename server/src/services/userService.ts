@@ -49,6 +49,14 @@ const login = async (email: string, password: string) => {
   };
 };
 
+async function generateToken(data: {
+  user: { _id: mongoose.Types.ObjectId; email: string; role: Role };
+}) {
+  if (SECRET) {
+    return await jwt.sign({ data }, SECRET, { expiresIn: '1d' });
+  }
+}
+
 const getUserInfo = (id: string) => User.findById(id);
 
 const updateUserInfo = async (id: string, data: Partial<UserI>) => {
@@ -63,14 +71,6 @@ const updateUserInfo = async (id: string, data: Partial<UserI>) => {
 
   return user;
 };
-
-async function generateToken(data: {
-  user: { _id: mongoose.Types.ObjectId; email: string; role: Role };
-}) {
-  if (SECRET) {
-    return await jwt.sign({ data }, SECRET, { expiresIn: '1d' });
-  }
-}
 
 /* const getFavouriteProducts = (id) =>
   User.findById(id).populate({
