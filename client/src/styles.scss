@@ -1,1 +1,164 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'ngx-toastr/toastr';
+
+// to be moved to scss/base/typography
+body {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+}
+// to be moved to scss/base/base
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+* {
+  /* For Firefox */
+  scrollbar-color: blue white;
+  scrollbar-width: thin;
+}
+
+html {
+  // This defines what 1rem is
+  font-size: 62.5%; //1 rem = 10px; 10px/16px = 62.5%
+}
+
+body {
+  box-sizing: border-box;
+}
+
+#root {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+/* Other browsers - Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: blue;
+}
+
+/* *::-webkit-scrollbar-track:hover {
+  background-color: var(--primary-color);
+} */
+
+*::-webkit-scrollbar-track:active {
+  background-color: blue;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: blue;
+}
+// to be moved to scss/component/input
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  max-width: 300px;
+  width: 100%;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  box-sizing: border-box;
+}
+label {
+  display: block;
+}
+input,
+select {
+  display: block;
+  padding: 0.65rem 1rem;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+input.valid,
+select.valid {
+  border-color: #37b24d;
+  background: #f6fff8;
+}
+
+input.invalid,
+select.invalid {
+  border-color: #c00;
+  background: #fff6f6;
+}
+.validation-message {
+  color: #c00;
+  font-size: 0.97rem;
+  margin-bottom: 0.7rem;
+}
+
+button[type='submit'] {
+  background: #2f73da;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+button[type='submit']:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.input-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  input {
+    width: 100%;
+  }
+}
+.eye-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.info-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  color: #1976d2;
+  font-size: 1.1rem;
+}
+
+.account-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+}
