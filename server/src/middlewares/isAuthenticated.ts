@@ -1,25 +1,26 @@
+import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 
 interface MyRequest extends Request {
-  user?: {
-    data: {
-      user: {
-        _id: string;
-      };
-    };
-  };
-  decToken?: any;
+  user?: any;
 }
 
 export const isAuthenticated = (req: MyRequest, res: Response, next: NextFunction) => {
-  if (req.user?.data.user._id) {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ unauthorized: 'No token provided' });
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || '');
+    req.user = decoded;
     next();
-  } else {
-    if (req.decToken) {
-      return res
-        .status(401)
-        .json({ expMessage: 'Your session has expired, you have to login again!' });
-    }
-    res.status(401).json({ unauthorized: 'You have no power here!' });
+  } catch (err) {
+    return res
+      .status(401)
+      .json({ expMessage: 'Your session has expired, you have to login again!' });
   }
 };
