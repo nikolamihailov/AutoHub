@@ -30,16 +30,6 @@ userController.post('/register', trimBody, async (req, res) => {
   }
 });
 
-/* userController.post("/register", trimBody, async (req, res) => {
-    try {
-        const userData = await userService.register({ ...req.body });
-        res.status(201).json(userData);
-    } catch (error) {
-        const errors = extractErrors(error);
-        res.status(400).json({ errors });
-    }
-}); */
-
 userController.get('/admin', isAdmin, async (req: any, res) => {
   try {
     if (req.decToken) {
