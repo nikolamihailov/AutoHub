@@ -66,7 +66,7 @@ export class ProfileEditForm implements OnInit {
         this.avatarPreview = user.avatar || null;
         this.isLoading = false;
       },
-      error: (err) => {
+      error: () => {
         this.errorMsg = 'Failed to load profile info.';
         this.isLoading = false;
       },
@@ -108,16 +108,13 @@ export class ProfileEditForm implements OnInit {
       avatar: this.avatarPreview ?? undefined,
     };
 
-    console.log(userData);
-
     this.userService.updateProfile(userData).subscribe({
-      next: (updated: User) => {
+      next: () => {
         this.toast.success('Profile updated!');
-        this.isLoading = false;
         this.router.navigate(['/profile']);
+        this.isLoading = false;
       },
-      error: (err) => {
-        console.log(err);
+      error: () => {
         this.toast.error('Failed to update profile');
         this.isLoading = false;
       },

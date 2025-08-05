@@ -1,5 +1,5 @@
 <div class="profile-info-wrapper">
-  @if (isLoading) {
+  @if(isLoading){
   <div class="profile-loading">
     <mat-progress-spinner
       diameter="100"
@@ -35,15 +35,15 @@
       <span class="value">{{ user.accounType }}</span>
     </div>
   </div>
-  } @else if (errorMsg) {
-  <div class="profile-error">
-    {{ errorMsg }}
-  </div>
-  }
   <div>
     <button class="btn" (click)="handleEditBtn()">
       Edit
       <mat-icon style="font-size: 2rem">edit</mat-icon>
     </button>
   </div>
+  } @else if (errorMsg) {
+  <div class="profile-error">
+    {{ errorMsg }}
+  </div>
+  }
 </div>

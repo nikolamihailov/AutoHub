@@ -175,7 +175,7 @@ button[type='submit']:disabled {
   display: inline-block;
   vertical-align: middle;
   margin-right: 0.5rem;
-  /* optional: */
+  stroke: #1976d2 !important;
 }
 
 ::ng-deep .mat-mdc-progress-spinner circle,

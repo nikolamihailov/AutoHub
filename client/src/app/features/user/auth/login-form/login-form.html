@@ -22,6 +22,7 @@
         (input)="resetInvalidFields()"
         [class.valid]="isValid('password')"
         [class.invalid]="isInvalid('password') || invalidFields"
+        autocomplete="new-password"
       />
       <button
         type="button"
@@ -37,7 +38,7 @@
     <form-err-messages [form]="loginForm" field="password" [messages]="errorMessages['password']!" />
   </div>
 
-  <button type="submit" [disabled]="loginForm.invalid">
+  <button type="submit" [disabled]="loginForm.invalid || isLoading">
     @if (isLoading) {
     <mat-progress-spinner
       diameter="20"
