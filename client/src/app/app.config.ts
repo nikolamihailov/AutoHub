@@ -7,17 +7,18 @@ import {
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TokenInterceptor } from './core/interceptors/token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top' })),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([TokenInterceptor])),
     importProvidersFrom(BrowserAnimationsModule),
     importProvidersFrom(
       ToastrModule.forRoot({
