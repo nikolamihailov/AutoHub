@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,6 +10,8 @@ import { AuthService } from '../../../../core/services/user/authService.service'
 import { UserAuthErr, UserAuthResponse } from '../../../../models';
 import { FORM_ERROR_MESSAGES } from '../../../../shared/constants/formErrMessages';
 import { HttpErrorResponse } from '@angular/common/http';
+import { finalize } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login-form',
@@ -28,6 +30,8 @@ export class LoginForm {
   private authService = inject(AuthService);
   private router = inject(Router);
   private toast = inject(ToastrService);
+  private destroyRef = inject(DestroyRef);
+
   protected formHelper = FormHelper;
   protected loginForm: FormGroup;
 
@@ -63,31 +67,37 @@ export class LoginForm {
 
     const { email, password } = this.loginForm.value;
 
-    this.authService.login(email, password).subscribe({
-      next: (response: UserAuthResponse) => {
-        this.authService.saveToken(response.token);
-        this.router.navigate(['/home']);
-        this.toast.success('Successful Login!');
-        this.isLoading = false;
-      },
-      error: (err: UserAuthErr | HttpErrorResponse) => {
-        this.isLoading = false;
+    this.authService
+      .login(email, password)
+      .pipe(
+        finalize(() => (this.isLoading = false)),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: (response: UserAuthResponse) => {
+          this.authService.saveToken(response.token);
+          this.router.navigate(['/home']);
+          this.toast.success('Successful Login!');
+          this.isLoading = false;
+        },
+        error: (err: UserAuthErr | HttpErrorResponse) => {
+          this.isLoading = false;
 
-        const errMsg =
-          err?.error?.errors?.[0] ||
-          (typeof err?.error === 'string' && err.error) ||
-          err?.statusText ||
-          'Unknown Error';
+          const errMsg =
+            err?.error?.errors?.[0] ||
+            (typeof err?.error === 'string' && err.error) ||
+            err?.statusText ||
+            'Unknown Error';
 
-        if (err?.error?.errors?.[0]) {
-          this.invalidFields = true;
-          this.toast.error('Invalid email or password');
-        } else {
-          this.toast.error(errMsg);
-        }
+          if (err?.error?.errors?.[0]) {
+            this.invalidFields = true;
+            this.toast.error('Invalid email or password');
+          } else {
+            this.toast.error(errMsg);
+          }
 
-        return;
-      },
-    });
+          return;
+        },
+      });
   }
 }

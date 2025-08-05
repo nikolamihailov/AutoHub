@@ -1,16 +1,18 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
-import { Userservice } from '../../../core/services/user/userService.service';
+import { UserService } from '../../../core/services/user/userService.service';
 import { FormErrMessagesComponent } from '../../../shared/components';
 import { FormHelper } from '../../../shared/form-helper';
 import { AccountType, User } from '../../../models';
 import { FORM_ERROR_MESSAGES } from '../../../shared/constants/formErrMessages';
 import imageCompression from 'browser-image-compression';
+import { finalize } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-profile-edit-form',
@@ -26,9 +28,10 @@ import imageCompression from 'browser-image-compression';
 })
 export class ProfileEditForm implements OnInit {
   private fb = inject(FormBuilder);
-  private userService = inject(Userservice);
+  private userService = inject(UserService);
   private router = inject(Router);
   private toast = inject(ToastrService);
+  private destroyRef = inject(DestroyRef);
 
   protected formHelper = FormHelper;
   protected editForm!: FormGroup;
@@ -108,16 +111,21 @@ export class ProfileEditForm implements OnInit {
       avatar: this.avatarPreview ?? undefined,
     };
 
-    this.userService.updateProfile(userData).subscribe({
-      next: () => {
-        this.toast.success('Profile updated!');
-        this.router.navigate(['/profile']);
-        this.isLoading = false;
-      },
-      error: () => {
-        this.toast.error('Failed to update profile');
-        this.isLoading = false;
-      },
-    });
+    this.userService
+      .updateProfile(userData)
+      .pipe(
+        finalize(() => (this.isLoading = false)),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: () => {
+          this.toast.success('Profile updated!');
+          this.router.navigate(['/profile']);
+        },
+        error: (err) => {
+          console.log(err);
+          this.toast.error('Failed to update profile');
+        },
+      });
   }
 }

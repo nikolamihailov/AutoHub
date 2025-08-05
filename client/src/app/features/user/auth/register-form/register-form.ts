@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { FormHelper } from '../../../../shared/form-helper';
@@ -10,6 +10,8 @@ import { AuthService } from '../../../../core/services/user/authService.service'
 import { ToastrService } from 'ngx-toastr';
 import { FORM_ERROR_MESSAGES } from '../../../../shared/constants/formErrMessages';
 import { HttpErrorResponse } from '@angular/common/http';
+import { finalize } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-register-form',
@@ -28,6 +30,7 @@ export class RegisterForm {
   private authService = inject(AuthService);
   private router = inject(Router);
   private toast = inject(ToastrService);
+  private destroyRef = inject(DestroyRef);
   protected formHelper = FormHelper;
   protected registerForm: FormGroup;
 
@@ -103,31 +106,37 @@ export class RegisterForm {
       role: Role.USER,
     };
 
-    this.authService.registerUser(userData).subscribe({
-      next: (response: UserAuthResponse) => {
-        this.authService.saveToken(response.token);
-        this.router.navigate(['/home']);
-        this.toast.success('Successfuly created new account!');
-        this.isLoading = false;
-      },
-      error: (err: UserAuthErr | HttpErrorResponse) => {
-        this.isLoading = false;
+    this.authService
+      .registerUser(userData)
+      .pipe(
+        finalize(() => (this.isLoading = false)),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        next: (response: UserAuthResponse) => {
+          this.authService.saveToken(response.token);
+          this.router.navigate(['/home']);
+          this.toast.success('Successfuly created new account!');
+          this.isLoading = false;
+        },
+        error: (err: UserAuthErr | HttpErrorResponse) => {
+          this.isLoading = false;
 
-        const errMsg =
-          err?.error?.errors?.[0] ||
-          (typeof err?.error === 'string' && err.error) ||
-          err?.statusText ||
-          'Unknown Error';
+          const errMsg =
+            err?.error?.errors?.[0] ||
+            (typeof err?.error === 'string' && err.error) ||
+            err?.statusText ||
+            'Unknown Error';
 
-        if (err?.error?.errors?.[0]) {
-          this.userAlreadyExists = true;
-          this.toast.error('User with this email already exists!');
-        } else {
-          this.toast.error(errMsg);
-        }
+          if (err?.error?.errors?.[0]) {
+            this.userAlreadyExists = true;
+            this.toast.error('User with this email already exists!');
+          } else {
+            this.toast.error(errMsg);
+          }
 
-        return;
-      },
-    });
+          return;
+        },
+      });
   }
 }
