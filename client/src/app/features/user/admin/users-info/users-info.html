@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="search-wrapper">
+    <mat-icon class="search-icon" aria-hidden="true">search</mat-icon>
+    <input type="text" id="search" name="search" [formControl]="searchControl" placeholder="Search by name..." />
+    @if (searchControl.value) {
+    <button class="clear-btn" type="button" (click)="clearSearch()" aria-label="Clear search">
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </div>
+
+  <mat-form-field appearance="fill" class="sort-dropdown">
+    <mat-select [(value)]="sortOrder" (valueChange)="onSortChange($event)" disableRipple [placeholder]="'Sort by name'">
+      <mat-option value="asc">Name - Asc</mat-option>
+      <mat-option value="desc">Name - Desc</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div
+    class="user-list"
+    [@listAnimation]
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="100"
+    (scrolled)="onScroll()"
+  >
+    @for (user of users; track user._id) {
+    <div class="user-card" [@cardAnimation]>
+      <img class="avatar" [src]="user.avatar || 'assets/avatar.png'" alt="{{ user.firstName }}'s avatar" />
+      <div class="user-info">
+        <div class="name">{{ user.firstName }} {{ user.lastName }}</div>
+        <div class="role">{{ user.role }}</div>
+      </div>
+      <mat-icon style="color: rgb(219, 0, 0); cursor: pointer" (click)="confirmDelete(user)">delete</mat-icon>
+    </div>
+    }
+  </div>
+
+  @if (isLoading) {
+  <mat-progress-spinner
+    diameter="100"
+    mode="indeterminate"
+    color="primary"
+    class="inline-spinner"
+    [strokeWidth]="5"
+  ></mat-progress-spinner>
+  }
+</div>
