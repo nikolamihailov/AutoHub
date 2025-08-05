@@ -7,7 +7,8 @@ import { FormGroup } from '@angular/forms';
     @if (isInvalid) {
     <div class="validation-message">
       @for (err of errorKeys; track $index) {
-      <span>{{ getErrorMessage(err) }}</span>
+      <span>{{ getErrorMessage(err) }}</span
+      ><br />
       }
     </div>
     }
