@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import { jwt } from '../utils/jwt';
 import bcrypt from 'bcrypt';
 import { Role, User, UserI } from '../models/User.model';
+import { Request, Response } from 'express';
+import { Sort } from '../enums/Sort.enum';
 
 dotenv.config();
 const SECRET = process.env.JWT_SECRET;
@@ -124,6 +126,33 @@ const removeProductFromFavourites = async (id, product) => {
 
 const getAllUsers = () => User.find();
 
+const getPaginatedUsers = async (limit: string, page: string, searchTerm: string, sort: Sort) => {
+  const usersPerPage = parseInt(limit, 10) || 6;
+  const userPage = parseInt(page, 10) || 1;
+
+  const searchQuery = searchTerm
+    ? {
+        $or: [
+          { firstName: { $regex: searchTerm, $options: 'i' } },
+          { lastName: { $regex: searchTerm, $options: 'i' } },
+        ],
+      }
+    : {};
+
+  let sortOrder = Sort.ASC;
+  if (sort === Sort.DESC) sortOrder = Sort.DESC;
+
+  const usersCount = await User.countDocuments(searchQuery);
+  const pageCount = Math.ceil(usersCount / usersPerPage);
+
+  const users = await User.find(searchQuery)
+    .sort({ firstName: sortOrder, lastName: sortOrder })
+    .skip((userPage - 1) * usersPerPage)
+    .limit(usersPerPage);
+
+  return { users, pageCount, usersCount };
+};
+
 /* const getAllWithFilters = async (itemsPerPage, page, filter) => {
   const query = {};
   if (filter) {
@@ -165,5 +194,6 @@ export const userService = {
   updateUserInfo,
   deleteUser,
   getAllUsers,
+  getPaginatedUsers,
   getAllCount,
 };

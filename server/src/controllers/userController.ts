@@ -7,8 +7,6 @@ import { extractErrors } from '../utils/errParse';
 
 export const userController = Router();
 
-// const ITEMS_PER_PAGE = 6;
-
 userController.post('/login', trimBody, async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -30,7 +28,7 @@ userController.post('/register', trimBody, async (req, res) => {
   }
 });
 
-userController.get('/admin', isAdmin, async (req: any, res) => {
+/* userController.get('/admin', isAdmin, async (req: any, res) => {
   try {
     if (req.decToken) {
       return res
@@ -43,8 +41,8 @@ userController.get('/admin', isAdmin, async (req: any, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-
-/* userController.get('/', isAdmin, async (req: any, res) => {
+ */
+userController.get('/', isAuthenticated, isAdmin, async (req: any, res) => {
   try {
     if (req.decToken) {
       return res
@@ -52,8 +50,8 @@ userController.get('/admin', isAdmin, async (req: any, res) => {
         .json({ expMessage: 'Your session has expired, you have to login again!' });
     }
     if (Object.keys(req.query).length > 0) {
-      const { page, filter } = req.query;
-      const data = await userService.getAllWithFilters(ITEMS_PER_PAGE, page, filter);
+      const { page, limit, searchTerm, sort } = req.query;
+      const data = await userService.getPaginatedUsers(limit, page, searchTerm, sort);
       res.status(200).json(data);
     } else {
       const userData = await userService.getAllUsers();
@@ -63,7 +61,7 @@ userController.get('/admin', isAdmin, async (req: any, res) => {
     const errors = extractErrors(error);
     res.status(400).json({ errors });
   }
-}); */
+});
 
 userController.get('/:id', isAuthenticated, async (req: any, res) => {
   try {
@@ -101,7 +99,7 @@ userController.put('/:id', isAuthenticated, trimBody, async (req: any, res) => {
   }
 });
 
-userController.delete('/:id', isAdmin, async (req: any, res) => {
+userController.delete('/:id', isAuthenticated, isAdmin, async (req: any, res) => {
   try {
     if (req.decToken) {
       return res
