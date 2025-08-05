@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { UsersInfo } from '../../features/user/admin/users-info/users-info';
 
 @Component({
   selector: 'app-admin-users',
-  imports: [],
+  imports: [UsersInfo],
   templateUrl: './admin-users.html',
-  styleUrl: './admin-users.scss'
+  styleUrl: './admin-users.scss',
 })
-export class AdminUsers {
-
-}
+export class AdminUsers {}
