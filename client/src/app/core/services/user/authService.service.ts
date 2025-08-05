@@ -18,7 +18,7 @@ export interface JwtPayload {
 }
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiServerUrl = environment.BASE_URL;
+  private BASE_URL = environment.BASE_URL;
   private readonly _isLoggedIn = signal<boolean>(false);
   private readonly _currentUser = signal<UserPayload | null>(null);
 
@@ -33,11 +33,11 @@ export class AuthService {
   }
 
   public registerUser(user: Partial<User>): Observable<UserAuthResponse> {
-    return this.http.post<UserAuthResponse>(`${this.apiServerUrl}/users/register`, user);
+    return this.http.post<UserAuthResponse>(`${this.BASE_URL}/users/register`, user);
   }
 
   public login(email: string, password: string): Observable<UserAuthResponse> {
-    return this.http.post<UserAuthResponse>(`${this.apiServerUrl}/users/login`, {
+    return this.http.post<UserAuthResponse>(`${this.BASE_URL}/users/login`, {
       email,
       password,
     });
@@ -49,10 +49,7 @@ export class AuthService {
   }
 
   public getToken(): string | null {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('autohub-token');
-    }
-    return null;
+    return localStorage.getItem('autohub-token');
   }
 
   public logout(): void {
