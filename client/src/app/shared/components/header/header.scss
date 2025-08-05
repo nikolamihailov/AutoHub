@@ -40,7 +40,6 @@ header {
         font-weight: 500;
         letter-spacing: 0.01em;
         padding: 0.5rem 0.3rem;
-        border-radius: 4px;
         transition: background 0.15s;
         &:hover {
           background: #e7f0ff;
@@ -67,4 +66,39 @@ header {
       background: #e7f0ff;
     }
   }
+}
+
+/* --- MATERIAL MENU CUSTOMIZATION --- */
+::ng-deep .mat-mdc-menu-panel,
+::ng-deep .mat-menu-panel {
+  background: #fff !important;
+  box-shadow: 0 4px 24px 0 rgba(23, 58, 106, 0.12), 0 1.5px 3px 0 rgba(23, 58, 106, 0.1) !important;
+  border-radius: 10px;
+  min-width: 190px;
+}
+
+::ng-deep .mat-mdc-menu-item,
+::ng-deep .mat-menu-item {
+  color: #2456a6;
+  font-weight: 500;
+  transition: background 0.15s;
+  padding: 0.5rem 1.1rem;
+}
+
+::ng-deep .mat-mdc-menu-item:hover,
+::ng-deep .mat-mdc-menu-item.cdk-focused,
+::ng-deep .mat-mdc-menu-item.cdk-program-focused,
+::ng-deep .mat-menu-item:hover,
+::ng-deep .mat-menu-item.cdk-focused,
+::ng-deep .mat-menu-item.cdk-program-focused {
+  background: #e7f0ff !important;
+  color: #1976d2 !important;
+}
+
+::ng-deep .active-menu-item,
+::ng-deep .mat-mdc-menu-item.active-menu-item {
+  background: #d6e6fa !important;
+  color: #0a79e9 !important;
+  font-weight: 600;
+  border-left: 4px solid #0a79e9 !important;
 }
