@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+import { ProfileInfo } from '../../features/user/profile-info/profile-info';
+
+@Component({
+  selector: 'app-profile',
+  imports: [ProfileInfo],
+  templateUrl: './profile.html',
+  styleUrl: './profile.scss',
+})
+export class Profile {}
