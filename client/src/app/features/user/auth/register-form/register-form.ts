@@ -5,12 +5,21 @@ import { FormHelper } from '../../../../shared/form-helper';
 import { FormErrMessagesComponent } from '../../../../shared/components';
 import { AccountType, Role, User, UserAuthErr, UserAuthResponse } from '../../../../models';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from '../../../../core/services/user/authService.service';
 import { ToastrService } from 'ngx-toastr';
+import { FORM_ERROR_MESSAGES } from '../../../../shared/constants/formErrMessages';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register-form',
-  imports: [ReactiveFormsModule, RouterLink, FormErrMessagesComponent, MatIconModule],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    FormErrMessagesComponent,
+    MatIconModule,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './register-form.html',
   styleUrl: './register-form.scss',
 })
@@ -30,6 +39,7 @@ export class RegisterForm {
   protected showPassword = false;
   protected showAccountInfo = false;
   protected userAlreadyExists = false;
+  protected isLoading = false;
 
   constructor() {
     this.registerForm = this.fb.group({
@@ -58,6 +68,17 @@ export class RegisterForm {
     });
   }
 
+  errorMessages = FORM_ERROR_MESSAGES['registerForm'];
+  isValid = (field: string) => FormHelper.isValid(this.registerForm, field);
+  isInvalid = (field: string) => FormHelper.isInvalid(this.registerForm, field);
+  getErrorKeys = (field: string) => FormHelper.getErrorKeys(this.registerForm, field);
+
+  resetUserAlreadyExists() {
+    if (this.userAlreadyExists) {
+      this.userAlreadyExists = false;
+    }
+  }
+
   toggleShowInfoBtn() {
     this.showAccountInfo = !this.showAccountInfo;
   }
@@ -66,45 +87,9 @@ export class RegisterForm {
     this.showPassword = !this.showPassword;
   }
 
-  isValid = (field: string) => FormHelper.isValid(this.registerForm, field);
-  isInvalid = (field: string) => FormHelper.isInvalid(this.registerForm, field);
-  getErrorKeys = (field: string) => FormHelper.getErrorKeys(this.registerForm, field);
-
-  errorMessages: Record<string, Record<string, string>> = {
-    firstName: {
-      required: 'First name is required.',
-      minlength: 'First name must be at least 3 characters.',
-      maxlength: 'First name must not be more than 15 characters.',
-    },
-    lastName: {
-      required: 'Last name is required.',
-      minlength: 'Last name must be at least 3 characters.',
-      maxlength: 'Last name must not be more than 15 characters.',
-    },
-    email: {
-      required: 'Email is required.',
-      email: 'Please enter a valid email.',
-      minlength: 'Email must be at least 7 characters.',
-      maxlength: 'Email must not be more than 25 characters.',
-    },
-    password: {
-      required: 'Password is required.',
-      minlength: 'Password must be at least 6 characters.',
-      maxlength: 'Password must not be more than 20 characters.',
-    },
-    accounType: {
-      required: 'Account type is required.',
-    },
-  };
-
-  resetUserAlreadyExists() {
-    if (this.userAlreadyExists) {
-      this.userAlreadyExists = false;
-    }
-  }
-
   onSubmit(): void {
     if (this.registerForm.invalid) return;
+    this.isLoading = true;
 
     const { firstName, lastName, email, password, accounType } = this.registerForm.value;
 
@@ -114,6 +99,7 @@ export class RegisterForm {
       email,
       password,
       accounType,
+      avatar: '',
       role: Role.USER,
     };
 
@@ -122,13 +108,24 @@ export class RegisterForm {
         this.authService.saveToken(response.token);
         this.router.navigate(['/home']);
         this.toast.success('Successfuly created new account!');
+        this.isLoading = false;
       },
-      error: (err: UserAuthErr) => {
-        const errMsg = err.error.errors[0];
-        if (errMsg) {
+      error: (err: UserAuthErr | HttpErrorResponse) => {
+        this.isLoading = false;
+
+        const errMsg =
+          err?.error?.errors?.[0] ||
+          (typeof err?.error === 'string' && err.error) ||
+          err?.statusText ||
+          'Unknown Error';
+
+        if (err?.error?.errors?.[0]) {
           this.userAlreadyExists = true;
           this.toast.error('User with this email already exists!');
+        } else {
+          this.toast.error(errMsg);
         }
+
         return;
       },
     });

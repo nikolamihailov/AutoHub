@@ -13,4 +13,5 @@ export interface UserAuthErr {
   error: {
     errors: string[];
   };
+  statusText: string;
 }

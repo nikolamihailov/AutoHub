@@ -97,6 +97,16 @@
     }
   </div>
 
-  <button type="submit" [disabled]="registerForm.invalid">Register</button>
-  <p>Alrey have an account? <a routerLink="/login">Login</a></p>
+  <button type="submit" [disabled]="registerForm.invalid || isLoading">
+    @if (isLoading) {
+    <mat-progress-spinner
+      diameter="20"
+      mode="indeterminate"
+      color="primary"
+      class="inline-spinner"
+      [strokeWidth]="3"
+    ></mat-progress-spinner>
+    } @else { Register }
+  </button>
+  <p>Alredy have an account? <a routerLink="/login">Login</a></p>
 </form>

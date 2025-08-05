@@ -2,15 +2,24 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { FormHelper } from '../../../../shared/form-helper';
 import { FormErrMessagesComponent } from '../../../../shared/components';
 import { AuthService } from '../../../../core/services/user/authService.service';
 import { UserAuthErr, UserAuthResponse } from '../../../../models';
+import { FORM_ERROR_MESSAGES } from '../../../../shared/constants/formErrMessages';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-form',
-  imports: [ReactiveFormsModule, RouterLink, FormErrMessagesComponent, MatIconModule],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    FormErrMessagesComponent,
+    MatIconModule,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',
 })
@@ -24,7 +33,9 @@ export class LoginForm {
 
   protected showPassword = false;
   protected invalidFields = false;
+  protected isLoading = false;
 
+  errorMessages = FORM_ERROR_MESSAGES['loginForm'];
   isValid = (field: string) => FormHelper.isValid(this.loginForm, field);
   isInvalid = (field: string) => FormHelper.isInvalid(this.loginForm, field);
   getErrorKeys = (field: string) => FormHelper.getErrorKeys(this.loginForm, field);
@@ -35,17 +46,6 @@ export class LoginForm {
       password: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(6)]),
     });
   }
-
-  errorMessages: Record<string, Record<string, string>> = {
-    email: {
-      required: 'Email is required.',
-      email: 'Please enter a valid email.',
-    },
-    password: {
-      required: 'Password is required.',
-      minlength: 'Password must be at least 6 characters.',
-    },
-  };
 
   togglePassVisibility() {
     this.showPassword = !this.showPassword;
@@ -59,6 +59,7 @@ export class LoginForm {
 
   onSubmit(): void {
     if (this.loginForm.invalid) return;
+    this.isLoading = true;
 
     const { email, password } = this.loginForm.value;
 
@@ -67,13 +68,24 @@ export class LoginForm {
         this.authService.saveToken(response.token);
         this.router.navigate(['/home']);
         this.toast.success('Successful Login!');
+        this.isLoading = false;
       },
-      error: (err: UserAuthErr) => {
-        const errMsg = err.error.errors[0];
-        if (errMsg) {
+      error: (err: UserAuthErr | HttpErrorResponse) => {
+        this.isLoading = false;
+
+        const errMsg =
+          err?.error?.errors?.[0] ||
+          (typeof err?.error === 'string' && err.error) ||
+          err?.statusText ||
+          'Unknown Error';
+
+        if (err?.error?.errors?.[0]) {
           this.invalidFields = true;
-          this.toast.error('Invalid email or password!');
+          this.toast.error('Invalid email or password');
+        } else {
+          this.toast.error(errMsg);
         }
+
         return;
       },
     });
