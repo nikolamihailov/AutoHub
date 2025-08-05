@@ -1,0 +1,100 @@
+<div class="profile-edit-wrapper">
+  @if (isLoading) {
+  <div class="profile-loading">
+    <mat-progress-spinner
+      diameter="100"
+      mode="indeterminate"
+      color="primary"
+      class="inline-spinner"
+      [strokeWidth]="5"
+    ></mat-progress-spinner>
+  </div>
+  } @else if (editForm) {
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <div class="avatar-upload-group">
+      <input
+        type="file"
+        id="avatar-upload"
+        accept="image/*"
+        (change)="onAvatarChange($event)"
+        [hidden]="true"
+        #avatarInput
+      />
+
+      <div class="avatar-click-area" (click)="avatarInput.click()">
+        <img class="avatar-preview-img" [src]="avatarPreview || 'assets/avatar.png'" alt="Avatar" />
+
+        @if (avatarPreview) {
+        <button
+          type="button"
+          class="remove-avatar-btn"
+          (click)="removeAvatar(); $event.stopPropagation()"
+          mat-icon-button
+          aria-label="Remove avatar"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+        }
+
+        <span class="avatar-caption">Click on the image to change</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="firstName">First Name *</label>
+      <input
+        type="text"
+        id="firstName"
+        formControlName="firstName"
+        [class.valid]="isValid('firstName')"
+        [class.invalid]="isInvalid('firstName')"
+      />
+      <form-err-messages [form]="editForm" field="firstName" [messages]="errorMessages['firstName']!" />
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name *</label>
+      <input
+        type="text"
+        id="lastName"
+        formControlName="lastName"
+        [class.valid]="isValid('lastName')"
+        [class.invalid]="isInvalid('lastName')"
+      />
+      <form-err-messages [form]="editForm" field="lastName" [messages]="errorMessages['lastName']!" />
+    </div>
+
+    <div class="form-group">
+      <label for="accounType">Account Type *</label>
+      <select
+        id="accounType"
+        formControlName="accounType"
+        [class.valid]="isValid('accounType')"
+        [class.invalid]="isInvalid('accounType')"
+      >
+        <option value="" disabled>Select account type</option>
+        @for (type of accountTypes; track type.value) {
+        <option [value]="type.value">{{ type.label }}</option>
+        }
+      </select>
+      <form-err-messages [form]="editForm" field="accounType" [messages]="errorMessages['accounType']!" />
+    </div>
+
+    <button type="submit" [disabled]="editForm.invalid || isLoading">
+      @if (isLoading) {
+      <mat-progress-spinner
+        diameter="20"
+        mode="indeterminate"
+        color="primary"
+        class="inline-spinner"
+        [strokeWidth]="3"
+      ></mat-progress-spinner>
+      } @else { Save Changes }
+    </button>
+  </form>
+  } @else if (errorMsg) {
+  <div class="profile-error">
+    {{ errorMsg }}
+  </div>
+  }
+</div>
