@@ -4,7 +4,7 @@ export interface User {
   lastName: string;
   email: string;
   password: string;
-  avatar: string;
+  avatar: string | undefined;
   role: Role;
   accounType: AccountType;
   // savedCarOffers: CarOffer[];
