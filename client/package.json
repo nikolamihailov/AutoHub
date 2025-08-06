@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --configuration production",
-    "postbuild": "copy _redirects dist\\autohub\\_redirects",
+    "postbuild": "copy _redirects dist\\autohub\\browser\\_redirects",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
