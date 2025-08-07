@@ -8,6 +8,12 @@
   padding: 2rem;
 }
 
+@media (max-width: 500px) {
+  :host {
+    padding: 0;
+  }
+}
+
 p {
   max-width: 75%;
   text-align: center;
