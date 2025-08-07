@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Logo } from '../logo/logo';
-import { Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { AuthService } from '../../../core/services/user/authService.service';
@@ -13,13 +13,27 @@ import { Role } from '../../../models';
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class Header {
+export class Header implements OnInit {
   protected authService = inject(AuthService);
   protected router = inject(Router);
   protected toast = inject(ToastrService);
 
   protected showAdminNav = false;
   protected currentUser = this.authService.currentUser();
+
+  ngOnInit() {
+    this.checkAdminNav();
+    // Listen to route changes to update on navigation too!
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.checkAdminNav();
+      }
+    });
+  }
+
+  private checkAdminNav() {
+    this.showAdminNav = this.router.url.includes('admin') && this.isAdmin();
+  }
 
   isLoggedIn() {
     return this.authService.isLoggedIn();
