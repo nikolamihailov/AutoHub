@@ -1,3 +1,5 @@
+export * from './admin-page-header/admin-page-header';
+export * from './confirm-dialog/confirm-dialog';
 export * from './footer/footer';
 export * from './form-err-messages/form-err-messages';
 export * from './header/header';
