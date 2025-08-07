@@ -1,62 +1,21 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Logo } from '../logo/logo';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { AuthService } from '../../../core/services/user/authService.service';
-import { ToastrService } from 'ngx-toastr';
-import { Role } from '../../../models';
+import { Component } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { HeaderMobile } from '../header-mobile/header-mobile';
+import { HeaderDesktop } from '../header-desktop/header-desktop';
 
 @Component({
   selector: 'app-header',
-  imports: [Logo, RouterModule, MatIconModule, MatMenuModule],
+  imports: [HeaderMobile, HeaderDesktop],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class Header implements OnInit {
-  protected authService = inject(AuthService);
-  protected router = inject(Router);
-  protected toast = inject(ToastrService);
+export class Header {
+  isMobile = false;
 
-  protected showAdminNav = false;
-  protected currentUser = this.authService.currentUser();
-
-  ngOnInit() {
-    this.checkAdminNav();
-    // Listen to route changes to update on navigation too!
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.checkAdminNav();
-      }
+  // below 600px :)
+  constructor(private breakpointObserver: BreakpointObserver) {
+    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe((result) => {
+      this.isMobile = result.matches;
     });
-  }
-
-  private checkAdminNav() {
-    this.showAdminNav = this.router.url.includes('admin') && this.isAdmin();
-  }
-
-  isLoggedIn() {
-    return this.authService.isLoggedIn();
-  }
-
-  isAdmin(): boolean {
-    const user = this.authService.currentUser();
-    return !!user && user.role === Role.ADMIN;
-  }
-
-  handleLogout() {
-    this.authService.logout();
-    this.router.navigate(['/logout']);
-    this.toast.success('You logged out!');
-  }
-
-  handleAdminPanelEnter() {
-    this.showAdminNav = true;
-    this.router.navigate(['/admin-dashboard']);
-  }
-
-  handleAdminPanelLeave() {
-    this.showAdminNav = false;
-    this.router.navigate(['/home']);
   }
 }

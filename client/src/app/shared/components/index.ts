@@ -3,5 +3,7 @@ export * from './confirm-dialog/confirm-dialog';
 export * from './footer/footer';
 export * from './form-err-messages/form-err-messages';
 export * from './header/header';
+export * from './header-desktop/header-desktop';
+export * from './header-mobile/header-mobile';
 export * from './layout/layout';
 export * from './logo/logo';

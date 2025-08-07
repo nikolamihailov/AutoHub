@@ -1,0 +1,129 @@
+<header>
+  <nav class="navbar">
+    <div class="navbar-left">
+      @if(isAdmin() && showAdminNav){
+      <a class="logo-link" routerLink="/admin-dashboard">
+        <app-logo></app-logo>
+      </a>
+      <ul class="nav-links">
+        <li>
+          <a
+            routerLink="/admin-dashboard/users"
+            routerLinkActive="router-link-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Users</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/admin-dashboard/categories"
+            routerLinkActive="router-link-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Categories</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/admin-dashboard/car-offers"
+            routerLinkActive="router-link-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Car Offers</a
+          >
+        </li>
+      </ul>
+      }@else {
+      <a class="logo-link" routerLink="/home" (click)="showAdminNav = false">
+        <app-logo></app-logo>
+      </a>
+      <ul class="nav-links">
+        <li>
+          <a routerLink="/car-offers" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }"
+            >Car Offers</a
+          >
+        </li>
+        <li>
+          <a routerLink="/categories" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }"
+            >Categories</a
+          >
+        </li>
+        <li>
+          <a routerLink="/about" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }"
+            >About Us</a
+          >
+        </li>
+        <li>
+          <a routerLink="/contacts" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }"
+            >Contacts</a
+          >
+        </li>
+      </ul>
+      }
+    </div>
+
+    <div class="navbar-right">
+      <button mat-icon-button class="profile-btn" [matMenuTriggerFor]="profileMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #profileMenu="matMenu">
+        @if (authService.isLoggedIn()) {
+        <a mat-menu-item routerLink="/profile" routerLinkActive="active-menu-item">
+          <mat-icon>person</mat-icon>
+          Profile
+        </a>
+        <a
+          mat-menu-item
+          [routerLink]="['/car-offers/user', currentUser?._id]"
+          routerLinkActive="active-menu-item"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>garage</mat-icon>
+          My Car Offers
+        </a>
+        <a
+          mat-menu-item
+          routerLink="/car-offers/saved"
+          routerLinkActive="active-menu-item"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>favorite</mat-icon>
+          Saved Car Offers
+        </a>
+        @if (isAdmin() && showAdminNav) {
+        <a mat-menu-item (click)="handleAdminPanelLeave()">
+          <mat-icon>home</mat-icon>
+          Home
+        </a>
+        } @if (isAdmin() && !showAdminNav) {
+        <a mat-menu-item (click)="handleAdminPanelEnter()">
+          <mat-icon>admin_panel_settings</mat-icon>
+          Admin Panel
+        </a>
+        }
+        <a mat-menu-item (click)="handleLogout()">
+          <mat-icon>logout</mat-icon>
+          Logout
+        </a>
+        } @else {
+        <a
+          mat-menu-item
+          routerLink="/login"
+          routerLinkActive="active-menu-item"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>login</mat-icon>
+          Login
+        </a>
+        <a
+          mat-menu-item
+          routerLink="/register"
+          routerLinkActive="active-menu-item"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>person_add</mat-icon>
+          Register
+        </a>
+        }
+      </mat-menu>
+    </div>
+  </nav>
+</header>

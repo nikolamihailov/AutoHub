@@ -1,0 +1,72 @@
+.mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  padding: 0 1.2rem;
+  min-height: 56px;
+
+  .mobile-logo-link {
+    display: flex;
+    align-items: center;
+    img {
+      max-height: 36px;
+    }
+  }
+}
+
+.mobile-sidenav {
+  width: 27rem;
+  background: #fff;
+  padding: 1.5rem 1rem;
+
+  .sidenav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      color: #046bc2;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: 500;
+      padding: 0.6rem 0.3rem;
+      border-radius: 6px;
+      transition: background 0.18s;
+      &:hover {
+        background: #e7f0ff;
+      }
+    }
+
+    mat-icon {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+:host ::ng-deep .mat-drawer-inner-container {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.mat-drawer {
+  position: fixed;
+  height: 100%;
+  border-right: 3px solid #046bc2;
+}
+
+.sidenav-close-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 0.5rem;
+  padding-top: 0.2rem;
+}
+
+.sidenav-close-row button {
+  color: #1976d2;
+}

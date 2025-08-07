@@ -1,0 +1,99 @@
+<mat-sidenav-container class="mobile-sidenav-container">
+  <mat-sidenav #sidenav mode="over" class="mobile-sidenav">
+    <div class="sidenav-close-row">
+      <span></span>
+      <!-- This empty span pushes the button to the right in flex -->
+      <button mat-icon-button (click)="sidenav.close()" aria-label="Close menu">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="sidenav-links">
+      @if (isAdmin() && showAdminNav) {
+      <a routerLink="/admin-dashboard/users" (click)="sidenav.close()">
+        <mat-icon>people</mat-icon>
+        Users
+      </a>
+      <a routerLink="/admin-dashboard/categories" (click)="sidenav.close()">
+        <mat-icon>category</mat-icon>
+        Categories
+      </a>
+      <a routerLink="/admin-dashboard/car-offers" (click)="sidenav.close()">
+        <mat-icon>directions_car</mat-icon>
+        Car Offers
+      </a>
+      } @else {
+      <a routerLink="/car-offers" (click)="sidenav.close()">
+        <mat-icon>directions_car</mat-icon>
+        Car Offers
+      </a>
+      <a routerLink="/categories" (click)="sidenav.close()">
+        <mat-icon>category</mat-icon>
+        Categories
+      </a>
+      <a routerLink="/about" (click)="sidenav.close()">
+        <mat-icon>info</mat-icon>
+        About Us
+      </a>
+      <a routerLink="/contacts" (click)="sidenav.close()">
+        <mat-icon>contact_mail</mat-icon>
+        Contacts
+      </a>
+      }
+      <hr />
+      @if (isLoggedIn()) {
+      <a routerLink="/profile" (click)="sidenav.close()">
+        <mat-icon>person</mat-icon>
+        Profile
+      </a>
+      <a [routerLink]="['/car-offers/user', currentUser?._id]" (click)="sidenav.close()">
+        <mat-icon>garage</mat-icon>
+        My Car Offers
+      </a>
+      <a routerLink="/car-offers/saved" (click)="sidenav.close()">
+        <mat-icon>favorite</mat-icon>
+        Saved Car Offers
+      </a>
+      @if (isAdmin() && showAdminNav) {
+      <a (click)="handleAdminPanelLeave(sidenav)">
+        <mat-icon>home</mat-icon>
+        Home
+      </a>
+      } @if (isAdmin() && !showAdminNav) {
+      <a (click)="handleAdminPanelEnter(sidenav)">
+        <mat-icon>admin_panel_settings</mat-icon>
+        Admin Panel
+      </a>
+      }
+      <a (click)="handleLogout(sidenav)">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </a>
+      } @else {
+      <a routerLink="/login" (click)="sidenav.close()">
+        <mat-icon>login</mat-icon>
+        Login
+      </a>
+      <a routerLink="/register" (click)="sidenav.close()">
+        <mat-icon>person_add</mat-icon>
+        Register
+      </a>
+      }
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <header class="mobile-header">
+      @if(isAdmin() && showAdminNav){
+      <a class="logo-link" routerLink="/admin-dashboard">
+        <app-logo></app-logo>
+      </a>
+      }@else {
+      <a class="logo-link" routerLink="/home">
+        <app-logo></app-logo>
+      </a>
+      }
+      <button mat-icon-button (click)="sidenav.open()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </header>
+  </mat-sidenav-content>
+</mat-sidenav-container>
