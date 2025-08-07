@@ -17,7 +17,7 @@ body {
 
 * {
   /* For Firefox */
-  scrollbar-color: blue white;
+  scrollbar-color: #046bc2 white;
   scrollbar-width: thin;
 }
 
@@ -44,7 +44,7 @@ body {
 
 *::-webkit-scrollbar-track {
   border-radius: 5px;
-  background-color: blue;
+  background-color: #046bc2;
 }
 
 /* *::-webkit-scrollbar-track:hover {
@@ -52,12 +52,12 @@ body {
 } */
 
 *::-webkit-scrollbar-track:active {
-  background-color: blue;
+  background-color: #046bc2;
 }
 
 *::-webkit-scrollbar-thumb {
   border-radius: 20px;
-  background-color: blue;
+  background-color: #046bc2;
 }
 // to be moved to scss/component/input
 
@@ -111,13 +111,13 @@ button[type='submit'] {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #2f73da;
+  background: #046bc2;
   color: #fff;
   border: none;
   padding: 1rem 2.4rem;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 1rem;
+  margin: 1rem 0;
   transition: background 0.2s;
   min-width: 15rem;
 }
@@ -143,7 +143,7 @@ button[type='submit']:disabled {
 .eye-btn {
   position: absolute;
   right: 15px;
-  top: 50%;
+  top: 55%;
   transform: translateY(-50%);
   background: none;
   border: none;
@@ -153,6 +153,7 @@ button[type='submit']:disabled {
   padding: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .info-btn {
@@ -165,10 +166,16 @@ button[type='submit']:disabled {
 }
 
 .account-info {
+  margin: 1rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-style: italic;
+  font-size: 1.4rem;
+}
+
+.account-info-text {
+  font-size: 1.4rem;
 }
 
 .inline-spinner {
@@ -180,14 +187,14 @@ button[type='submit']:disabled {
 
 ::ng-deep .mat-mdc-progress-spinner circle,
 ::ng-deep .mat-progress-spinner circle {
-  stroke: #1976d2 !important; // Change to your preferred blue hex code
+  stroke: #1976d2 !important; // Change to your preferred
 }
 
 .btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #2f73da;
+  background: #046bc2;
   color: #fff;
   border: none;
   padding: 1rem 2.4rem;
