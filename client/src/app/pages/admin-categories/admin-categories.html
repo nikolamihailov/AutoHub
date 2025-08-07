@@ -1,1 +1,10 @@
-<p>admin-categories works!</p>
+<app-admin-page-header
+  [name]="'Categories'"
+  [descriptionTitle]="'  View, search, and manage all categories of the platform.'"
+  [descriptionText]="
+    'You can scroll to load more categories, search categories, sort them by name and delete categories if there are no
+    car-offers with it.'
+  "
+/>
+
+<app-categories-management></app-categories-management>
