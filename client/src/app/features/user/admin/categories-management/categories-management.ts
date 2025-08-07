@@ -41,6 +41,7 @@ export class CategoriesManagement {
   protected itemsPerPage = 12;
   protected canLoadMore = true;
   protected isLoading = false;
+  protected initialLoad = true;
   protected searchControl = new FormControl('');
 
   protected sortOrder: Sort = Sort.ASC;
@@ -71,6 +72,8 @@ export class CategoriesManagement {
   loadCategories(searchTerm = '') {
     if (this.isLoading || !this.canLoadMore) return;
     this.isLoading = true;
+
+    if (this.initialLoad === true) this.initialLoad = false;
 
     this.categoryService
       .getCategories(this.itemsPerPage.toString(), this.page.toString(), searchTerm, this.sortOrder)

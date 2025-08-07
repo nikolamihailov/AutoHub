@@ -34,7 +34,9 @@
       </div>
       <mat-icon style="color: rgb(219, 0, 0); cursor: pointer" (click)="confirmDelete(user)">delete</mat-icon>
     </div>
-    }
+    } @empty { @if(!isLoading && !initialLoad){
+    <h3 class="user-no-results">No results found</h3>
+    } }
   </div>
 
   @if (isLoading) {

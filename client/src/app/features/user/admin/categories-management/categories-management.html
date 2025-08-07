@@ -50,7 +50,9 @@
         >
       </div>
     </div>
-    }
+    }@empty { @if(!isLoading && !initialLoad){
+    <h3 class="category-no-results">No results found</h3>
+    } }
   </div>
 
   @if (isLoading) {

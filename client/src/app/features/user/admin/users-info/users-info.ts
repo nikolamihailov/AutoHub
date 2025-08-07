@@ -41,6 +41,7 @@ export class UsersInfo implements OnInit {
   protected page = 1;
   protected itemsPerPage = 12;
   protected canLoadMore = true;
+  protected initialLoad = true;
   protected isLoading = false;
   protected searchControl = new FormControl('');
 
@@ -72,6 +73,8 @@ export class UsersInfo implements OnInit {
   loadUsers(searchTerm = '') {
     if (this.isLoading || !this.canLoadMore) return;
     this.isLoading = true;
+
+    if (this.initialLoad === true) this.initialLoad = false;
 
     this.userService
       .getUsers(this.itemsPerPage.toString(), this.page.toString(), searchTerm, this.sortOrder)
