@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import {
   AdminCarOffers,
   AdminCategories,
+  AdminCategoriesAdd,
+  AdminCategoriesEdit,
   AdminDashboard,
   AdminUsers,
   ErrorPage,
@@ -26,7 +28,14 @@ export const routes: Routes = [
     children: [
       { path: '', component: AdminDashboard },
       { path: 'car-offers', component: AdminCarOffers },
-      { path: 'categories', component: AdminCategories },
+      {
+        path: 'categories',
+        children: [
+          { path: '', component: AdminCategories },
+          { path: 'add', component: AdminCategoriesAdd },
+          { path: 'edit/:id', component: AdminCategoriesEdit },
+        ],
+      },
       { path: 'users', component: AdminUsers },
     ],
   },
