@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProfileInfo } from '../../features/user/profile-info/profile-info';
+import { ProfileInfo } from '../../features';
 
 @Component({
   selector: 'app-profile',

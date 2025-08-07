@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProfileEditForm } from '../../features/user/profile-edit-form/profile-edit-form';
+import { ProfileEditForm } from '../../features';
 
 @Component({
   selector: 'app-profile-edit',

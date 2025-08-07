@@ -1,5 +1,7 @@
 export * from './admin-car-offers/admin-car-offers';
 export * from './admin-categories/admin-categories';
+export * from './admin-categories-add/admin-categories-add';
+export * from './admin-categories-edit/admin-categories-edit';
 export * from './admin-dashboard/admin-dashboard';
 export * from './admin-users/admin-users';
 export * from './home/home';

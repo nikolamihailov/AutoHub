@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RegisterForm } from '../../features/user/auth/register-form/register-form';
+import { RegisterForm } from '../../features';
 
 @Component({
   selector: 'app-register',
