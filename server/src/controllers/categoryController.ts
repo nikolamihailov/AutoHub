@@ -4,6 +4,8 @@ import { isAdmin } from '../middlewares/isAdmin';
 import { isAuthenticated } from '../middlewares/isAuthenticated';
 import { extractErrors } from '../utils/errParse';
 import { categoryService } from '../services/categoryService';
+import mongoose from 'mongoose';
+import { Category } from '../models/Category.model';
 
 export const categoryController = Router();
 
@@ -39,6 +41,16 @@ categoryController.get('/admin', isAuthenticated, isAdmin, async (req: any, res)
 categoryController.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: 'Category not found.' });
+    }
+
+    const categoryExists = await Category.findById(id);
+    if (!categoryExists) {
+      return res.status(404).json({ error: 'Category not found.' });
+    }
+
     const category = await categoryService.getOneCategory(id);
     res.status(200).json(category);
   } catch (error) {
