@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import { jwt } from '../utils/jwt';
 import bcrypt from 'bcrypt';
 import { Role, User, UserI } from '../models/User.model';
-import { Request, Response } from 'express';
 import { Sort } from '../enums/Sort.enum';
 
 dotenv.config();
