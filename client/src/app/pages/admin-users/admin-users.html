@@ -1,9 +1,9 @@
-<div class="admin-users-header">
-  <h1>Users Management</h1>
-  <p>
-    View, search, and manage all users of the platform.<br />
-    You can scroll to load more users, search users, filter them by role and delete users if they don't have car-offers.
-  </p>
-</div>
+<app-admin-page-header
+  [name]="'Users'"
+  [descriptionTitle]="' View, search, and manage all users of the platform.'"
+  [descriptionText]="
+    'You can scroll to load more users, search users, filter them by role and delete users if they don\'t have car-offers.'
+  "
+/>
 
 <app-users-info></app-users-info>
