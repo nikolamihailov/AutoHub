@@ -35,4 +35,12 @@ export const FORM_ERROR_MESSAGES: Record<string, Record<string, Record<string, s
       minlength: 'Password must be at least 6 characters.',
     },
   },
+  categoryForm: {
+    name: {
+      required: 'Name is required',
+      minlength: 'Category must be at least 3 characters.',
+      maxlength: 'Category must not be more than 20 characters',
+    },
+    img: { required: 'Image is required' },
+  },
 };
