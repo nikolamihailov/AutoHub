@@ -16,27 +16,29 @@
     </mat-select>
   </mat-form-field>
 
-  <div
-    class="user-list"
-    [@listAnimation]
-    infiniteScroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="100"
-    (scrolled)="onScroll()"
-  >
-    @for (user of users; track user._id) {
-    <div class="user-card" [@cardAnimation]>
-      <img class="avatar" [src]="user.avatar || 'assets/avatar.png'" alt="{{ user.firstName }}'s avatar" />
-      <div class="user-info">
-        <div class="role">{{ user.role }}</div>
-        <div class="name">{{ user.firstName }} {{ user.lastName }}</div>
-        <div class="email">{{ user.email }}</div>
+  <div class="user-list-wrapper">
+    <div
+      class="user-list"
+      [@listAnimation]
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="100"
+      (scrolled)="onScroll()"
+    >
+      @for (user of users; track user._id) {
+      <div class="user-card" [@cardAnimation]>
+        <img class="avatar" [src]="user.avatar || 'assets/avatar.png'" alt="{{ user.firstName }}'s avatar" />
+        <div class="user-info">
+          <div class="role">{{ user.role }}</div>
+          <div class="name">{{ user.firstName }} {{ user.lastName }}</div>
+          <div class="email">{{ user.email }}</div>
+        </div>
+        <mat-icon style="color: rgb(219, 0, 0); cursor: pointer" (click)="confirmDelete(user)">delete</mat-icon>
       </div>
-      <mat-icon style="color: rgb(219, 0, 0); cursor: pointer" (click)="confirmDelete(user)">delete</mat-icon>
+      } @empty { @if(!isLoading && !initialLoad){
+      <h3 class="user-no-results">No results found</h3>
+      } }
     </div>
-    } @empty { @if(!isLoading && !initialLoad){
-    <h3 class="user-no-results">No results found</h3>
-    } }
   </div>
 
   @if (isLoading) {
