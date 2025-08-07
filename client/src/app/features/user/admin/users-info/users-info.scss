@@ -53,19 +53,26 @@
   justify-content: center;
   align-items: center;
 
-  .name {
-    font-size: 1.2rem;
+  .name,
+  .email {
+    font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 0.25rem;
     color: #212121;
+    margin: 0.5rem 0;
   }
+
+  .name {
+    font-size: 1.6rem;
+  }
+
   .role {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: white;
     background-color: #3474af;
     border-radius: 12px;
     padding: 0.6rem 1.2rem;
-    width: 8rem;
+    width: 6rem;
     font-weight: bold;
     text-transform: capitalize;
     letter-spacing: 0.5px;

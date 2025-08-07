@@ -1,54 +1,56 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="email">Email *</label>
-    <input
-      type="email"
-      id="email"
-      formControlName="email"
-      (input)="resetInvalidFields()"
-      [class.valid]="isValid('email')"
-      [class.invalid]="isInvalid('email') || invalidFields"
-    />
-    <form-err-messages [form]="loginForm" field="email" [messages]="errorMessages['email']!" />
-  </div>
-
-  <div class="form-group">
-    <label for="password">Password *</label>
-    <div class="input-wrapper">
+<div class="login-form-wrapper">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email *</label>
       <input
-        [type]="showPassword ? 'text' : 'password'"
-        id="password"
-        formControlName="password"
+        type="email"
+        id="email"
+        formControlName="email"
         (input)="resetInvalidFields()"
-        [class.valid]="isValid('password')"
-        [class.invalid]="isInvalid('password') || invalidFields"
-        autocomplete="new-password"
+        [class.valid]="isValid('email')"
+        [class.invalid]="isInvalid('email') || invalidFields"
       />
-      <button
-        type="button"
-        class="icon-btn eye-btn"
-        (click)="togglePassVisibility()"
-        [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
-        tabindex="-1"
-        mat-icon-button
-      >
-        <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-      </button>
+      <form-err-messages [form]="loginForm" field="email" [messages]="errorMessages['email']!" />
     </div>
-    <form-err-messages [form]="loginForm" field="password" [messages]="errorMessages['password']!" />
-  </div>
 
-  <button type="submit" [disabled]="loginForm.invalid || isLoading">
-    @if (isLoading) {
-    <mat-progress-spinner
-      diameter="20"
-      mode="indeterminate"
-      color="primary"
-      class="inline-spinner"
-      [strokeWidth]="3"
-    ></mat-progress-spinner>
-    } @else { Login }
-  </button>
+    <div class="form-group">
+      <label for="password">Password *</label>
+      <div class="input-wrapper">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          id="password"
+          formControlName="password"
+          (input)="resetInvalidFields()"
+          [class.valid]="isValid('password')"
+          [class.invalid]="isInvalid('password') || invalidFields"
+          autocomplete="new-password"
+        />
+        <button
+          type="button"
+          class="icon-btn eye-btn"
+          (click)="togglePassVisibility()"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          tabindex="-1"
+          mat-icon-button
+        >
+          <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </div>
+      <form-err-messages [form]="loginForm" field="password" [messages]="errorMessages['password']!" />
+    </div>
 
-  <p>Don't have an account? <a routerLink="/register">Register</a></p>
-</form>
+    <button type="submit" [disabled]="loginForm.invalid || isLoading">
+      @if (isLoading) {
+      <mat-progress-spinner
+        diameter="20"
+        mode="indeterminate"
+        color="primary"
+        class="inline-spinner"
+        [strokeWidth]="3"
+      ></mat-progress-spinner>
+      } @else { Login }
+    </button>
+
+    <p>Don't have an account? <a routerLink="/register">Register</a></p>
+  </form>
+</div>
