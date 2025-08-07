@@ -3,7 +3,8 @@ import { environment } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from './authService.service';
 import { Observable, throwError } from 'rxjs';
-import { PaginatedUsersResponse, Sort, User } from '../../../models';
+import { PaginatedUsersResponse, User } from '../../../models';
+import { Sort } from '../../../shared/enums/Sort.enum';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
