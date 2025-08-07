@@ -1,64 +1,96 @@
 import { Routes } from '@angular/router';
-import {
-  AdminCarOffers,
-  AdminCategories,
-  AdminCategoriesAdd,
-  AdminCategoriesEdit,
-  AdminDashboard,
-  AdminUsers,
-  ErrorPage,
-  Home,
-  Login,
-  Profile,
-  ProfileEdit,
-  Register,
-} from './pages';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: Home },
-  { path: 'profile', component: Profile },
-  { path: 'profile-edit', component: ProfileEdit },
-  { path: 'login', component: Login },
-  { path: 'register', component: Register },
+  {
+    path: 'home',
+    loadComponent: () => import('./pages/home/home').then((m) => m.Home),
+  },
+  {
+    path: 'profile',
+    loadComponent: () => import('./pages/profile/profile').then((m) => m.Profile),
+  },
+  {
+    path: 'profile-edit',
+    loadComponent: () => import('./pages/profile-edit/profile-edit').then((m) => m.ProfileEdit),
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login').then((m) => m.Login),
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./pages/register/register').then((m) => m.Register),
+  },
   { path: 'logout', redirectTo: 'home', pathMatch: 'full' },
 
   {
     path: 'admin-dashboard',
     children: [
-      { path: '', component: AdminDashboard },
-      { path: 'car-offers', component: AdminCarOffers },
+      {
+        path: '',
+        loadComponent: () =>
+          import('./pages/admin-dashboard/admin-dashboard').then((m) => m.AdminDashboard),
+      },
+      {
+        path: 'car-offers',
+        loadComponent: () =>
+          import('./pages/admin-car-offers/admin-car-offers').then((m) => m.AdminCarOffers),
+      },
       {
         path: 'categories',
         children: [
-          { path: '', component: AdminCategories },
-          { path: 'add', component: AdminCategoriesAdd },
-          { path: 'edit/:id', component: AdminCategoriesEdit },
+          {
+            path: '',
+            loadComponent: () =>
+              import('./pages/admin-categories/admin-categories').then((m) => m.AdminCategories),
+          },
+          {
+            path: 'add',
+            loadComponent: () =>
+              import('./pages/admin-categories-add/admin-categories-add').then(
+                (m) => m.AdminCategoriesAdd,
+              ),
+          },
+          {
+            path: 'edit/:id',
+            loadComponent: () =>
+              import('./pages/admin-categories-edit/admin-categories-edit').then(
+                (m) => m.AdminCategoriesEdit,
+              ),
+          },
         ],
       },
-      { path: 'users', component: AdminUsers },
+      {
+        path: 'users',
+        loadComponent: () => import('./pages/admin-users/admin-users').then((m) => m.AdminUsers),
+      },
     ],
   },
 
-  { path: 'not-found', component: ErrorPage },
+  {
+    path: 'not-found',
+    loadComponent: () => import('./pages/error-page/error-page').then((m) => m.ErrorPage),
+  },
   { path: '**', redirectTo: 'not-found' },
-  /*  ,
-    {
-      path: 'car-offers',
-      children: [
-        { path: '', component: CarOffers },
-        { path: 'add', component: CarOfferAddComponent },
-        { path: 'edit', component: CarOfferEditComponent },
-        { path: 'saved', component: CarOffersSavedComponent },
-        { path: 'user/:userId', component: CarOffersUserComponent },
-        { path: ':id', component: CarOfferComponent },
-      ],
-    },
-    {
-      path: 'categories',
-      children: [
-        { path: '', component: CategoriesComponent },
-        { path: ':id', component: CategoryComponent },
-      ],
-    }, */
 ];
+
+/*  ,
+  {
+    path: 'car-offers',
+    children: [
+      { path: '', component: CarOffers },
+      { path: 'add', component: CarOfferAddComponent },
+      { path: 'edit', component: CarOfferEditComponent },
+      { path: 'saved', component: CarOffersSavedComponent },
+      { path: 'user/:userId', component: CarOffersUserComponent },
+      { path: ':id', component: CarOfferComponent },
+    ],
+  },
+  {
+    path: 'categories',
+    children: [
+      { path: '', component: CategoriesComponent },
+      { path: ':id', component: CategoryComponent },
+    ],
+  }, */
