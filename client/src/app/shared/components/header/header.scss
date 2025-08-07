@@ -35,7 +35,7 @@ header {
 
     li {
       a {
-        color: #2456a6;
+        color: #046bc2;
         text-decoration: none;
         font-weight: 500;
         letter-spacing: 0.01em;
@@ -79,7 +79,7 @@ header {
 
 ::ng-deep .mat-mdc-menu-item,
 ::ng-deep .mat-menu-item {
-  color: #2456a6;
+  color: #046bc2;
   font-weight: 500;
   transition: background 0.15s;
   padding: 0.5rem 1.1rem;
@@ -101,4 +101,12 @@ header {
   color: #0a79e9 !important;
   font-weight: 600;
   border-left: 4px solid #0a79e9 !important;
+}
+
+.mat-menu-panel .mat-menu-item.cdk-focused:not(:hover),
+.mat-menu-panel .mat-menu-item.cdk-program-focused:not(:hover),
+.mat-menu-panel .mat-menu-item.mat-mdc-menu-item--highlighted:not(:hover) {
+  background: none !important;
+  color: inherit !important;
+  outline: none !important;
 }

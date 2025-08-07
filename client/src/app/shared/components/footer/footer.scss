@@ -6,13 +6,13 @@ footer {
 
   h3 {
     margin: 0 0 0.5rem 0;
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     font-weight: 600;
     letter-spacing: 1px;
   }
 
   i {
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-style: normal;
     color: #e0e7ff;
 
@@ -23,7 +23,7 @@ footer {
       transition: color 0.2s;
 
       &:hover {
-        color: #a5b4fc; // lighter blue on hover
+        color: #000000; // lighter blue on hover
       }
     }
   }
