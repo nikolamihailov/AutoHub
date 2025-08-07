@@ -1,0 +1,22 @@
+.admin-header {
+  padding: 2rem 1rem 1rem 1rem;
+  background: #f8fafc;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #24292f;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: #57606a;
+    font-size: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+}
