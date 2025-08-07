@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="search-wrapper">
+    <mat-icon class="search-icon" aria-hidden="true">search</mat-icon>
+    <input type="text" id="search" name="search" [formControl]="searchControl" placeholder="Search by name..." />
+    @if (searchControl.value) {
+    <button class="clear-btn" type="button" (click)="clearSearch()" aria-label="Clear search">
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </div>
+
+  <mat-form-field appearance="fill" class="sort-dropdown">
+    <mat-select [(value)]="sortOrder" (valueChange)="onSortChange($event)" disableRipple [placeholder]="'Sort by name'">
+      <mat-option value="asc">Name - Asc</mat-option>
+      <mat-option value="desc">Name - Desc</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button class="btn" (click)="goToAdd()">
+    <mat-icon>add</mat-icon>
+    Add Category
+  </button>
+
+  <div
+    class="categories-list"
+    [@listAnimation]
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="100"
+    (scrolled)="onScroll()"
+  >
+    @for (category of categories; track category._id) {
+    <div class="category-card" [@cardAnimation]>
+      <img class="categoryImage" [src]="category.categoryImage" alt="{{ category.name }}" />
+      <div class="category-info">
+        <div class="role">{{ category.name }}</div>
+      </div>
+      <div>
+        <mat-icon
+          style="color: #1976d2; margin-right: 10px; cursor: pointer"
+          (click)="goToEdit(category._id)"
+          aria-label="Edit category"
+          >edit</mat-icon
+        >
+        <mat-icon
+          style="color: rgb(219, 0, 0); cursor: pointer"
+          (click)="confirmDelete(category)"
+          aria-label="Delete category"
+          >delete</mat-icon
+        >
+      </div>
+    </div>
+    }
+  </div>
+
+  @if (isLoading) {
+  <mat-progress-spinner
+    diameter="100"
+    mode="indeterminate"
+    color="primary"
+    class="inline-spinner"
+    [strokeWidth]="5"
+  ></mat-progress-spinner>
+  }
+</div>

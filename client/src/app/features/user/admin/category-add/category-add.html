@@ -1,0 +1,58 @@
+<div class="category-form-wrapper">
+  <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+    <div class="category-upload-group">
+      <input
+        type="file"
+        id="category-upload"
+        accept="image/*"
+        (change)="onCategoryImageChange($event)"
+        [hidden]="true"
+        [class.valid]="isValid('img')"
+        [class.invalid]="isInvalid('img')"
+        #categoryImageInput
+      />
+
+      <div class="category-click-area" (click)="categoryImageInput.click()">
+        <img class="category-preview-img" [src]="categoryPreview || 'assets/uploadCategory.png'" alt="Avatar" />
+
+        @if (categoryPreview) {
+        <button
+          type="button"
+          class="remove-category-image-btn"
+          (click)="removeCategoryImage(); $event.stopPropagation()"
+          mat-icon-button
+          aria-label="Remove category image"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+        }
+
+        <span class="category-caption">Click on the image to upload and change</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Name *</label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        [class.valid]="isValid('name')"
+        [class.invalid]="isInvalid('name')"
+      />
+      <form-err-messages [form]="addForm" field="name" [messages]="errorMessages['name']!" />
+    </div>
+
+    <button type="submit" [disabled]="addForm.invalid || isLoading">
+      @if (isLoading) {
+      <mat-progress-spinner
+        diameter="20"
+        mode="indeterminate"
+        color="primary"
+        class="inline-spinner"
+        [strokeWidth]="3"
+      ></mat-progress-spinner>
+      } @else { Create }
+    </button>
+  </form>
+</div>
