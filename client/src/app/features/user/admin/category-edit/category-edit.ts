@@ -79,6 +79,10 @@ export class CategoryEdit {
           }
         },
         error: (err) => {
+          if (err.status === 404) {
+            this.router.navigate(['/not-found']);
+            return;
+          }
           this.errorMsg = err?.error?.message || 'Failed to load category.';
         },
       });
