@@ -1,3 +1,8 @@
+header {
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
 .mobile-header {
   display: flex;
   align-items: center;
@@ -25,6 +30,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.1rem;
+    cursor: pointer;
 
     a {
       display: flex;
@@ -35,7 +41,6 @@
       font-size: 1.5rem;
       font-weight: 500;
       padding: 0.6rem 0.3rem;
-      border-radius: 6px;
       transition: background 0.18s;
       &:hover {
         background: #e7f0ff;
@@ -43,6 +48,7 @@
     }
 
     mat-icon {
+      margin-top: 0.8rem;
       font-size: 1.6rem;
     }
   }
@@ -69,4 +75,11 @@
 
 .sidenav-close-row button {
   color: #1976d2;
+}
+
+.router-link-active-mobile {
+  background: #d6e6fa !important;
+  color: #0a79e9 !important;
+  font-weight: 600;
+  border-left: 4px solid #0a79e9;
 }
