@@ -1,0 +1,46 @@
+import { Router } from 'express';
+import { trimBody } from '../middlewares/trimBody';
+import { isAdmin } from '../middlewares/isAdmin';
+import { isAuthenticated } from '../middlewares/isAuthenticated';
+import { extractErrors } from '../utils/errParse';
+import { carOfferService } from '../services/carOfferService';
+import mongoose from 'mongoose';
+import { User } from '../models/User.model';
+
+export const carOfferController = Router();
+
+carOfferController.get('/', isAuthenticated, trimBody, async (req: any, res) => {
+  try {
+    if (req.decToken) {
+      return res
+        .status(401)
+        .json({ expMessage: 'Your session has expired, you have to login again!' });
+    }
+    const categories = await carOfferService.getAllCarOffers();
+    res.status(200).json(categories);
+  } catch (error) {
+    let errors = extractErrors(error);
+    res.status(400).json({ errors });
+  }
+});
+
+carOfferController.post('/', isAuthenticated, trimBody, async (req: any, res) => {
+  try {
+    if (req.decToken) {
+      return res
+        .status(401)
+        .json({ expMessage: 'Your session has expired, you have to login again!' });
+    }
+    const newCarOffer = await carOfferService.createCarOffer({
+      ...req.body,
+    });
+
+    await User.findByIdAndUpdate(req.body.creator, {
+      $push: { carOffers: newCarOffer._id },
+    });
+    res.status(201).json(newCarOffer);
+  } catch (error) {
+    let errors = extractErrors(error);
+    res.status(400).json({ errors });
+  }
+});

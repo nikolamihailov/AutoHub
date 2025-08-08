@@ -10,7 +10,8 @@ export interface UserI {
   avatar: string;
   role: Role;
   accounType: AccountType;
-  // savedCarOffers: CarOffer[];
+  savedCarOffers: mongoose.Types.ObjectId[];
+  carOffers: mongoose.Types.ObjectId[];
 }
 
 export enum Role {
@@ -53,6 +54,7 @@ const userSchema = new mongoose.Schema<UserI>(
     },
     avatar: {
       type: String,
+      default: '',
     },
     role: {
       type: String,
@@ -63,12 +65,20 @@ const userSchema = new mongoose.Schema<UserI>(
       type: String,
       enum: AccountType,
     },
-    /*   savedCarOffers: [
+    savedCarOffers: [
       {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'CarOffer',
+        default: [],
       },
-    ], */
+    ],
+    carOffers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'CarOffer',
+        default: [],
+      },
+    ],
   },
   { timestamps: true }
 );
