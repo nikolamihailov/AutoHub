@@ -1,0 +1,169 @@
+<div class="car-offer-form-wrapper">
+  <form [formGroup]="carOfferForm" (ngSubmit)="onSubmit()">
+    <div class="grid">
+      <div class="form-group">
+        <label>Brand *</label>
+        <input
+          type="text"
+          formControlName="brand"
+          [class.invalid]="isInvalid('brand')"
+          [class.valid]="isValid('brand')"
+        />
+        <form-err-messages [form]="carOfferForm" field="brand" [messages]="errorMessages['brand']!"></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label>Model *</label>
+        <input
+          type="text"
+          formControlName="model"
+          [class.invalid]="isInvalid('model')"
+          [class.valid]="isValid('model')"
+        />
+        <form-err-messages [form]="carOfferForm" field="model" [messages]="errorMessages['model']!"></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label>Price (€) *</label>
+        <input
+          type="number"
+          formControlName="price"
+          [class.invalid]="isInvalid('price')"
+          [class.valid]="isValid('price')"
+        />
+        <form-err-messages [form]="carOfferForm" field="price" [messages]="errorMessages['price']!"></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label>Year *</label>
+        <input
+          type="number"
+          formControlName="year"
+          [class.invalid]="isInvalid('year')"
+          [class.valid]="isValid('year')"
+        />
+        <form-err-messages [form]="carOfferForm" field="year" [messages]="errorMessages['year']!"></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label>Mileage (km) *</label>
+        <input
+          type="number"
+          formControlName="mileage"
+          [class.invalid]="isInvalid('mileage')"
+          [class.valid]="isValid('mileage')"
+        />
+        <form-err-messages
+          [form]="carOfferForm"
+          field="mileage"
+          [messages]="errorMessages['mileage']!"
+        ></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label>Region *</label>
+        <input
+          type="text"
+          formControlName="region"
+          [class.invalid]="isInvalid('region')"
+          [class.valid]="isValid('region')"
+        />
+        <form-err-messages
+          [form]="carOfferForm"
+          field="region"
+          [messages]="errorMessages['region']!"
+        ></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label>Category *</label>
+        <mat-select
+          formControlName="category"
+          [class.invalid]="isInvalid('category')"
+          [class.valid]="isValid('category')"
+        >
+          @for (cat of categories; track cat._id) {
+          <mat-option [value]="cat._id">{{ cat.name }}</mat-option>
+          }
+        </mat-select>
+        <form-err-messages
+          [form]="carOfferForm"
+          field="category"
+          [messages]="errorMessages['category']!"
+        ></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label>Gearbox *</label>
+        <mat-select formControlName="gearbox" [class.invalid]="isInvalid('gearbox')" [class.valid]="isValid('gearbox')">
+          <mat-option value="manual">Manual</mat-option>
+          <mat-option value="automatic">Automatic</mat-option>
+        </mat-select>
+        <form-err-messages
+          [form]="carOfferForm"
+          field="gearbox"
+          [messages]="errorMessages['gearbox']!"
+        ></form-err-messages>
+      </div>
+
+      <div class="form-group form-group--span">
+        <label>Description *</label>
+        <textarea
+          rows="3"
+          formControlName="description"
+          [class.invalid]="isInvalid('description')"
+          [class.valid]="isValid('description')"
+        ></textarea>
+        <form-err-messages
+          [form]="carOfferForm"
+          field="description"
+          [messages]="errorMessages['description']!"
+        ></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label>Main Image URL *</label>
+        <input
+          type="text"
+          formControlName="mainImage"
+          [class.invalid]="isInvalid('mainImage')"
+          [class.valid]="isValid('mainImage')"
+        />
+        <form-err-messages
+          [form]="carOfferForm"
+          field="mainImage"
+          [messages]="errorMessages['mainImage']!"
+        ></form-err-messages>
+
+        @if (carOfferForm.get('mainImage')?.value) {
+        <img class="img-preview" [src]="carOfferForm.get('mainImage')?.value" alt="Preview" width="100" height="100" />
+        }
+      </div>
+
+      <div class="form-group form-group--span">
+        <label>Gallery Images (URLs)</label>
+        <div class="add-image-row">
+          <input type="text" [formControl]="newImageUrl" placeholder="https://...jpg" />
+          <button mat-stroked-button type="button" (click)="addImageUrl()">Add</button>
+        </div>
+
+        <div class="images-preview-row">
+          @for (ctrl of images.controls; let i = $index; track i) {
+          <div class="gallery-img-preview">
+            <img [src]="ctrl.value" alt="Gallery" width="100" height="100" />
+            <button mat-icon-button type="button" (click)="removeImage(i)" aria-label="Remove image">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="carOfferForm.invalid || isLoading">
+      @if (isLoading) {
+      <mat-progress-spinner class="inline-spinner" diameter="20" mode="indeterminate" [strokeWidth]="3" />
+      } @else { Create }
+    </button>
+  </form>
+</div>

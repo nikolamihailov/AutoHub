@@ -1,0 +1,72 @@
+.car-offer-form-wrapper {
+  position: relative;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px #0001;
+  max-width: 900px;
+
+  form {
+    width: 100%;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.form-group--span {
+  grid-column: 1 / -1;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+input,
+textarea,
+mat-select {
+  width: 100%;
+}
+.invalid {
+  border-color: #e53935 !important;
+}
+.valid {
+  border-color: #43a047 !important;
+}
+
+.img-preview,
+.gallery-img-preview img {
+  border-radius: 8px;
+  border: 1px solid #e3e3e3;
+  object-fit: cover;
+}
+
+.images-preview-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 0.5rem;
+}
+
+.gallery-img-preview {
+  position: relative;
+  button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(255, 255, 255, 0.85);
+  }
+}
+
+.add-image-row {
+  display: flex;
+  gap: 8px;
+}
+.inline-spinner {
+  vertical-align: middle;
+}

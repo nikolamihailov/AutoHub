@@ -23,6 +23,16 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/register/register').then((m) => m.Register),
   },
   { path: 'logout', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'car-offers',
+    children: [
+      {
+        path: 'add',
+        loadComponent: () =>
+          import('./pages/car-offers-create/car-offers-create').then((m) => m.CarOffersCreate),
+      },
+    ],
+  },
 
   {
     path: 'admin-dashboard',

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { FormHelper } from '../../../../shared/form-helper';
 import { FormErrMessagesComponent } from '../../../../shared/components';
-import { AccountType, Role, User, UserAuthErr, UserAuthResponse } from '../../../../models';
+import { AccountType, User, UserAuthErr, UserAuthResponse } from '../../../../models';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from '../../../../core/services/user/authService.service';
@@ -102,8 +102,6 @@ export class RegisterForm {
       email,
       password,
       accounType,
-      avatar: '',
-      role: Role.USER,
     };
 
     this.authService

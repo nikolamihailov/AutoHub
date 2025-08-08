@@ -43,4 +43,52 @@ export const FORM_ERROR_MESSAGES: Record<string, Record<string, Record<string, s
     },
     img: { required: 'Image is required' },
   },
+  carOfferForm: {
+    brand: {
+      required: 'Brand is required.',
+      minlength: 'Brand must be at least 2 characters.',
+      maxlength: 'Brand must be at most 32 characters.',
+    },
+    model: {
+      required: 'Model is required.',
+      minlength: 'Model must be at least 1 character.',
+      maxlength: 'Model must be at most 32 characters.',
+    },
+    price: {
+      required: 'Price is required.',
+      min: 'Price must be greater than 0.',
+    },
+    year: {
+      required: 'Year is required.',
+      min: 'Year must be greater than 1920.',
+    },
+    mileage: {
+      required: 'Mileage is required.',
+      min: 'Mileage must be 0 or more.',
+      max: 'Mileage must be less than 1,000,000.',
+    },
+    description: {
+      required: 'Description is required.',
+      minlength: 'Description must be at least 10 characters.',
+      maxlength: 'Description must be at most 1500 characters.',
+    },
+    region: {
+      required: 'Region is required.',
+      minlength: 'Region must be at least 2 characters.',
+      maxlength: 'Region must be at most 64 characters.',
+    },
+    gearbox: {
+      required: 'Gearbox is required.',
+    },
+    mainImage: {
+      required: 'Main image is required.',
+      pattern: 'Must be a valid image URL.',
+    },
+    category: {
+      required: 'Category is required.',
+    },
+    images: {
+      pattern: 'Each image must be a valid image URL.',
+    },
+  },
 };

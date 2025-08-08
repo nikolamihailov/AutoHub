@@ -54,6 +54,9 @@ header {
   align-items: center;
 
   .profile-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: none;
     border: none;
     outline: none;

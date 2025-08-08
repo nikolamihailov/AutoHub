@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { CategoryAdd } from '../../features';
+import { CategoryAddForm } from '../../features';
 
 @Component({
   selector: 'app-admin-categories-add',
-  imports: [CategoryAdd],
+  imports: [CategoryAddForm],
   templateUrl: './admin-categories-add.html',
   styleUrl: './admin-categories-add.scss',
 })

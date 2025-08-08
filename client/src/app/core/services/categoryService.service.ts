@@ -27,6 +27,10 @@ export class CategoryService {
     return this.http.delete<Category>(`${this.BASE_URL}/categories/${id}`);
   }
 
+  public getAllCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.BASE_URL}/categories`);
+  }
+
   public getCategories(
     limit?: string,
     page?: string,

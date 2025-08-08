@@ -10,24 +10,22 @@ import { FormHelper } from '../../../../shared/form-helper';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import imageCompression from 'browser-image-compression';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from '../../../../models';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-category-edit',
+  selector: 'app-category-add-form',
   imports: [ReactiveFormsModule, MatIconModule, MatProgressSpinnerModule, FormErrMessagesComponent],
-  templateUrl: './category-edit.html',
-  styleUrl: './category-edit.scss',
+  templateUrl: './category-add-form.html',
+  styleUrl: './category-add-form.scss',
 })
-export class CategoryEdit {
+export class CategoryAddForm {
   private fb = inject(FormBuilder);
   private categoryService = inject(CategoryService);
   private toast = inject(ToastrService);
   private router = inject(Router);
-  private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
 
-  protected editForm: FormGroup = this.fb.group({
+  protected addForm: FormGroup = this.fb.group({
     name: this.fb.nonNullable.control('', [
       Validators.required,
       Validators.minLength(3),
@@ -43,50 +41,10 @@ export class CategoryEdit {
 
   errorMessages = FORM_ERROR_MESSAGES['categoryForm'];
 
-  isValid = (field: string) => FormHelper.isValid(this.editForm, field);
-  isInvalid = (field: string) => FormHelper.isInvalid(this.editForm, field);
+  isValid = (field: string) => FormHelper.isValid(this.addForm, field);
+  isInvalid = (field: string) => FormHelper.isInvalid(this.addForm, field);
 
   categoryImageInput!: HTMLInputElement;
-
-  categoryId!: string;
-
-  ngAfterViewInit(): void {
-    this.categoryId = this.route.snapshot.paramMap.get('id')!;
-    this.categoryService
-      .getCategory(this.categoryId)
-      .pipe(
-        finalize(() => {
-          this.isLoading = false;
-        }),
-      )
-      .subscribe({
-        next: (category: Category) => {
-          this.editForm.patchValue({
-            name: category.name,
-            img: null,
-          });
-          this.categoryPreview = category.categoryImage || null;
-
-          const imgCtrl = this.editForm.get('img');
-          if (this.categoryPreview) {
-            imgCtrl?.clearValidators();
-            imgCtrl?.setErrors(null);
-            imgCtrl?.updateValueAndValidity({ onlySelf: true, emitEvent: false });
-          } else {
-            imgCtrl?.setValidators([Validators.required]);
-            imgCtrl?.setErrors({ required: true });
-            imgCtrl?.updateValueAndValidity({ onlySelf: true, emitEvent: false });
-          }
-        },
-        error: (err) => {
-          if (err.status === 404) {
-            this.router.navigate(['/not-found']);
-            return;
-          }
-          this.errorMsg = err?.error?.message || 'Failed to load category.';
-        },
-      });
-  }
 
   async onCategoryImageChange(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -102,8 +60,8 @@ export class CategoryEdit {
         reader.readAsDataURL(compressedFile);
 
         this.categoryImageFile = compressedFile;
-        this.editForm.get('img')?.setValue(compressedFile);
-        this.editForm.get('img')?.markAsDirty();
+        this.addForm.get('img')?.setValue(compressedFile);
+        this.addForm.get('img')?.markAsDirty();
       } catch (err) {
         this.toast.error('Failed to process image');
       }
@@ -113,17 +71,15 @@ export class CategoryEdit {
   removeCategoryImage() {
     this.categoryPreview = null;
     this.categoryImageFile = null;
-    this.editForm.get('img')?.setValue(null);
-    this.editForm.get('img')?.setValidators([Validators.required]);
-    this.editForm.get('img')?.updateValueAndValidity();
-    this.editForm.get('img')?.markAsDirty();
+    this.addForm.get('img')?.setValue(null);
+    this.addForm.get('img')?.markAsDirty();
   }
 
   onSubmit() {
-    if (this.editForm.invalid) return;
+    if (this.addForm.invalid) return;
 
     this.isLoading = true;
-    const { name } = this.editForm.value;
+    const { name } = this.addForm.value;
 
     const categoryData = {
       name,
@@ -131,21 +87,21 @@ export class CategoryEdit {
     };
 
     this.categoryService
-      .updateCategory(this.categoryId, categoryData)
+      .createCategory(categoryData)
       .pipe(
         finalize(() => (this.isLoading = false)),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         next: () => {
-          this.toast.success('Category updated!');
+          this.toast.success('Category added!');
           this.router.navigate(['/admin-dashboard/categories']);
-          this.editForm.reset();
+          this.addForm.reset();
           this.categoryPreview = null;
           this.categoryImageFile = null;
         },
         error: (err) => {
-          this.toast.error('Failed to update category');
+          this.toast.error('Failed to add category');
           this.errorMsg = err?.error?.message || 'Error occurred';
         },
       });
