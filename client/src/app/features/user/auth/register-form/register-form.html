@@ -63,19 +63,19 @@
     </div>
 
     <div class="form-group">
-      <label for="accounType">Account Type *</label>
+      <label for="accountType">Account Type *</label>
       <select
-        id="accounType"
-        formControlName="accounType"
-        [class.valid]="isValid('accounType')"
-        [class.invalid]="isInvalid('accounType')"
+        id="accountType"
+        formControlName="accountType"
+        [class.valid]="isValid('accountType')"
+        [class.invalid]="isInvalid('accountType')"
       >
         <option value="" disabled>Select account type</option>
         @for (type of accountTypes; track type.value) {
         <option [value]="type.value">{{ type.label }}</option>
         }
       </select>
-      <form-err-messages [form]="registerForm" field="accounType" [messages]="errorMessages['accounType']!" />
+      <form-err-messages [form]="registerForm" field="accountType" [messages]="errorMessages['accountType']!" />
 
       <div class="account-info">
         <span>Accounts Information</span>

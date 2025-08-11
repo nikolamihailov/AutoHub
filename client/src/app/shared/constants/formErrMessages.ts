@@ -21,7 +21,7 @@ export const FORM_ERROR_MESSAGES: Record<string, Record<string, Record<string, s
       minlength: 'Password must be at least 6 characters.',
       maxlength: 'Password must not be more than 20 characters.',
     },
-    accounType: {
+    accountType: {
       required: 'Account type is required.',
     },
   },

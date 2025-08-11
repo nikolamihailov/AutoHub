@@ -64,7 +64,7 @@ export class ProfileEditForm implements OnInit {
             Validators.minLength(3),
             Validators.maxLength(15),
           ]),
-          accounType: this.fb.nonNullable.control(user.accounType, [Validators.required]),
+          accounType: this.fb.nonNullable.control(user.accountType, [Validators.required]),
         });
         this.avatarPreview = user.avatar || null;
         this.isLoading = false;

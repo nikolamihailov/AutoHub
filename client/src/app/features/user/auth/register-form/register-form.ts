@@ -67,7 +67,7 @@ export class RegisterForm {
         Validators.minLength(6),
         Validators.maxLength(20),
       ]),
-      accounType: this.fb.nonNullable.control('', [Validators.required]),
+      accountType: this.fb.nonNullable.control('', [Validators.required]),
     });
   }
 
@@ -94,14 +94,14 @@ export class RegisterForm {
     if (this.registerForm.invalid) return;
     this.isLoading = true;
 
-    const { firstName, lastName, email, password, accounType } = this.registerForm.value;
+    const { firstName, lastName, email, password, accountType } = this.registerForm.value;
 
     const userData: Partial<User> = {
       firstName,
       lastName,
       email,
       password,
-      accounType,
+      accountType,
     };
 
     this.authService

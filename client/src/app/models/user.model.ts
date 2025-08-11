@@ -1,3 +1,5 @@
+import { CarOffer } from './car-offer.model';
+
 export interface User {
   _id?: string;
   firstName: string;
@@ -6,7 +8,8 @@ export interface User {
   password: string;
   avatar: string | undefined;
   role: Role;
-  accounType: AccountType;
+  accountType: AccountType;
+  carOffers: CarOffer[];
   // savedCarOffers: CarOffer[];
 }
 export interface UserPayload {

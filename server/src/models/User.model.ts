@@ -9,7 +9,7 @@ export interface UserI {
   password: string;
   avatar: string;
   role: Role;
-  accounType: AccountType;
+  accountType: AccountType;
   savedCarOffers: mongoose.Types.ObjectId[];
   carOffers: mongoose.Types.ObjectId[];
 }
@@ -61,7 +61,7 @@ const userSchema = new mongoose.Schema<UserI>(
       enum: Role,
       default: Role.USER,
     },
-    accounType: {
+    accountType: {
       type: String,
       enum: AccountType,
     },
