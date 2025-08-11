@@ -80,6 +80,9 @@ export const FORM_ERROR_MESSAGES: Record<string, Record<string, Record<string, s
     gearbox: {
       required: 'Gearbox is required.',
     },
+    status: {
+      required: 'Status is required.',
+    },
     mainImage: {
       required: 'Main image is required.',
       pattern: 'Must be a valid image URL.',

@@ -7,6 +7,11 @@ export enum Gearbox {
   AUTOMATIC = 'automatic',
 }
 
+export enum Status {
+  ACTIVE = 'active',
+  SOLD = 'sold',
+}
+
 export interface CarOfferI {
   _id: mongoose.Types.ObjectId;
   brand: string;
@@ -19,6 +24,7 @@ export interface CarOfferI {
   images: string[];
   region: string;
   gearbox: Gearbox;
+  status: Status;
   creator: mongoose.Types.ObjectId | UserI;
   category: mongoose.Types.ObjectId | CategoryI;
 }
@@ -57,6 +63,11 @@ const carOfferSchema = new Schema<CarOfferI>(
       type: String,
       enum: Object.values(Gearbox),
       required: [true, 'Gearbox is required'],
+    },
+    status: {
+      type: String,
+      enum: Object.values(Status),
+      required: [true, 'Status is required'],
     },
     description: {
       type: String,
