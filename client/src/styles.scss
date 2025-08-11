@@ -80,7 +80,8 @@ label {
   font-size: 1.4rem;
 }
 input,
-select {
+select,
+textarea {
   display: block;
   padding: 0.7rem 1.4rem;
   font-size: 1.4rem;
@@ -91,16 +92,19 @@ select {
 }
 
 input.valid,
-select.valid {
+select.valid,
+textarea.valid {
   border-color: #37b24d;
   background: #f6fff8;
 }
 
 input.invalid,
-select.invalid {
+select.invalid,
+textarea.invalid {
   border-color: #c00;
   background: #fff6f6;
 }
+
 .validation-message {
   color: #c00;
   font-size: 1.2rem;
