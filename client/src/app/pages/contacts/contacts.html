@@ -1,0 +1,92 @@
+<div class="page">
+  <h1>Contact us</h1>
+
+  <div class="grid">
+    <mat-card>
+      <h2><mat-icon>support_agent</mat-icon> Support</h2>
+      <div class="info">
+        <p>
+          You can contact us directly on the phone, email, come to our office or just sent your question from the form
+          here
+        </p>
+        <p><mat-icon>call</mat-icon> <a href="tel:+359000000000">+359 88 428 966</a></p>
+        <p>
+          <mat-icon>email</mat-icon> <a href="mailto:support@yourcarsite.com">{{ 'support@autohub.com' }}</a>
+        </p>
+        <p><mat-icon>schedule</mat-icon> Mon–Fri: 09:00–18:00</p>
+        <p><mat-icon>place</mat-icon> AutoHub Central Office, Sofia</p>
+      </div>
+    </mat-card>
+
+    <mat-card>
+      <h2><mat-icon>question_answer</mat-icon> Send us a message</h2>
+
+      <form class="form" [formGroup]="contactsForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Name *</label>
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            [class.valid]="isValid('name')"
+            [class.invalid]="isInvalid('name')"
+          />
+          <form-err-messages [form]="contactsForm" field="name" [messages]="errorMessages['name']!" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            [class.valid]="isValid('email')"
+            [class.invalid]="isInvalid('email')"
+          />
+          <form-err-messages [form]="contactsForm" field="email" [messages]="errorMessages['email']!" />
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message *</label>
+          <textarea
+            id="message"
+            rows="3"
+            formControlName="message"
+            [class.valid]="isValid('message')"
+            [class.invalid]="isInvalid('message')"
+          ></textarea>
+          <form-err-messages [form]="contactsForm" field="message" [messages]="errorMessages['message']!" />
+        </div>
+
+        <button type="submit" [disabled]="contactsForm.invalid || isLoading">
+          @if (isLoading) {
+          <mat-progress-spinner
+            diameter="20"
+            mode="indeterminate"
+            color="primary"
+            class="inline-spinner"
+            [strokeWidth]="3"
+          >
+          </mat-progress-spinner>
+          } @else { Send }
+        </button>
+      </form>
+    </mat-card>
+  </div>
+
+  <mat-card class="map">
+    <h2><mat-icon>map</mat-icon> Find us</h2>
+    <div class="map-wrap" role="img" aria-label="Map to our central office">
+      <iframe
+        title="Central office map"
+        width="100%"
+        height="100%"
+        style="border: 0"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps?q=Central%20Office%2C%20Sofia&z=14&output=embed"
+      >
+      </iframe>
+    </div>
+  </mat-card>
+</div>

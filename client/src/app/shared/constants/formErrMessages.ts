@@ -91,4 +91,18 @@ export const FORM_ERROR_MESSAGES: Record<string, Record<string, Record<string, s
       pattern: 'Each image must be a valid image URL.',
     },
   },
+  contactsForm: {
+    name: {
+      required: 'Name is required.',
+      minlength: 'Name must be at least 2 characters.',
+    },
+    email: {
+      required: 'Email is required.',
+      email: 'Please enter a valid email.',
+    },
+    message: {
+      required: 'Message is required.',
+      minlength: 'Message must be at least 10 characters.',
+    },
+  },
 };
