@@ -1,0 +1,28 @@
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(160px, 200px));
+  gap: 16px;
+}
+.card {
+  padding: 18px;
+  border-radius: 12px;
+  background: #046bc2;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+.number {
+  font-size: clamp(28px, 6vw, 42px);
+  font-weight: 800;
+  color: white;
+}
+.label {
+  color: white;
+  margin-top: 6px;
+}
+.stats-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: 1 / -1;
+  min-height: 200px;
+}

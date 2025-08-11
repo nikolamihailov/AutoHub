@@ -1,0 +1,24 @@
+<div class="stats">
+  @if (isLoading()) {
+  <div class="stats-loading">
+    <mat-progress-spinner
+      diameter="100"
+      mode="indeterminate"
+      color="primary"
+      class="inline-spinner"
+      [strokeWidth]="5"
+    ></mat-progress-spinner>
+  </div>
+  } @else if (error()) {
+  <p class="error">{{ error() }}</p>
+  } @else {
+  <div class="card">
+    <div class="number">{{ usersCount() | number }}</div>
+    <div class="label">Clients</div>
+  </div>
+  <div class="card">
+    <div class="number">{{ carOffersCount() | number }}</div>
+    <div class="label">Car Offers</div>
+  </div>
+  }
+</div>
