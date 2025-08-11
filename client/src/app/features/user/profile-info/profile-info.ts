@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { User } from '../../../models';
+import { AccountType, User } from '../../../models';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -21,6 +21,11 @@ export class ProfileInfo implements OnInit {
   protected user: User | null = null;
   protected isLoading = true;
   protected errorMsg: string | null = null;
+
+  protected accountTypes = {
+    [AccountType.DEALERSHIP]: 'Dealership',
+    [AccountType.PRIVATE_ACCOUNT]: 'Private',
+  };
 
   ngOnInit(): void {
     this.userService
