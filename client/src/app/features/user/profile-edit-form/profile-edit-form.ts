@@ -64,7 +64,7 @@ export class ProfileEditForm implements OnInit {
             Validators.minLength(3),
             Validators.maxLength(15),
           ]),
-          accounType: this.fb.nonNullable.control(user.accountType, [Validators.required]),
+          accountType: this.fb.nonNullable.control(user.accountType, [Validators.required]),
         });
         this.avatarPreview = user.avatar || null;
         this.isLoading = false;
@@ -102,12 +102,12 @@ export class ProfileEditForm implements OnInit {
     if (this.editForm.invalid) return;
 
     this.isLoading = true;
-    const { firstName, lastName, accounType } = this.editForm.value;
+    const { firstName, lastName, accountType } = this.editForm.value;
 
     const userData = {
       firstName,
       lastName,
-      accounType,
+      accountType,
       avatar: this.avatarPreview ?? undefined,
     };
 
