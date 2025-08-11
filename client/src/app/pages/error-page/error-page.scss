@@ -1,0 +1,67 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 2rem;
+}
+
+.nf-wrap {
+  margin: 0 auto;
+  max-width: 900px;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.nf-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.digit {
+  font-size: clamp(100px, 15vw, 180px);
+  font-weight: bold;
+  line-height: 1;
+  color: #0f172a;
+}
+
+.tire-img {
+  width: clamp(100px, 15vw, 180px);
+  height: auto;
+  animation: spin 5s linear infinite;
+}
+
+.nf-title {
+  margin-top: 20px;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.nf-sub {
+  margin-top: 8px;
+  color: #555;
+}
+
+.nf-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  .btn {
+    text-decoration: none;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
