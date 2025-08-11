@@ -1,33 +1,44 @@
+// app.routes.ts
 import { Routes } from '@angular/router';
+import { isAdminGuard, isAuthGuard, isGuestGuard } from './core/guards';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  {
-    path: 'home',
-    loadComponent: () => import('./pages/home/home').then((m) => m.Home),
-  },
+
+  { path: 'home', loadComponent: () => import('./pages/home/home').then((m) => m.Home) },
+
   {
     path: 'profile',
+    canActivate: [isAuthGuard],
     loadComponent: () => import('./pages/profile/profile').then((m) => m.Profile),
   },
+
   {
     path: 'profile-edit',
+    canActivate: [isAuthGuard],
     loadComponent: () => import('./pages/profile-edit/profile-edit').then((m) => m.ProfileEdit),
   },
+
   {
     path: 'login',
+    canActivate: [isGuestGuard],
     loadComponent: () => import('./pages/login/login').then((m) => m.Login),
   },
+
   {
     path: 'register',
+    canActivate: [isGuestGuard],
     loadComponent: () => import('./pages/register/register').then((m) => m.Register),
   },
+
   { path: 'logout', redirectTo: 'home', pathMatch: 'full' },
+
   {
     path: 'car-offers',
     children: [
       {
         path: 'add',
+        canActivate: [isAuthGuard],
         loadComponent: () =>
           import('./pages/car-offers-create/car-offers-create').then((m) => m.CarOffersCreate),
       },
@@ -36,6 +47,7 @@ export const routes: Routes = [
 
   {
     path: 'admin-dashboard',
+    canActivateChild: [isAuthGuard, isAdminGuard],
     children: [
       {
         path: '',

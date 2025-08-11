@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -29,9 +29,11 @@ export class LoginForm {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private toast = inject(ToastrService);
   private destroyRef = inject(DestroyRef);
 
+  protected redirectToUrl = '/';
   protected formHelper = FormHelper;
   protected loginForm: FormGroup;
 
@@ -49,6 +51,7 @@ export class LoginForm {
       email: this.fb.nonNullable.control('', [Validators.required, Validators.email]),
       password: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(6)]),
     });
+    this.redirectToUrl = this.route.snapshot.queryParamMap.get('redirectTo') ?? '/home';
   }
 
   togglePassVisibility() {
@@ -76,7 +79,7 @@ export class LoginForm {
       .subscribe({
         next: (response: UserAuthResponse) => {
           this.authService.saveToken(response.token);
-          this.router.navigate(['/home']);
+          this.router.navigate([this.redirectToUrl]);
           this.toast.success('Successful Login!');
           this.isLoading = false;
         },
