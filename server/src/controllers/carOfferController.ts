@@ -9,6 +9,16 @@ import { User } from '../models/User.model';
 
 export const carOfferController = Router();
 
+carOfferController.get('/count', async (_, res) => {
+  try {
+    const carOffersCount = await carOfferService.getAllCount();
+    res.status(200).json(carOffersCount);
+  } catch (error) {
+    const errors = extractErrors(error);
+    res.status(400).json({ errors });
+  }
+});
+
 carOfferController.get('/', isAuthenticated, trimBody, async (req: any, res) => {
   try {
     if (req.decToken) {
