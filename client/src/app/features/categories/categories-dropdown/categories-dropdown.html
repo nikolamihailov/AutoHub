@@ -1,0 +1,52 @@
+@if (mobile) {
+<button class="sidenav-row" (click)="toggleMobile()" [attr.aria-expanded]="open">
+  <mat-icon>category</mat-icon>
+  <span>Categories</span>
+  <mat-icon class="caret">{{ open ? 'expand_less' : 'expand_more' }}</mat-icon>
+</button>
+
+@if (open) {
+<nav class="mobile-list" aria-label="Categories list">
+  @if (isLoading) {
+  <div class="loading">Loading…</div>
+  } @else { @for (c of categories; track c._id) {
+  <a class="mobile-item" routerLink="/categories" (click)="onSelect()">
+    <span class="name">{{ c.name }}</span>
+    <img [src]="c.categoryImage" [alt]="c.name" class="img" />
+  </a>
+  } }
+</nav>
+} }@else {
+
+<a
+  mat-button
+  class="categories-trigger"
+  [matMenuTriggerFor]="catMenu"
+  #trigger="matMenuTrigger"
+  [attr.aria-expanded]="trigger.menuOpen"
+  aria-label="Open categories"
+>
+  <span>Categories</span>
+  <mat-icon class="caret">
+    {{ trigger.menuOpen ? 'expand_less' : 'expand_more' }}
+  </mat-icon>
+</a>
+
+<mat-menu #catMenu="matMenu" class="categories-menu">
+  @if (isLoading) {
+  <button mat-menu-item disabled>Loading…</button>
+  } @else {
+  <ul>
+    @for (c of categories; track c._id) {
+    <li>
+      <a mat-menu-item routerLink="/categories">
+        <span class="cat-name">{{ c.name }}</span>
+        <img [src]="c.categoryImage" [alt]="c.name" class="cat-img" />
+      </a>
+    </li>
+    }
+  </ul>
+  }
+</mat-menu>
+
+}

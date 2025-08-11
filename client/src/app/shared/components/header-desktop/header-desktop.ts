@@ -6,10 +6,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ToastrService } from 'ngx-toastr';
 import { Role } from '../../../models';
 import { AuthService } from '../../../core/services';
+import { CategoriesDropdown } from '../../../features/categories/categories-dropdown/categories-dropdown';
 
 @Component({
   selector: 'app-header-desktop',
-  imports: [Logo, RouterModule, MatIconModule, MatMenuModule],
+  imports: [Logo, RouterModule, MatIconModule, MatMenuModule, CategoriesDropdown],
   templateUrl: './header-desktop.html',
   styleUrl: './header-desktop.scss',
 })

@@ -48,15 +48,7 @@
             <mat-icon>directions_car</mat-icon>
             Car Offers
           </a>
-          <a
-            routerLink="/categories"
-            routerLinkActive="router-link-active-mobile"
-            [routerLinkActiveOptions]="{ exact: true }"
-            (click)="sidenav.close()"
-          >
-            <mat-icon>category</mat-icon>
-            Categories
-          </a>
+          <app-categories-dropdown [mobile]="true" (selected)="sidenav.close()"> </app-categories-dropdown>
           <a
             routerLink="/about"
             routerLinkActive="router-link-active-mobile"

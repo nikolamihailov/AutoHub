@@ -7,11 +7,19 @@ import { Logo } from '../logo/logo';
 import { ToastrService } from 'ngx-toastr';
 import { Role } from '../../../models';
 import { AuthService } from '../../../core/services';
+import { CategoriesDropdown } from '../../../features/categories/categories-dropdown/categories-dropdown';
 
 @Component({
   selector: 'app-header-mobile',
   standalone: true,
-  imports: [MatSidenavModule, MatIconModule, MatButtonModule, RouterModule, Logo],
+  imports: [
+    MatSidenavModule,
+    MatIconModule,
+    MatButtonModule,
+    RouterModule,
+    Logo,
+    CategoriesDropdown,
+  ],
   templateUrl: './header-mobile.html',
   styleUrl: './header-mobile.scss',
 })
