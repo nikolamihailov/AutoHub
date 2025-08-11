@@ -12,15 +12,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { FormErrMessagesComponent } from '../../../shared/components';
-import { CategoryService } from '../../../core/services/categoryService.service';
 import { FORM_ERROR_MESSAGES } from '../../../shared/constants/formErrMessages';
 import { FormHelper } from '../../../shared/form-helper';
-import { CarOfferService } from '../../../core/services/carOfferService.service';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../core/services/user/authService.service';
 import { CarOffer, Gearbox } from '../../../models';
+import { AuthService, CarOfferService, CategoryService } from '../../../core/services';
 
 @Component({
   selector: 'app-car-offer-create-form',

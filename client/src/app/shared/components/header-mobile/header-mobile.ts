@@ -4,9 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Logo } from '../logo/logo';
-import { AuthService } from '../../../core/services/user/authService.service';
 import { ToastrService } from 'ngx-toastr';
 import { Role } from '../../../models';
+import { AuthService } from '../../../core/services';
 
 @Component({
   selector: 'app-header-mobile',

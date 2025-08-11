@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormErrMessagesComponent } from '../../../../shared/components';
-import { CategoryService } from '../../../../core/services/categoryService.service';
 import { ToastrService } from 'ngx-toastr';
 import { FORM_ERROR_MESSAGES } from '../../../../shared/constants/formErrMessages';
 import { FormHelper } from '../../../../shared/form-helper';
@@ -11,6 +10,7 @@ import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import imageCompression from 'browser-image-compression';
 import { Router } from '@angular/router';
+import { CategoryService } from '../../../../core/services';
 
 @Component({
   selector: 'app-category-add-form',

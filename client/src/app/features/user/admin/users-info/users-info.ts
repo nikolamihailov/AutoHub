@@ -1,5 +1,4 @@
 import { Component, OnInit, DestroyRef, inject } from '@angular/core';
-import { UserService } from '../../../../core/services/user/userService.service';
 import { User } from '../../../../models';
 import { ToastrService } from 'ngx-toastr';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -15,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { cardAnimation, listAnimation } from '../../../../shared/constants/cardAnimations';
 import { ConfirmDialog, ConfirmDialogData } from '../../../../shared/components';
 import { Sort } from '../../../../shared/enums/Sort.enum';
+import { UserService } from '../../../../core/services';
 
 @Component({
   selector: 'app-users-info',

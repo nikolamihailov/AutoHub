@@ -6,12 +6,12 @@ import { FormErrMessagesComponent } from '../../../../shared/components';
 import { AccountType, User, UserAuthErr, UserAuthResponse } from '../../../../models';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AuthService } from '../../../../core/services/user/authService.service';
 import { ToastrService } from 'ngx-toastr';
 import { FORM_ERROR_MESSAGES } from '../../../../shared/constants/formErrMessages';
 import { HttpErrorResponse } from '@angular/common/http';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthService } from '../../../../core/services';
 
 @Component({
   selector: 'app-register-form',

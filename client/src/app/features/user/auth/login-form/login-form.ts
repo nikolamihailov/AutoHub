@@ -6,12 +6,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { FormHelper } from '../../../../shared/form-helper';
 import { FormErrMessagesComponent } from '../../../../shared/components';
-import { AuthService } from '../../../../core/services/user/authService.service';
 import { UserAuthErr, UserAuthResponse } from '../../../../models';
 import { FORM_ERROR_MESSAGES } from '../../../../shared/constants/formErrMessages';
 import { HttpErrorResponse } from '@angular/common/http';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthService } from '../../../../core/services';
 
 @Component({
   selector: 'app-login-form',

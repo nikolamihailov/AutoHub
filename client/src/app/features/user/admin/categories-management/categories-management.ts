@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
-import { CategoryService } from '../../../../core/services/categoryService.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,6 +13,7 @@ import { debounceTime, distinctUntilChanged, finalize, startWith } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ConfirmDialog, ConfirmDialogData } from '../../../../shared/components';
 import { cardAnimation, listAnimation } from '../../../../shared/constants/cardAnimations';
+import { CategoryService } from '../../../../core/services';
 
 @Component({
   selector: 'app-categories-management',

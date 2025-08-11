@@ -2,10 +2,10 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { User } from '../../../models';
-import { UserService } from '../../../core/services/user/userService.service';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UserService } from '../../../core/services';
 
 @Component({
   selector: 'app-profile-info',

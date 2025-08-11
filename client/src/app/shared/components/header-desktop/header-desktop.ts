@@ -3,9 +3,9 @@ import { Logo } from '../logo/logo';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { AuthService } from '../../../core/services/user/authService.service';
 import { ToastrService } from 'ngx-toastr';
 import { Role } from '../../../models';
+import { AuthService } from '../../../core/services';
 
 @Component({
   selector: 'app-header-desktop',
