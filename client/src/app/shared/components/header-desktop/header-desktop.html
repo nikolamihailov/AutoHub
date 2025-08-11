@@ -1,7 +1,7 @@
 <header>
   <nav class="navbar">
     <div class="navbar-left">
-      @if(isAdmin() && showAdminNav){
+      @if(isLoggedIn() && isAdmin() && showAdminNav){
       <a class="logo-link" routerLink="/admin-dashboard">
         <app-logo></app-logo>
       </a>
@@ -65,7 +65,26 @@
         <mat-icon style="font-size: 2.6rem">account_circle</mat-icon>
       </button>
       <mat-menu #profileMenu="matMenu">
-        @if (authService.isLoggedIn()) {
+        @if (!isLoggedIn()) {
+        <a
+          mat-menu-item
+          routerLink="/login"
+          routerLinkActive="active-menu-item"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>login</mat-icon>
+          Login
+        </a>
+        <a
+          mat-menu-item
+          routerLink="/register"
+          routerLinkActive="active-menu-item"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>person_add</mat-icon>
+          Register
+        </a>
+        } @else if (isLoggedIn() && !isAdmin()) {
         <a mat-menu-item routerLink="/profile" routerLinkActive="active-menu-item">
           <mat-icon>person</mat-icon>
           Profile
@@ -88,39 +107,49 @@
           <mat-icon>favorite</mat-icon>
           Saved Car Offers
         </a>
-        @if (isAdmin() && showAdminNav) {
-        <a mat-menu-item (click)="handleAdminPanelLeave()">
-          <mat-icon>home</mat-icon>
-          Home
-        </a>
-        } @if (isAdmin() && !showAdminNav) {
-        <a mat-menu-item (click)="handleAdminPanelEnter()">
-          <mat-icon>admin_panel_settings</mat-icon>
-          Admin Panel
-        </a>
-        }
         <a mat-menu-item (click)="handleLogout()">
           <mat-icon>logout</mat-icon>
           Logout
         </a>
-        } @else {
-        <a
-          mat-menu-item
-          routerLink="/login"
-          routerLinkActive="active-menu-item"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <mat-icon>login</mat-icon>
-          Login
+        } @else if (isLoggedIn() && isAdmin() && !showAdminNav) {
+        <a mat-menu-item routerLink="/profile" routerLinkActive="active-menu-item">
+          <mat-icon>person</mat-icon>
+          Profile
         </a>
         <a
           mat-menu-item
-          routerLink="/register"
+          [routerLink]="['/car-offers/user', currentUser?._id]"
           routerLinkActive="active-menu-item"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <mat-icon>person_add</mat-icon>
-          Register
+          <mat-icon>garage</mat-icon>
+          My Car Offers
+        </a>
+        <a
+          mat-menu-item
+          routerLink="/car-offers/saved"
+          routerLinkActive="active-menu-item"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon>favorite</mat-icon>
+          Saved Car Offers
+        </a>
+        <a mat-menu-item (click)="handleAdminPanelEnter()">
+          <mat-icon>admin_panel_settings</mat-icon>
+          Admin Panel
+        </a>
+        <a mat-menu-item (click)="handleLogout()">
+          <mat-icon>logout</mat-icon>
+          Logout
+        </a>
+        } @else if (isLoggedIn() && isAdmin() && showAdminNav) {
+        <a mat-menu-item (click)="handleAdminPanelLeave()">
+          <mat-icon>home</mat-icon>
+          Home
+        </a>
+        <a mat-menu-item (click)="handleLogout()">
+          <mat-icon>logout</mat-icon>
+          Logout
         </a>
         }
       </mat-menu>

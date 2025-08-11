@@ -37,6 +37,7 @@
             <mat-icon>directions_car</mat-icon>
             Car Offers
           </a>
+
           } @else {
           <a
             routerLink="/car-offers"
@@ -75,8 +76,30 @@
             Contacts
           </a>
           }
+
           <hr />
-          @if (isLoggedIn()) {
+
+          @if (!isLoggedIn()) {
+          <a
+            routerLink="/login"
+            routerLinkActive="router-link-active-mobile"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="sidenav.close()"
+          >
+            <mat-icon>login</mat-icon>
+            Login
+          </a>
+          <a
+            routerLink="/register"
+            routerLinkActive="router-link-active-mobile"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="sidenav.close()"
+          >
+            <mat-icon>person_add</mat-icon>
+            Register
+          </a>
+
+          } @else if (isLoggedIn() && !isAdmin()) {
           <a
             routerLink="/profile"
             routerLinkActive="router-link-active-mobile"
@@ -104,39 +127,56 @@
             <mat-icon>favorite</mat-icon>
             Saved Car Offers
           </a>
-          @if (isAdmin() && showAdminNav) {
-          <a (click)="handleAdminPanelLeave(sidenav)">
-            <mat-icon>home</mat-icon>
-            Home
-          </a>
-          } @if (isAdmin() && !showAdminNav) {
-          <a (click)="handleAdminPanelEnter(sidenav)">
-            <mat-icon>admin_panel_settings</mat-icon>
-            Admin Panel
-          </a>
-          }
           <a (click)="handleLogout(sidenav)">
             <mat-icon>logout</mat-icon>
             Logout
           </a>
-          } @else {
+
+          } @else if (isLoggedIn() && isAdmin() && !showAdminNav) {
           <a
-            routerLink="/login"
+            routerLink="/profile"
             routerLinkActive="router-link-active-mobile"
             [routerLinkActiveOptions]="{ exact: true }"
             (click)="sidenav.close()"
           >
-            <mat-icon>login</mat-icon>
-            Login
+            <mat-icon>person</mat-icon>
+            Profile
           </a>
           <a
-            routerLink="/register"
+            [routerLink]="['/car-offers/user', currentUser?._id]"
             routerLinkActive="router-link-active-mobile"
             [routerLinkActiveOptions]="{ exact: true }"
             (click)="sidenav.close()"
           >
-            <mat-icon>person_add</mat-icon>
-            Register
+            <mat-icon>garage</mat-icon>
+            My Car Offers
+          </a>
+          <a
+            routerLink="/car-offers/saved"
+            routerLinkActive="router-link-active-mobile"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="sidenav.close()"
+          >
+            <mat-icon>favorite</mat-icon>
+            Saved Car Offers
+          </a>
+          <a (click)="handleAdminPanelEnter(sidenav)">
+            <mat-icon>admin_panel_settings</mat-icon>
+            Admin Panel
+          </a>
+          <a (click)="handleLogout(sidenav)">
+            <mat-icon>logout</mat-icon>
+            Logout
+          </a>
+
+          } @else if (isLoggedIn() && isAdmin() && showAdminNav) {
+          <a (click)="handleAdminPanelLeave(sidenav)">
+            <mat-icon>home</mat-icon>
+            Home
+          </a>
+          <a (click)="handleLogout(sidenav)">
+            <mat-icon>logout</mat-icon>
+            Logout
           </a>
           }
         </div>
