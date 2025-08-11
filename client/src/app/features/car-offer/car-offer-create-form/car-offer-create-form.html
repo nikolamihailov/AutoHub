@@ -2,8 +2,9 @@
   <form [formGroup]="carOfferForm" (ngSubmit)="onSubmit()">
     <div class="grid">
       <div class="form-group">
-        <label>Brand *</label>
+        <label for="brand">Brand *</label>
         <input
+          id="brand"
           type="text"
           formControlName="brand"
           [class.invalid]="isInvalid('brand')"
@@ -13,8 +14,9 @@
       </div>
 
       <div class="form-group">
-        <label>Model *</label>
+        <label for="model">Model *</label>
         <input
+          id="model"
           type="text"
           formControlName="model"
           [class.invalid]="isInvalid('model')"
@@ -24,8 +26,9 @@
       </div>
 
       <div class="form-group">
-        <label>Price (€) *</label>
+        <label for="price">Price (€) *</label>
         <input
+          id="price"
           type="number"
           formControlName="price"
           [class.invalid]="isInvalid('price')"
@@ -35,8 +38,9 @@
       </div>
 
       <div class="form-group">
-        <label>Year *</label>
+        <label for="year">Year *</label>
         <input
+          id="year"
           type="number"
           formControlName="year"
           [class.invalid]="isInvalid('year')"
@@ -46,8 +50,9 @@
       </div>
 
       <div class="form-group">
-        <label>Mileage (km) *</label>
+        <label for="mileage">Mileage (km) *</label>
         <input
+          id="mileage"
           type="number"
           formControlName="mileage"
           [class.invalid]="isInvalid('mileage')"
@@ -61,8 +66,9 @@
       </div>
 
       <div class="form-group">
-        <label>Region *</label>
+        <label for="region">Region *</label>
         <input
+          id="region"
           type="text"
           formControlName="region"
           [class.invalid]="isInvalid('region')"
@@ -76,16 +82,18 @@
       </div>
 
       <div class="form-group">
-        <label>Category *</label>
-        <mat-select
+        <label for="category">Category *</label>
+        <select
+          id="category"
           formControlName="category"
-          [class.invalid]="isInvalid('category')"
           [class.valid]="isValid('category')"
+          [class.invalid]="isInvalid('category')"
         >
+          <option value="" disabled>Select category</option>
           @for (cat of categories; track cat._id) {
-          <mat-option [value]="cat._id">{{ cat.name }}</mat-option>
+          <option [value]="cat._id">{{ cat.name }}</option>
           }
-        </mat-select>
+        </select>
         <form-err-messages
           [form]="carOfferForm"
           field="category"
@@ -94,11 +102,17 @@
       </div>
 
       <div class="form-group">
-        <label>Gearbox *</label>
-        <mat-select formControlName="gearbox" [class.invalid]="isInvalid('gearbox')" [class.valid]="isValid('gearbox')">
-          <mat-option value="manual">Manual</mat-option>
-          <mat-option value="automatic">Automatic</mat-option>
-        </mat-select>
+        <label for="gearbox">Gearbox *</label>
+        <select
+          id="gearbox"
+          formControlName="gearbox"
+          gearbox
+          [class.valid]="isValid('gearbox')"
+          [class.invalid]="isInvalid('gearbox')"
+        >
+          <option value="manual">Manual</option>
+          <option value="automatic">Automatic</option>
+        </select>
         <form-err-messages
           [form]="carOfferForm"
           field="gearbox"
@@ -107,8 +121,9 @@
       </div>
 
       <div class="form-group form-group--span">
-        <label>Description *</label>
+        <label for="description">Description *</label>
         <textarea
+          id="description"
           rows="3"
           formControlName="description"
           [class.invalid]="isInvalid('description')"
@@ -122,8 +137,9 @@
       </div>
 
       <div class="form-group">
-        <label>Main Image URL *</label>
+        <label for="mainImage">Main Image URL *</label>
         <input
+          id="mainImage"
           type="text"
           formControlName="mainImage"
           [class.invalid]="isInvalid('mainImage')"
@@ -141,9 +157,9 @@
       </div>
 
       <div class="form-group form-group--span">
-        <label>Gallery Images (URLs)</label>
+        <label for="otherImages">Gallery Images (URLs)</label>
         <div class="add-image-row">
-          <input type="text" [formControl]="newImageUrl" placeholder="https://...jpg" />
+          <input id="otherImages" [formControl]="newImageUrl" placeholder="https://...jpg" />
           <button mat-stroked-button type="button" (click)="addImageUrl()">Add</button>
         </div>
 
