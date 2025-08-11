@@ -51,32 +51,7 @@
     }
   }
 }
-/* 
-.form-group {
-  margin-bottom: 1.25rem;
-}
 
-input,
-select {
-  width: 100%;
-  padding: 0.5rem 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: border 0.2s;
-  &.valid {
-    border-color: #4caf50;
-  }
-  &.invalid {
-    border-color: #e53935;
-  }
-}
-
-button[type='submit'] {
-  margin-top: 2rem;
-  width: 100%;
-} 
- */
 input[type='file'] {
   display: none !important;
 }
