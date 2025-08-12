@@ -28,3 +28,5 @@ export interface CarOffer {
   category: string | Category;
   createdAt?: Date;
 }
+
+export type CarOfferDetails = CarOffer & { category: Category } & { creator: User };

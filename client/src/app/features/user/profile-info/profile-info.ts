@@ -37,12 +37,10 @@ export class ProfileInfo implements OnInit {
       .subscribe({
         next: (response: User) => {
           this.user = response;
-          this.isLoading = false;
         },
         error: (err: any) => {
           console.log(err);
           this.errorMsg = 'Failed to load user profile.';
-          this.isLoading = false;
         },
       });
   }

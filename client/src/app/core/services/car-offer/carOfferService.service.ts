@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environments';
-import { CarOffer } from '../../../models';
+import { CarOffer, CarOfferDetails } from '../../../models';
 import { PaginatedCarOffersResponse } from '../../../models/car-offerResponse';
 import { Sort } from '../../../shared/enums/Sort.enum';
 
@@ -12,8 +12,8 @@ export class CarOfferService {
 
   constructor(private http: HttpClient) {}
 
-  public getCarOffer(id: string): Observable<CarOffer> {
-    return this.http.get<CarOffer>(`${this.BASE_URL}/car-offers/${id}`);
+  public getCarOffer(id: string): Observable<CarOfferDetails> {
+    return this.http.get<CarOfferDetails>(`${this.BASE_URL}/car-offers/${id}`);
   }
 
   public createCarOffer(data: Omit<CarOffer, '_id'>): Observable<CarOffer> {

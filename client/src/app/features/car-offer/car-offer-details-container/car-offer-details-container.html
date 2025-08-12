@@ -1,1 +1,111 @@
-<p>car-offer-details-container works!</p>
+<div class="details-wrapper">
+  @if (isLoading) {
+  <div class="loading">
+    <mat-progress-spinner mode="indeterminate" diameter="56" [strokeWidth]="4"></mat-progress-spinner>
+  </div>
+  } @else if (errorMsg) {
+  <div class="error">{{ errorMsg }}</div>
+  } @else if (carOffer) {
+  <section class="top-grid">
+    <div class="gallery">
+      <div class="viewer">
+        <img class="hero" [src]="selectedImage || carOffer.mainImage" [alt]="carOffer.brand + ' ' + carOffer.model" />
+
+        <div class="price-badge">
+          <div class="eur">€{{ carOffer.price }}</div>
+        </div>
+      </div>
+
+      @if(carOffer.images && carOffer.images.length>0){
+      <div class="thumbs">
+        <a
+          class="thumb"
+          [class.selected]="(selectedImage || carOffer.mainImage) === carOffer.mainImage"
+          (click)="selectedImage = carOffer.mainImage"
+        >
+          <img [src]="carOffer.mainImage" [alt]="carOffer.brand + ' ' + carOffer.model" />
+        </a>
+
+        @for (img of carOffer.images; let i = $index; track i) {
+        <a class="thumb" [class.selected]="selectedImage === img" (click)="selectedImage = img">
+          <img [src]="img" [alt]="carOffer.brand + ' ' + carOffer.model + ' - ' + (i + 1)" />
+        </a>
+        }
+      </div>
+      }
+    </div>
+
+    <aside class="side">
+      <div class="user-card">
+        <img
+          class="avatar"
+          [src]="carOffer.creator.avatar || 'assets/avatar.png'"
+          [alt]="carOffer.creator.firstName + ' ' + carOffer.creator.lastName"
+        />
+        <div class="user-info">
+          <h3>{{ carOffer.creator.firstName }} {{ carOffer.creator.lastName }}</h3>
+          <p class="email">Email: {{ carOffer.creator.email }}</p>
+          <p class="account-type">Account type: {{ accountTypes[carOffer.creator.accountType] }}</p>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="card">
+    <h2 class="title">{{ carOffer.brand }} {{ carOffer.model }}</h2>
+
+    <div class="specs">
+      <div class="spec">
+        <mat-icon>schedule</mat-icon>
+        <div>
+          <div class="spec-label">Posted</div>
+          <div class="spec-value">
+            {{ carOffer.createdAt | date : 'd MMM y, HH:mm' }}
+          </div>
+        </div>
+      </div>
+      <div class="spec">
+        <mat-icon>place</mat-icon>
+        <div>
+          <div class="spec-label">Region</div>
+          <div class="spec-value">{{ carOffer.region }}</div>
+        </div>
+      </div>
+      <div class="spec">
+        <mat-icon>category</mat-icon>
+        <div>
+          <div class="spec-label">Category</div>
+          <div class="spec-value">{{ carOffer.category.name }}</div>
+        </div>
+      </div>
+      <div class="spec">
+        <mat-icon>speed</mat-icon>
+        <div>
+          <div class="spec-label">Mileage</div>
+          <div class="spec-value">{{ carOffer.mileage }} km</div>
+        </div>
+      </div>
+      <div class="spec">
+        <mat-icon>calendar_today</mat-icon>
+        <div>
+          <div class="spec-label">Year</div>
+          <div class="spec-value">{{ carOffer.year }}</div>
+        </div>
+      </div>
+      <div class="spec">
+        <mat-icon>settings</mat-icon>
+        <div>
+          <div class="spec-label">Gearbox</div>
+          <div class="spec-value">{{ carOffer.gearbox }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESCRIPTION CARD -->
+  <section class="card desc">
+    <h2>Description</h2>
+    <p>{{ carOffer.description }}</p>
+  </section>
+  }
+</div>

@@ -60,6 +60,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/car-offers-edit/car-offers-edit').then((m) => m.CarOffersEdit),
       },
+      {
+        path: 'details/:id',
+        canActivate: [isAuthGuard],
+        loadComponent: () =>
+          import('./pages/car-offer-details/car-offer-details').then((m) => m.CarOfferDetails),
+      },
     ],
   },
 
