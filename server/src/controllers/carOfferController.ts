@@ -4,7 +4,6 @@ import { isAdmin } from '../middlewares/isAdmin';
 import { isAuthenticated } from '../middlewares/isAuthenticated';
 import { extractErrors } from '../utils/errParse';
 import { carOfferService } from '../services/carOfferService';
-import mongoose from 'mongoose';
 import { User } from '../models/User.model';
 
 export const carOfferController = Router();
@@ -19,15 +18,11 @@ carOfferController.get('/count', async (_, res) => {
   }
 });
 
-carOfferController.get('/', isAuthenticated, trimBody, async (req: any, res) => {
+carOfferController.get('/', async (req: any, res) => {
   try {
-    if (req.decToken) {
-      return res
-        .status(401)
-        .json({ expMessage: 'Your session has expired, you have to login again!' });
-    }
-    const categories = await carOfferService.getAllCarOffers();
-    res.status(200).json(categories);
+    const { page, limit } = req.query;
+    const data = await carOfferService.getPaginatedCarOffers(limit, page);
+    res.status(200).json(data);
   } catch (error) {
     let errors = extractErrors(error);
     res.status(400).json({ errors });

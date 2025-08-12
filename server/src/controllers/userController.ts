@@ -8,10 +8,8 @@ import { extractErrors } from '../utils/errParse';
 export const userController = Router();
 
 userController.get('/count', async (_, res) => {
-  console.log('in');
   try {
     const userDataCount = await userService.getAllCount();
-    console.log(userDataCount);
     res.status(200).json(userDataCount);
   } catch (error) {
     const errors = extractErrors(error);
