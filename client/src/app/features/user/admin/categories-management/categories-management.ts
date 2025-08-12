@@ -90,7 +90,7 @@ export class CategoriesManagement {
           this.canLoadMore = this.page <= res.pageCount;
         },
         error: (err) => {
-          this.toast?.error?.('Failed to load users.');
+          this.toast?.error?.('Failed to load categories.');
           console.error(err);
         },
       });
