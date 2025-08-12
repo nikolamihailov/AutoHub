@@ -1,5 +1,5 @@
 import { Sort } from '../enums/Sort.enum';
-import { CarOffer, CarOfferI } from '../models/Car-offer.model';
+import { CarOffer, CarOfferI, Status } from '../models/Car-offer.model';
 import { User } from '../models/User.model';
 
 const createCarOffer = (data: Partial<CarOfferI>) => CarOffer.create(data);
@@ -45,14 +45,13 @@ const getPaginatedCarOffersActive = async (
   const carOffersPerPage = parseInt(limit, 10) || 6;
   const carOfferPage = parseInt(page, 10) || 1;
 
-  const searchQuery = searchTerm
-    ? {
-        $or: [
-          { brand: { $regex: searchTerm, $options: 'i' } },
-          { model: { $regex: searchTerm, $options: 'i' } },
-        ],
-      }
-    : {};
+  const searchQuery: any = { status: Status.ACTIVE };
+  if (searchTerm) {
+    searchQuery.$or = [
+      { brand: { $regex: searchTerm, $options: 'i' } },
+      { model: { $regex: searchTerm, $options: 'i' } },
+    ];
+  }
 
   let sortOrder = Sort.ASC;
   if (sort === Sort.DESC) sortOrder = Sort.DESC;
@@ -149,6 +148,7 @@ export const deleteCarOfferAndCleanup = async (
 export const carOfferService = {
   getAllCarOffers,
   getPaginatedCarOffers,
+  getPaginatedCarOffersActive,
   getPaginatedCarOffersForUser,
   getOneCarOffer,
   createCarOffer,

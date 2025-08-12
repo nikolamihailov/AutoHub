@@ -20,10 +20,21 @@ carOfferController.get('/count', async (_, res) => {
   }
 });
 
-carOfferController.get('/', async (req: any, res) => {
+carOfferController.get('/admin', async (req: any, res) => {
   try {
     const { page, limit, searchTerm, sort } = req.query;
     const data = await carOfferService.getPaginatedCarOffers(limit, page, searchTerm, sort);
+    res.status(200).json(data);
+  } catch (error) {
+    let errors = extractErrors(error);
+    res.status(400).json({ errors });
+  }
+});
+
+carOfferController.get('/', async (req: any, res) => {
+  try {
+    const { page, limit, searchTerm, sort } = req.query;
+    const data = await carOfferService.getPaginatedCarOffersActive(limit, page, searchTerm, sort);
     res.status(200).json(data);
   } catch (error) {
     let errors = extractErrors(error);

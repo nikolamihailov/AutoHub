@@ -75,7 +75,12 @@ export class CarOffersManagement {
     if (this.initialLoad === true) this.initialLoad = false;
 
     this.carOffersService
-      .getCarOffers(this.itemsPerPage.toString(), this.page.toString(), searchTerm, this.sortOrder)
+      .getCarOffersAdmin(
+        this.itemsPerPage.toString(),
+        this.page.toString(),
+        searchTerm,
+        this.sortOrder,
+      )
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         finalize(() => {

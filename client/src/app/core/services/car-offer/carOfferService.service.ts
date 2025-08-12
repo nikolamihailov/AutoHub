@@ -30,6 +30,23 @@ export class CarOfferService {
     return this.http.delete<CarOffer>(`${this.BASE_URL}/car-offers/${id}`);
   }
 
+  public getCarOffersAdmin(
+    limit?: string,
+    page?: string,
+    searchTerm?: string,
+    sort?: Sort | '',
+  ): Observable<PaginatedCarOffersResponse> {
+    let params = new HttpParams();
+    if (limit) params = params.set('limit', limit);
+    if (page) params = params.set('page', page);
+    if (searchTerm) params = params.set('searchTerm', searchTerm);
+    if (sort) params = params.set('sort', sort);
+
+    return this.http.get<PaginatedCarOffersResponse>(`${this.BASE_URL}/car-offers/admin`, {
+      params,
+    });
+  }
+
   public getCarOffers(
     limit?: string,
     page?: string,
