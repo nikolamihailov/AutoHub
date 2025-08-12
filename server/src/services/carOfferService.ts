@@ -101,7 +101,15 @@ const getAllCarOffers = () => CarOffer.find();
 const getAllCount = () => CarOffer.estimatedDocumentCount();
 
 const getOneCarOffer = (id: string) =>
-  CarOffer.findById(id).populate('category').populate('creator');
+  CarOffer.findById(id)
+    .populate('category')
+    .populate({
+      path: 'creator',
+      populate: {
+        path: 'savedCarOffers',
+        model: 'CarOffer',
+      },
+    });
 
 const editCarOffer = (id: string, data: Partial<CarOfferI>) =>
   CarOffer.findByIdAndUpdate(id, data, { new: true, runValidators: true });

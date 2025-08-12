@@ -10,7 +10,7 @@ export interface User {
   role: Role;
   accountType: AccountType;
   carOffers: CarOffer[];
-  // savedCarOffers: CarOffer[];
+  savedCarOffers: CarOffer[] | string[];
 }
 export interface UserPayload {
   _id: string;

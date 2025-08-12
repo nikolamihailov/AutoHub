@@ -38,20 +38,56 @@ userController.post('/register', trimBody, async (req, res) => {
   }
 });
 
-/* userController.get('/admin', isAdmin, async (req: any, res) => {
+userController.get('/:id/saved-offers', isAuthenticated, async (req: any, res) => {
   try {
     if (req.decToken) {
       return res
         .status(401)
         .json({ expMessage: 'Your session has expired, you have to login again!' });
     }
-    const usersCount = await userService.getAllCount();
-    res.status(200).json(usersCount);
-  } catch (error: any) {
-    res.status(400).json({ error: error.message });
+
+    const userData = await userService.getSavedCarOffers(req.params.id);
+    res.status(200).json(userData?.savedCarOffers);
+  } catch (error) {
+    const errors = extractErrors(error);
+    res.status(400).json({ errors });
   }
 });
- */
+
+userController.post('/:id/saved-offers', isAuthenticated, async (req: any, res) => {
+  try {
+    if (req.decToken) {
+      return res
+        .status(401)
+        .json({ expMessage: 'Your session has expired, you have to login again!' });
+    }
+
+    const { carOfferId } = req.body;
+    const userData = await userService.addCarOfferToSaved(req.params.id, carOfferId);
+    res.status(201).json(userData?.savedCarOffers);
+  } catch (error) {
+    const errors = extractErrors(error);
+    res.status(400).json({ errors });
+  }
+});
+
+userController.put('/:id/saved-offers', isAuthenticated, async (req: any, res) => {
+  try {
+    if (req.decToken) {
+      return res
+        .status(401)
+        .json({ expMessage: 'Your session has expired, you have to login again!' });
+    }
+
+    const { carOfferId } = req.body;
+    const userData = await userService.removeCarOfferFromSaved(req.params.id, carOfferId);
+    res.status(200).json(userData?.savedCarOffers);
+  } catch (error) {
+    const errors = extractErrors(error);
+    res.status(400).json({ errors });
+  }
+});
+
 userController.get('/', isAuthenticated, isAdmin, async (req: any, res) => {
   try {
     if (req.decToken) {

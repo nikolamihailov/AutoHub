@@ -3,7 +3,7 @@ import { environment } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from './authService.service';
 import { Observable, throwError } from 'rxjs';
-import { PaginatedUsersResponse, User } from '../../../models';
+import { CarOffer, PaginatedUsersResponse, User } from '../../../models';
 import { Sort } from '../../../shared/enums/Sort.enum';
 
 @Injectable({ providedIn: 'root' })
@@ -46,5 +46,33 @@ export class UserService {
 
   public deleteUser(id: string): Observable<User> {
     return this.http.delete<User>(`${this.BASE_URL}/users/${id}`);
+  }
+
+  public getSavedCarOffers(): Observable<CarOffer[]> {
+    const currentUser = this.authService.currentUser();
+    if (!currentUser?._id) {
+      return throwError(() => new Error('No user logged in'));
+    }
+    return this.http.get<CarOffer[]>(`${this.BASE_URL}/users/${currentUser._id}/saved-offers`);
+  }
+
+  public addCarOfferToSaved(carOfferId: string): Observable<CarOffer[]> {
+    const currentUser = this.authService.currentUser();
+    if (!currentUser?._id) {
+      return throwError(() => new Error('No user logged in'));
+    }
+    return this.http.post<CarOffer[]>(`${this.BASE_URL}/users/${currentUser._id}/saved-offers`, {
+      carOfferId,
+    });
+  }
+
+  public removeCarOfferFromSaved(carOfferId: string): Observable<CarOffer[]> {
+    const currentUser = this.authService.currentUser();
+    if (!currentUser?._id) {
+      return throwError(() => new Error('No user logged in'));
+    }
+    return this.http.put<CarOffer[]>(`${this.BASE_URL}/users/${currentUser._id}/saved-offers`, {
+      carOfferId,
+    });
   }
 }

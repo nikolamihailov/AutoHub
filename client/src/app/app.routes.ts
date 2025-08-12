@@ -55,6 +55,12 @@ export const routes: Routes = [
           import('./pages/my-car-offers/my-car-offers').then((m) => m.MyCarOffers),
       },
       {
+        path: 'saved',
+        canActivate: [isAuthGuard],
+        loadComponent: () =>
+          import('./pages/car-offers-saved/car-offers-saved').then((m) => m.CarOffersSaved),
+      },
+      {
         path: 'add',
         canActivate: [isAuthGuard],
         loadComponent: () =>

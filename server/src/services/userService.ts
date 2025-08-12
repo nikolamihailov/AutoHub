@@ -58,7 +58,7 @@ async function generateToken(data: {
   }
 }
 
-const getUserInfo = (id: string) => User.findById(id);
+const getUserInfo = (id: string) => User.findById(id).populate('savedOffers');
 
 const updateUserInfo = async (id: string, data: Partial<UserI>) => {
   const { email } = data;
@@ -72,56 +72,45 @@ const updateUserInfo = async (id: string, data: Partial<UserI>) => {
 
   return user;
 };
-
-/* const getFavouriteProducts = (id) =>
-  User.findById(id).populate({
-    path: 'favouriteProducts',
-    populate: [
-      {
-        path: 'category',
-        model: 'Category',
-      },
-      {
-        path: 'reviews',
-        model: 'Review',
-      },
-    ],
+const getSavedCarOffers = (userId: string) =>
+  User.findById(userId).populate({
+    path: 'savedCarOffers',
+    populate: {
+      path: 'category',
+      model: 'Category',
+    },
   });
 
-const addProductToFavourites = (id, product) =>
+const addCarOfferToSaved = (userId: string, carOfferId: string) =>
   User.findByIdAndUpdate(
-    id,
+    userId,
     {
-      $push: {
-        favouriteProducts: product.productId,
-      },
+      $push: { savedCarOffers: carOfferId },
     },
     { new: true, runValidators: true }
-  ).populate('favouriteProducts');
-
-const removeProductFromFavourites = async (id, product) => {
-  const obj = new mongoose.Types.ObjectId(product.productId);
-
-  const user = await User.findByIdAndUpdate(
-    id,
-    { $pull: { favouriteProducts: obj } },
-    { new: true }
   ).populate({
-    path: 'favouriteProducts',
-    populate: [
-      {
-        path: 'category',
-        model: 'Category',
-      },
-      {
-        path: 'reviews',
-        model: 'Review',
-      },
-    ],
+    path: 'savedCarOffers',
+    populate: {
+      path: 'category',
+      model: 'Category',
+    },
   });
 
-  return user;
-}; */
+const removeCarOfferFromSaved = async (userId: string, carOfferId: string) => {
+  const objId = new mongoose.Types.ObjectId(carOfferId);
+
+  return await User.findByIdAndUpdate(
+    userId,
+    { $pull: { savedCarOffers: objId } },
+    { new: true }
+  ).populate({
+    path: 'savedCarOffers',
+    populate: {
+      path: 'category',
+      model: 'Category',
+    },
+  });
+};
 
 const getAllUsers = () => User.find();
 
@@ -152,33 +141,6 @@ const getPaginatedUsers = async (limit: string, page: string, searchTerm: string
   return { users, pageCount, usersCount };
 };
 
-/* const getAllWithFilters = async (itemsPerPage, page, filter) => {
-  const query = {};
-  if (filter) {
-    if (filter.includes('firstName')) query.firstName = filter.split('-')[1];
-    if (filter.includes('createdAt')) query.createdAt = filter.split('-')[1];
-    if (filter === 'admins') query.role = 'admin';
-  }
-
-  let users;
-  if (query.role) users = await User.find(query);
-  else if (Object.keys(query).length > 0)
-    users = await User.find().sort(query).collation({ locale: 'en', strength: 3 });
-  else users = await User.find();
-
-  const usersCount = users.length;
-  let pageCount = Math.ceil(usersCount / Number(itemsPerPage));
-  let skip = Number(itemsPerPage) * (Number(page) - 1);
-
-  if (usersCount <= Number(itemsPerPage)) {
-    skip = 0;
-    pageCount = 1;
-  }
-
-  users = users.slice(skip, skip + Number(itemsPerPage));
-  return { users, pageCount, usersCount };
-}; */
-
 const deleteUser = async (id: string) => {
   const user = await User.findById(id);
   return User.findByIdAndDelete(id);
@@ -195,4 +157,7 @@ export const userService = {
   getAllUsers,
   getPaginatedUsers,
   getAllCount,
+  getSavedCarOffers,
+  addCarOfferToSaved,
+  removeCarOfferFromSaved,
 };

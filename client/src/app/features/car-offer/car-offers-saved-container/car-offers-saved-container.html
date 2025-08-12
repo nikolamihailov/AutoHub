@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="car-offers-list-wrapper">
+    <div class="car-offers-list" [@listAnimation]>
+      @for (offer of savedOffers; track offer._id) {
+      <div class="car-offer-card" [@cardAnimation]>
+        <app-car-offer-card [offer]="offer"></app-car-offer-card>
+        <button mat-icon-button color="warn" (click)="removeFromSaved(offer._id)" aria-label="Remove from saved">
+          Remove
+          <mat-icon>favorite</mat-icon>
+        </button>
+      </div>
+      } @empty { @if (!isLoading && !initialLoad) {
+      <h3 class="car-offer-no-results">No saved offers found</h3>
+      } }
+    </div>
+  </div>
+
+  @if (isLoading) {
+  <mat-progress-spinner
+    diameter="100"
+    mode="indeterminate"
+    color="primary"
+    class="inline-spinner"
+    [strokeWidth]="5"
+  ></mat-progress-spinner>
+  }
+</div>

@@ -197,6 +197,23 @@
       color: #64748b;
     }
   }
+
+  button {
+    background-color: #3b82f6;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    color: white;
+    border-radius: 12px;
+    padding: 1rem 1.6rem;
+    cursor: pointer;
+
+    & mat-icon {
+      color: #ef4444;
+    }
+  }
 }
 
 .spec mat-icon {
