@@ -45,6 +45,10 @@ export const routes: Routes = [
     path: 'car-offers',
     children: [
       {
+        path: '',
+        loadComponent: () => import('./pages/car-offers/car-offers').then((m) => m.CarOffers),
+      },
+      {
         path: 'add',
         canActivate: [isAuthGuard],
         loadComponent: () =>

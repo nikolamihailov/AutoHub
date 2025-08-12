@@ -1,0 +1,62 @@
+.card {
+  border-radius: 12px;
+  box-shadow: 0 2px 14px #0001;
+  background: #fff;
+  overflow: hidden;
+  display: grid;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.image-wrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #f3f5f7;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.price-badge {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  background: #fff;
+  border: 3px solid #046bc2;
+  border-radius: 12px;
+  padding: 0.25rem 0.6rem;
+  line-height: 1.05;
+  text-align: right;
+  box-shadow: 0 2px 8px #0002;
+
+  .bgn {
+    font-weight: 700;
+    font-size: 1.8rem;
+  }
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 0 0.75rem;
+}
+
+.meta {
+  padding: 0 0.75rem 0.75rem;
+  color: #475569;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.8rem;
+  font-size: 1.5rem;
+
+  .date {
+    align-self: center;
+    margin-top: 1.6rem;
+    font-style: italic;
+  }
+}

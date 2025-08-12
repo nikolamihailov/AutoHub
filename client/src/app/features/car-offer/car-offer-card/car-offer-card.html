@@ -1,0 +1,17 @@
+<article class="card">
+  <div class="image-wrap">
+    <img [src]="offer.mainImage" [alt]="offer.brand + ' ' + offer.model" />
+    <div class="price-badge">
+      <div class="bgn">€{{ offer.price }}</div>
+    </div>
+  </div>
+
+  <header class="title">{{ offer.brand }} {{ offer.model }}</header>
+
+  <div class="meta">
+    <p>Mileage: {{ offer.mileage }} km</p>
+    <p>Year: {{ offer.year }}</p>
+    <p>Region: {{ offer.region }}</p>
+    <p class="date">Created: {{ offer.createdAt | date : 'dd-MM-yy HH:mm' }}</p>
+  </div>
+</article>

@@ -1,0 +1,34 @@
+<div class="container">
+  <button mat-raised-button class="btn" (click)="goToAdd()">
+    <mat-icon>add</mat-icon>
+    Add Car Offer
+  </button>
+  <div class="car-offers-list-wrapper">
+    <div
+      class="car-offers-list"
+      [@listAnimation]
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="100"
+      (scrolled)="onScroll()"
+    >
+      @for (carOffer of carOffers; track carOffer._id) {
+      <div class="car-offer-card" [@cardAnimation]>
+        <app-car-offer-card [offer]="carOffer"></app-car-offer-card>
+      </div>
+      }@empty { @if(!isLoading && !initialLoad){
+      <h3 class="car-offer-no-results">No results found</h3>
+      } }
+    </div>
+  </div>
+
+  @if (isLoading) {
+  <mat-progress-spinner
+    diameter="100"
+    mode="indeterminate"
+    color="primary"
+    class="inline-spinner"
+    [strokeWidth]="5"
+  ></mat-progress-spinner>
+  }
+</div>
