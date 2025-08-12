@@ -54,6 +54,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/car-offers-create/car-offers-create').then((m) => m.CarOffersCreate),
       },
+      {
+        path: 'edit/:id',
+        canActivate: [isAuthGuard],
+        loadComponent: () =>
+          import('./pages/car-offers-edit/car-offers-edit').then((m) => m.CarOffersEdit),
+      },
     ],
   },
 

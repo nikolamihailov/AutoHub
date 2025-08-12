@@ -1,0 +1,151 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.car-offer-list-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.car-offers-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2.5rem;
+  padding: 3rem;
+  width: 100%;
+}
+
+@media (max-width: 500px) {
+  .car-offers-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.car-offer-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 1.2rem;
+  padding: 1.5rem;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 1.5rem;
+
+  input[type='text'] {
+    width: 100%;
+    padding: 1.4rem 2.5rem 1.4rem 3.6rem;
+    font-size: 1.2rem;
+    border-radius: 999px;
+    border: 1px solid #e0e0e0;
+    transition: box-shadow 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: #3182ce;
+      box-shadow: 0 4px 16px rgba(49, 130, 206, 0.06);
+    }
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 55%;
+    transform: translateY(-50%);
+    color: #757575;
+    font-size: 22px;
+    pointer-events: none;
+  }
+
+  .clear-btn {
+    position: absolute;
+    right: 0.3rem;
+    top: 55%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+    border-radius: 50%;
+    transition: background 0.2s;
+
+    mat-icon {
+      font-size: 22px;
+      color: #888;
+    }
+
+    &:hover mat-icon {
+      color: #e53e3e;
+    }
+  }
+}
+.sort-dropdown {
+  min-width: 100px;
+
+  .mat-form-field-flex {
+    border-radius: 2rem;
+    background: #f7f7f7;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    padding: 0 1rem;
+  }
+
+  .mat-select-trigger {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #23262f;
+  }
+
+  .mat-select-placeholder,
+  .sort-placeholder {
+    color: #7d8590 !important;
+    font-weight: normal;
+    font-size: 1rem;
+    opacity: 1;
+  }
+
+  .mat-select-arrow {
+    color: #7d8590;
+  }
+}
+
+/* ::ng-deep .mat-mdc-form-field {
+  border-radius: 6px;
+  background: #fff !important;
+} */
+::ng-deep .mat-mdc-select-panel {
+  background: #fff !important;
+}
+
+::ng-deep .mat-mdc-option {
+  background: #fff !important;
+  color: #222;
+}
+
+// Optional: Make the placeholder also more visible
+::ng-deep .mat-mdc-select-placeholder {
+  color: #999 !important;
+  opacity: 1 !important;
+}
+
+.car-offers-no-results {
+  grid-column: 1 / -1;
+  justify-self: center;
+  align-self: center;
+}
