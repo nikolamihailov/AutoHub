@@ -31,6 +31,27 @@ carOfferController.get('/', async (req: any, res) => {
   }
 });
 
+carOfferController.get('/user/:id', async (req: any, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    const userExists = await User.findById(id);
+    if (!userExists) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+    const { page, limit, searchTerm, sort } = req.query;
+    const data = await carOfferService.getPaginatedCarOffersForUser(id, limit, page, searchTerm);
+    res.status(200).json(data);
+  } catch (error) {
+    let errors = extractErrors(error);
+    res.status(400).json({ errors });
+  }
+});
+
 carOfferController.get('/:id', async (req: any, res) => {
   try {
     const { id } = req.params;

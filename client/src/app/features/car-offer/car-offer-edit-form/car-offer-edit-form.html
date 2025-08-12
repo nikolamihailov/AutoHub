@@ -1,6 +1,12 @@
 <div class="car-offer-form-wrapper">
   @if (isLoading) {
-  <mat-progress-spinner diameter="48" mode="indeterminate" [strokeWidth]="4"></mat-progress-spinner>
+  <mat-progress-spinner
+    diameter="20"
+    mode="indeterminate"
+    color="primary"
+    class="inline-spinner"
+    [strokeWidth]="3"
+  ></mat-progress-spinner>
   } @else {
   <form [formGroup]="carOfferForm" (ngSubmit)="onSubmit()">
     <div class="grid">

@@ -37,6 +37,66 @@ const getPaginatedCarOffers = async (
   return { carOffers, pageCount, categoryCount };
 };
 
+const getPaginatedCarOffersActive = async (
+  limit: string,
+  page: string,
+  searchTerm: string,
+  sort: Sort
+) => {
+  const carOffersPerPage = parseInt(limit, 10) || 6;
+  const carOfferPage = parseInt(page, 10) || 1;
+
+  const searchQuery = searchTerm
+    ? {
+        $or: [
+          { brand: { $regex: searchTerm, $options: 'i' } },
+          { model: { $regex: searchTerm, $options: 'i' } },
+        ],
+      }
+    : {};
+
+  let sortOrder = Sort.ASC;
+  if (sort === Sort.DESC) sortOrder = Sort.DESC;
+
+  const categoryCount = await CarOffer.countDocuments();
+  const pageCount = Math.ceil(categoryCount / carOffersPerPage);
+
+  const carOffers = await CarOffer.find(searchQuery)
+    .sort({ createdAt: sortOrder })
+    .skip((carOfferPage - 1) * carOffersPerPage)
+    .limit(carOffersPerPage);
+
+  return { carOffers, pageCount, categoryCount };
+};
+
+const getPaginatedCarOffersForUser = async (
+  id: string,
+  limit: string,
+  page: string,
+  searchTerm: string
+) => {
+  const carOffersPerPage = parseInt(limit, 10) || 6;
+  const carOfferPage = parseInt(page, 10) || 1;
+
+  const searchQuery: any = { creator: id };
+
+  if (searchTerm) {
+    searchQuery.$or = [
+      { brand: { $regex: searchTerm, $options: 'i' } },
+      { model: { $regex: searchTerm, $options: 'i' } },
+    ];
+  }
+
+  const categoryCount = await CarOffer.countDocuments(searchQuery);
+  const pageCount = Math.ceil(categoryCount / carOffersPerPage);
+
+  const carOffers = await CarOffer.find(searchQuery)
+    .skip((carOfferPage - 1) * carOffersPerPage)
+    .limit(carOffersPerPage);
+
+  return { carOffers, pageCount, categoryCount };
+};
+
 const getAllCarOffers = () => CarOffer.find();
 
 const getAllCount = () => CarOffer.estimatedDocumentCount();
@@ -82,6 +142,7 @@ export const deleteCarOfferAndCleanup = async (
 export const carOfferService = {
   getAllCarOffers,
   getPaginatedCarOffers,
+  getPaginatedCarOffersForUser,
   getOneCarOffer,
   createCarOffer,
   getAllCount,

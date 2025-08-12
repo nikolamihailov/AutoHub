@@ -6,6 +6,36 @@
   display: grid;
   gap: 1rem;
   cursor: pointer;
+  position: relative;
+
+  &.sold {
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2;
+    }
+
+    &::after {
+      content: 'SOLD';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 3rem;
+      font-weight: bold;
+      color: rgba(255, 255, 255, 0.85);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    a {
+      cursor: not-allowed;
+    }
+  }
 }
 
 .image-wrap {

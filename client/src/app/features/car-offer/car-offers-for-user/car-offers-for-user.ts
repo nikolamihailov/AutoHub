@@ -4,20 +4,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { CarOfferCard } from '../car-offer-card/car-offer-card';
+import { cardAnimation, listAnimation } from '../../../shared/constants/cardAnimations';
+import { CarOfferService } from '../../../core/services';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { CarOffer } from '../../../../models';
-import { Sort } from '../../../../shared/enums/Sort.enum';
+import { CarOffer } from '../../../models';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ConfirmDialog, ConfirmDialogData } from '../../../../shared/components';
-import { cardAnimation, listAnimation } from '../../../../shared/constants/cardAnimations';
-import { CarOfferService } from '../../../../core/services';
-import { CarOfferCard } from '../../../car-offer/car-offer-card/car-offer-card';
+import { ConfirmDialog, ConfirmDialogData } from '../../../shared/components';
 
 @Component({
-  selector: 'app-car-offers-management',
+  selector: 'app-car-offers-for-user',
   imports: [
     InfiniteScrollDirective,
     MatProgressSpinnerModule,
@@ -26,11 +25,11 @@ import { CarOfferCard } from '../../../car-offer/car-offer-card/car-offer-card';
     MatSelectModule,
     CarOfferCard,
   ],
-  templateUrl: './car-offers-management.html',
-  styleUrl: './car-offers-management.scss',
+  templateUrl: './car-offers-for-user.html',
+  styleUrl: './car-offers-for-user.scss',
   animations: [cardAnimation, listAnimation],
 })
-export class CarOffersManagement {
+export class CarOffersForUser {
   private carOffersService = inject(CarOfferService);
   private destroyRef = inject(DestroyRef);
   private toast = inject(ToastrService);
@@ -45,8 +44,6 @@ export class CarOffersManagement {
   protected isLoading = false;
   protected initialLoad = true;
   protected searchControl = new FormControl('');
-
-  protected sortOrder: Sort = Sort.DESC;
 
   ngOnInit(): void {
     const searchFromUrl = this.route.snapshot.queryParamMap.get('search') || '';
@@ -75,7 +72,7 @@ export class CarOffersManagement {
     if (this.initialLoad === true) this.initialLoad = false;
 
     this.carOffersService
-      .getCarOffers(this.itemsPerPage.toString(), this.page.toString(), searchTerm, this.sortOrder)
+      .getCarOffersForUser(this.itemsPerPage.toString(), this.page.toString(), searchTerm)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         finalize(() => {
@@ -95,14 +92,6 @@ export class CarOffersManagement {
       });
   }
 
-  onSortChange(newOrder: Sort) {
-    this.sortOrder = newOrder;
-    this.carOffers = [];
-    this.page = 1;
-    this.canLoadMore = true;
-    this.loadCarOffers(this.searchControl.value || '');
-  }
-
   onScroll() {
     this.loadCarOffers(this.searchControl.value || '');
   }
@@ -112,15 +101,11 @@ export class CarOffersManagement {
   }
 
   goToAdd() {
-    this.router.navigate(['/car-offers/add'], {
-      queryParams: { returnTo: this.router.url },
-    });
+    this.router.navigate(['/car-offers/add']);
   }
 
   goToEdit(id: string) {
-    this.router.navigate(['/car-offers/edit', id], {
-      queryParams: { returnTo: this.router.url },
-    });
+    this.router.navigate(['/car-offers/edit', id]);
   }
 
   confirmDelete(carOffer: CarOffer) {

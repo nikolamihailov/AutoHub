@@ -1,4 +1,4 @@
-<article class="card">
+<article class="card" [class.sold]="offer.status === 'sold'">
   <a [routerLink]="['/car-offers/details', offer._id]">
     <div class="image-wrap">
       <img [src]="offer.mainImage" [alt]="offer.brand + ' ' + offer.model" />

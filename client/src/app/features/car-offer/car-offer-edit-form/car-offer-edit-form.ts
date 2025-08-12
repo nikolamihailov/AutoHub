@@ -173,7 +173,7 @@ export class CarOfferEditForm implements OnInit {
         next: () => {
           this.toast.success('Car Offer updated!');
           const returnTo = this.route.snapshot.queryParamMap.get('returnTo');
-          this.router.navigateByUrl(returnTo ?? '/car-offers');
+          this.router.navigateByUrl(returnTo ?? '/car-offers/mine');
           this.carOfferForm.reset();
         },
         error: (err) => {
