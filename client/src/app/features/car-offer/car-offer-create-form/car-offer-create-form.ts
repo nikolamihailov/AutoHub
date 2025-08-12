@@ -16,7 +16,7 @@ import { FORM_ERROR_MESSAGES } from '../../../shared/constants/formErrMessages';
 import { FormHelper } from '../../../shared/form-helper';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarOffer, Gearbox, Status } from '../../../models';
 import { AuthService, CarOfferService, CategoryService } from '../../../core/services';
 
@@ -41,6 +41,7 @@ export class CarOfferCreateForm implements OnInit {
   private carOfferService = inject(CarOfferService);
   private toast = inject(ToastrService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
 
   isLoading = false;
@@ -134,7 +135,7 @@ export class CarOfferCreateForm implements OnInit {
     };
 
     this.carOfferService
-      .createCategory(carOfferData)
+      .createCarOffer(carOfferData)
       .pipe(
         finalize(() => (this.isLoading = false)),
         takeUntilDestroyed(this.destroyRef),
@@ -142,7 +143,8 @@ export class CarOfferCreateForm implements OnInit {
       .subscribe({
         next: () => {
           this.toast.success('Car Offer created!');
-          this.router.navigate(['/car-offers']);
+          const returnTo = this.route.snapshot.queryParamMap.get('returnTo');
+          this.router.navigateByUrl(returnTo ?? '/car-offers');
           this.carOfferForm.reset();
         },
         error: (err) => {
