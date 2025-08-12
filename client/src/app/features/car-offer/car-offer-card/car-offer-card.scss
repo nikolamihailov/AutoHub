@@ -46,8 +46,8 @@
 }
 
 .meta {
-  padding: 0 0.75rem 0.75rem;
-  color: #475569;
+  padding: 1rem 1.6rem;
+  color: #30353c;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -58,5 +58,6 @@
     align-self: center;
     margin-top: 1.6rem;
     font-style: italic;
+    font-size: 1.4rem;
   }
 }

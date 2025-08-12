@@ -107,7 +107,14 @@ export class CarOfferEditForm implements OnInit {
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: (offer) => this.populateForm(offer),
-        error: () => this.toast.error('Could not load car offer'),
+        error: (err) => {
+          if (err.status === 404) {
+            this.router.navigate(['/not-found']);
+            this.toast.error('No such car offer');
+            return;
+          }
+          this.toast.error('Could not load car offer');
+        },
       });
   }
 
@@ -169,7 +176,14 @@ export class CarOfferEditForm implements OnInit {
           this.router.navigateByUrl(returnTo ?? '/car-offers');
           this.carOfferForm.reset();
         },
-        error: () => this.toast.error('Failed to update car offer'),
+        error: (err) => {
+          if (err.status === 404) {
+            this.router.navigate(['/not-found']);
+            this.toast.error('No such car offer');
+            return;
+          }
+          this.toast.error('Failed to update car offer');
+        },
       });
   }
 }

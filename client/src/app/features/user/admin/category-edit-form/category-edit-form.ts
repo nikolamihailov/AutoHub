@@ -81,6 +81,7 @@ export class CategoryEditForm {
         error: (err) => {
           if (err.status === 404) {
             this.router.navigate(['/not-found']);
+            this.toast.error('No such category');
             return;
           }
           this.errorMsg = err?.error?.message || 'Failed to load category.';
@@ -145,6 +146,11 @@ export class CategoryEditForm {
           this.categoryImageFile = null;
         },
         error: (err) => {
+          if (err.status === 404) {
+            this.router.navigate(['/not-found']);
+            this.toast.error('No such category');
+            return;
+          }
           this.toast.error('Failed to update category');
           this.errorMsg = err?.error?.message || 'Error occurred';
         },
