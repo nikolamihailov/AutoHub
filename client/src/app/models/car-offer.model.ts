@@ -6,6 +6,11 @@ export enum Gearbox {
   AUTOMATIC = 'automatic',
 }
 
+export enum Status {
+  ACTIVE = 'active',
+  SOLD = 'sold',
+}
+
 export interface CarOffer {
   _id: string;
   brand: string;
@@ -18,6 +23,8 @@ export interface CarOffer {
   images?: string[];
   region: string;
   gearbox: Gearbox;
+  status: Status;
   creator: string | User;
   category: string | Category;
+  createdAt?: Date;
 }
