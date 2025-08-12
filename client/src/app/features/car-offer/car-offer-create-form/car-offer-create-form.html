@@ -176,7 +176,7 @@
       </div>
     </div>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="carOfferForm.invalid || isLoading">
+    <button type="submit" [disabled]="carOfferForm.invalid || isLoading">
       @if (isLoading) {
       <mat-progress-spinner class="inline-spinner" diameter="20" mode="indeterminate" [strokeWidth]="3" />
       } @else { Create }

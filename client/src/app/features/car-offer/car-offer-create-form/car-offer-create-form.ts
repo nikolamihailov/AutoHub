@@ -17,7 +17,7 @@ import { FormHelper } from '../../../shared/form-helper';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { CarOffer, Gearbox } from '../../../models';
+import { CarOffer, Gearbox, Status } from '../../../models';
 import { AuthService, CarOfferService, CategoryService } from '../../../core/services';
 
 @Component({
@@ -129,6 +129,7 @@ export class CarOfferCreateForm implements OnInit {
 
     const carOfferData: Omit<CarOffer, '_id'> = {
       ...formValue,
+      status: Status.ACTIVE,
       creator: this.authService.currentUser()!._id,
     };
 
@@ -141,12 +142,12 @@ export class CarOfferCreateForm implements OnInit {
       .subscribe({
         next: () => {
           this.toast.success('Car Offer created!');
-          // this.router.navigate(['/car-offers']);
+          this.router.navigate(['/car-offers']);
           this.carOfferForm.reset();
         },
         error: (err) => {
           console.log(err);
-          this.toast.error('Failed to add category');
+          this.toast.error('Failed to add car offer');
         },
       });
   }
