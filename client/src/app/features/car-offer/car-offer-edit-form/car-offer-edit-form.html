@@ -1,0 +1,207 @@
+<div class="car-offer-form-wrapper">
+  @if (isLoading) {
+  <mat-progress-spinner diameter="48" mode="indeterminate" [strokeWidth]="4"></mat-progress-spinner>
+  } @else {
+  <form [formGroup]="carOfferForm" (ngSubmit)="onSubmit()">
+    <div class="grid">
+      <div class="form-group">
+        <label for="brand">Brand *</label>
+        <input
+          id="brand"
+          type="text"
+          formControlName="brand"
+          [class.invalid]="isInvalid('brand')"
+          [class.valid]="isValid('brand')"
+        />
+        <form-err-messages [form]="carOfferForm" field="brand" [messages]="errorMessages['brand']!"></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="model">Model *</label>
+        <input
+          id="model"
+          type="text"
+          formControlName="model"
+          [class.invalid]="isInvalid('model')"
+          [class.valid]="isValid('model')"
+        />
+        <form-err-messages [form]="carOfferForm" field="model" [messages]="errorMessages['model']!"></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price (€) *</label>
+        <input
+          id="price"
+          type="number"
+          formControlName="price"
+          [class.invalid]="isInvalid('price')"
+          [class.valid]="isValid('price')"
+        />
+        <form-err-messages [form]="carOfferForm" field="price" [messages]="errorMessages['price']!"></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="year">Year *</label>
+        <input
+          id="year"
+          type="number"
+          formControlName="year"
+          [class.invalid]="isInvalid('year')"
+          [class.valid]="isValid('year')"
+        />
+        <form-err-messages [form]="carOfferForm" field="year" [messages]="errorMessages['year']!"></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="mileage">Mileage (km) *</label>
+        <input
+          id="mileage"
+          type="number"
+          formControlName="mileage"
+          [class.invalid]="isInvalid('mileage')"
+          [class.valid]="isValid('mileage')"
+        />
+        <form-err-messages
+          [form]="carOfferForm"
+          field="mileage"
+          [messages]="errorMessages['mileage']!"
+        ></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="region">Region *</label>
+        <input
+          id="region"
+          type="text"
+          formControlName="region"
+          [class.invalid]="isInvalid('region')"
+          [class.valid]="isValid('region')"
+        />
+        <form-err-messages
+          [form]="carOfferForm"
+          field="region"
+          [messages]="errorMessages['region']!"
+        ></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category *</label>
+        <select
+          id="category"
+          formControlName="category"
+          [class.valid]="isValid('category')"
+          [class.invalid]="isInvalid('category')"
+        >
+          <option value="" disabled>Select category</option>
+          @for (cat of categories; track cat._id) {
+          <option [value]="cat._id">{{ cat.name }}</option>
+          }
+        </select>
+        <form-err-messages
+          [form]="carOfferForm"
+          field="category"
+          [messages]="errorMessages['category']!"
+        ></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="gearbox">Gearbox *</label>
+        <select
+          id="gearbox"
+          formControlName="gearbox"
+          gearbox
+          [class.valid]="isValid('gearbox')"
+          [class.invalid]="isInvalid('gearbox')"
+        >
+          <option value="manual">Manual</option>
+          <option value="automatic">Automatic</option>
+        </select>
+        <form-err-messages
+          [form]="carOfferForm"
+          field="gearbox"
+          [messages]="errorMessages['gearbox']!"
+        ></form-err-messages>
+      </div>
+
+      <div class="form-group form-group--span">
+        <label for="status">Status *</label>
+        <select
+          id="status"
+          formControlName="status"
+          [class.valid]="isValid('status')"
+          [class.invalid]="isInvalid('status')"
+        >
+          <option [value]="status.ACTIVE">Active</option>
+          <option [value]="status.SOLD">Sold</option>
+        </select>
+        <form-err-messages
+          [form]="carOfferForm"
+          field="status"
+          [messages]="errorMessages['status']!"
+        ></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description *</label>
+        <textarea
+          id="description"
+          rows="5"
+          formControlName="description"
+          [class.invalid]="isInvalid('description')"
+          [class.valid]="isValid('description')"
+        ></textarea>
+        <form-err-messages
+          [form]="carOfferForm"
+          field="description"
+          [messages]="errorMessages['description']!"
+        ></form-err-messages>
+      </div>
+
+      <div class="form-group">
+        <label for="mainImage">Main Image URL *</label>
+        <input
+          id="mainImage"
+          type="text"
+          formControlName="mainImage"
+          [class.invalid]="isInvalid('mainImage')"
+          [class.valid]="isValid('mainImage')"
+        />
+        <form-err-messages
+          [form]="carOfferForm"
+          field="mainImage"
+          [messages]="errorMessages['mainImage']!"
+        ></form-err-messages>
+
+        @if (carOfferForm.get('mainImage')?.value) {
+        <img class="img-preview" [src]="carOfferForm.get('mainImage')?.value" alt="Preview" width="100" height="100" />
+        }
+      </div>
+
+      <div class="form-group form-group--span">
+        <label for="otherImages">Gallery Images (URLs)</label>
+        <div class="add-image-row">
+          <input id="otherImages" [formControl]="newImageUrl" placeholder="https://...jpg" />
+          <button mat-stroked-button type="button" (click)="addImageUrl()">Add</button>
+        </div>
+
+        <div class="images-preview-row">
+          @for (ctrl of images.controls; let i = $index; track i) {
+          <div class="gallery-img-preview">
+            <img [src]="ctrl.value" alt="Gallery" width="100" height="100" />
+            <button mat-icon-button type="button" (click)="removeImage(i)" aria-label="Remove image">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="carOfferForm.invalid || isSubmitting">
+      @if (isSubmitting) {
+      <mat-progress-spinner class="inline-spinner" diameter="20" mode="indeterminate" [strokeWidth]="3" />
+      } @else { Save changes }
+    </button>
+  </form>
+  }
+</div>
