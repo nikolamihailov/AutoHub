@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import { AccountType, CarOfferDetails } from '../../../models';
+import { AccountType, CarOffer, CarOfferDetails } from '../../../models';
 import { CarOfferService, AuthService, UserService } from '../../../core/services';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
@@ -54,7 +54,7 @@ export class CarOfferDetailsContainer {
           this.selectedImage = car.mainImage;
 
           this.userService.getUserInfo().subscribe((user) => {
-            if (user.savedCarOffers.some((offerId) => offerId.toString() === car._id)) {
+            if (user.savedCarOffers.some((offer) => offer?._id === car._id)) {
               this.isSaved = true;
             }
           });

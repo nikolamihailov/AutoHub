@@ -42,6 +42,12 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   }
 }
+.car-offers-no-results {
+  text-align: center;
+  grid-column: 1 / -1;
+  justify-self: center;
+  align-self: center;
+}
 
 button {
   background-color: #3b82f6;
@@ -53,6 +59,7 @@ button {
   color: white;
   border-radius: 12px;
   padding: 1rem 1.6rem;
+  font-weight: bold;
   cursor: pointer;
 
   & mat-icon {

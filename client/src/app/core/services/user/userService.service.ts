@@ -3,7 +3,7 @@ import { environment } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AuthService } from './authService.service';
 import { Observable, throwError } from 'rxjs';
-import { CarOffer, PaginatedUsersResponse, User } from '../../../models';
+import { CarOffer, PaginatedUsersResponse, User, UserDetails } from '../../../models';
 import { Sort } from '../../../shared/enums/Sort.enum';
 
 @Injectable({ providedIn: 'root' })
@@ -13,12 +13,12 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  public getUserInfo(): Observable<User> {
+  public getUserInfo(): Observable<UserDetails> {
     const currentUser = this.authService.currentUser();
     if (!currentUser?._id) {
       return throwError(() => new Error('No user logged in'));
     }
-    return this.http.get<User>(`${this.BASE_URL}/users/${currentUser._id}`);
+    return this.http.get<UserDetails>(`${this.BASE_URL}/users/${currentUser._id}`);
   }
 
   public updateProfile(data: Partial<User>): Observable<User> {

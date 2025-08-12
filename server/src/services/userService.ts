@@ -58,7 +58,7 @@ async function generateToken(data: {
   }
 }
 
-const getUserInfo = (id: string) => User.findById(id).populate('savedOffers');
+const getUserInfo = (id: string) => User.findById(id).populate('savedCarOffers');
 
 const updateUserInfo = async (id: string, data: Partial<UserI>) => {
   const { email } = data;

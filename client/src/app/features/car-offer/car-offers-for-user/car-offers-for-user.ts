@@ -112,7 +112,7 @@ export class CarOffersForUser {
     const dialogRef = this.dialog.open(ConfirmDialog, {
       data: {
         title: 'Delete car offer?',
-        message: `Are you sure you want to delete "${carOffer.brand} ${carOffer.model}", this will delete the car from all users saved cars?`,
+        message: `Are you sure you want to delete "${carOffer.brand} ${carOffer.model}"?`,
         confirmText: 'Delete',
         cancelText: 'Cancel',
       } as ConfirmDialogData,

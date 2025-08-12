@@ -27,3 +27,5 @@ export enum AccountType {
   PRIVATE_ACCOUNT = 'privateAccount',
   DEALERSHIP = 'dealership',
 }
+
+export type UserDetails = User & { savedCarOffers: CarOffer[] };

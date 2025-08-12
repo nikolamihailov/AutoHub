@@ -88,27 +88,6 @@ userController.put('/:id/saved-offers', isAuthenticated, async (req: any, res) =
   }
 });
 
-userController.get('/', isAuthenticated, isAdmin, async (req: any, res) => {
-  try {
-    if (req.decToken) {
-      return res
-        .status(401)
-        .json({ expMessage: 'Your session has expired, you have to login again!' });
-    }
-    if (Object.keys(req.query).length > 0) {
-      const { page, limit, searchTerm, sort } = req.query;
-      const data = await userService.getPaginatedUsers(limit, page, searchTerm, sort);
-      res.status(200).json(data);
-    } else {
-      const userData = await userService.getAllUsers();
-      res.status(200).json(userData);
-    }
-  } catch (error) {
-    const errors = extractErrors(error);
-    res.status(400).json({ errors });
-  }
-});
-
 userController.get('/:id', isAuthenticated, async (req: any, res) => {
   try {
     if (req.decToken) {
@@ -140,6 +119,27 @@ userController.put('/:id', isAuthenticated, trimBody, async (req: any, res) => {
     ) {
       return res.status(400).json({ errors: ['File size too large! File must be below 15MB!'] });
     }
+    const errors = extractErrors(error);
+    res.status(400).json({ errors });
+  }
+});
+
+userController.get('/', isAuthenticated, isAdmin, async (req: any, res) => {
+  try {
+    if (req.decToken) {
+      return res
+        .status(401)
+        .json({ expMessage: 'Your session has expired, you have to login again!' });
+    }
+    if (Object.keys(req.query).length > 0) {
+      const { page, limit, searchTerm, sort } = req.query;
+      const data = await userService.getPaginatedUsers(limit, page, searchTerm, sort);
+      res.status(200).json(data);
+    } else {
+      const userData = await userService.getAllUsers();
+      res.status(200).json(userData);
+    }
+  } catch (error) {
     const errors = extractErrors(error);
     res.status(400).json({ errors });
   }
