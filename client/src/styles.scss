@@ -246,3 +246,7 @@ button[type='submit']:disabled {
     transition: background 0.15s;
   }
 }
+
+textarea {
+  resize: none;
+}
