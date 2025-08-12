@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { Sort } from '../enums/Sort.enum';
 import { CarOffer, CarOfferI } from '../models/Car-offer.model';
 import { User } from '../models/User.model';

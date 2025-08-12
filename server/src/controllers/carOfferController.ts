@@ -43,7 +43,7 @@ carOfferController.get('/user/:id', async (req: any, res) => {
     if (!userExists) {
       return res.status(404).json({ error: 'User not found.' });
     }
-    const { page, limit, searchTerm, sort } = req.query;
+    const { page, limit, searchTerm } = req.query;
     const data = await carOfferService.getPaginatedCarOffersForUser(id, limit, page, searchTerm);
     res.status(200).json(data);
   } catch (error) {
