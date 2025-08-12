@@ -12,8 +12,20 @@ export class CarOfferService {
 
   constructor(private http: HttpClient) {}
 
-  public createCategory(data: Omit<CarOffer, '_id'>): Observable<CarOffer> {
+  public getCarOffer(id: string): Observable<CarOffer> {
+    return this.http.get<CarOffer>(`${this.BASE_URL}/car-offers/${id}`);
+  }
+
+  public createCarOffer(data: Omit<CarOffer, '_id'>): Observable<CarOffer> {
     return this.http.post<CarOffer>(`${this.BASE_URL}/car-offers`, data);
+  }
+
+  public editCarOffer(id: string, data: Partial<CarOffer>): Observable<CarOffer> {
+    return this.http.put<CarOffer>(`${this.BASE_URL}/car-offers/${id}`, data);
+  }
+
+  public deleteCarOffer(id: string): Observable<CarOffer> {
+    return this.http.delete<CarOffer>(`${this.BASE_URL}/car-offers/${id}`);
   }
 
   public getCarOffers(
