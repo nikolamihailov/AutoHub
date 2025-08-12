@@ -81,7 +81,17 @@ categoryController.put('/:id', isAuthenticated, isAdmin, trimBody, async (req: a
         .status(401)
         .json({ expMessage: 'Your session has expired, you have to login again!' });
     }
-    const updatedCategory = await categoryService.editCategory(req.params.id, { ...req.body });
+
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: 'Category not found.' });
+    }
+
+    const categoryExists = await Category.findById(id);
+    if (!categoryExists) {
+      return res.status(404).json({ error: 'Category not found.' });
+    }
+    const updatedCategory = await categoryService.editCategory(id, { ...req.body });
     res.status(200).json(updatedCategory);
   } catch (error) {
     let errors = extractErrors(error);
@@ -95,6 +105,16 @@ categoryController.delete('/:id', isAuthenticated, isAdmin, async (req: any, res
       return res
         .status(401)
         .json({ expMessage: 'Your session has expired, you have to login again!' });
+    }
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: 'Category not found.' });
+    }
+
+    const categoryExists = await Category.findById(id);
+    if (!categoryExists) {
+      return res.status(404).json({ error: 'Category not found.' });
     }
     /*    const products = await productService.getAllFromCategory(req.params.id);
     if (products.length > 0)
