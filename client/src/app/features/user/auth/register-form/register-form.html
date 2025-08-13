@@ -78,7 +78,7 @@
       <form-err-messages [form]="registerForm" field="accountType" [messages]="errorMessages['accountType']!" />
 
       <div class="account-info">
-        <span>Accounts Information</span>
+        <span>Account's Type Information</span>
         <button
           type="button"
           class="icon-btn info-btn"
@@ -93,8 +93,8 @@
 
       @if (showAccountInfo) {
       <div class="account-info-text">
-        <strong>Private Account:</strong> You can post only 1 offer, and others can’t see your account.<br /><br />
-        <strong>Dealership:</strong> No posting limit. All your offers are visible to others.
+        <strong>Private Account:</strong> Others can't access all your active offers at once.<br /><br />
+        <strong>Dealership:</strong> All your active offers are visible to others in your profile.
       </div>
       }
     </div>

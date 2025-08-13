@@ -22,6 +22,8 @@ export class ProfileInfo implements OnInit {
   protected isLoading = true;
   protected errorMsg: string | null = null;
 
+  protected showAccountInfo = false;
+
   protected accountTypes = {
     [AccountType.DEALERSHIP]: 'Dealership',
     [AccountType.PRIVATE_ACCOUNT]: 'Private',
@@ -43,6 +45,10 @@ export class ProfileInfo implements OnInit {
           this.errorMsg = 'Failed to load user profile.';
         },
       });
+  }
+
+  toggleShowInfoBtn() {
+    this.showAccountInfo = !this.showAccountInfo;
   }
 
   handleEditBtn() {

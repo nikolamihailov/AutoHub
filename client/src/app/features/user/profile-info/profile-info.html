@@ -34,6 +34,26 @@
       <span class="label">Account Type:</span>
       <span class="value">{{ accountTypes[user.accountType] }}</span>
     </div>
+    <div class="account-info">
+      <span>Account's Type Information</span>
+      <button
+        type="button"
+        class="icon-btn info-btn"
+        (click)="toggleShowInfoBtn()"
+        tabindex="-1"
+        aria-label="Account type info"
+        mat-icon-button
+      >
+        <mat-icon>info</mat-icon>
+      </button>
+    </div>
+
+    @if (showAccountInfo) {
+    <div class="account-info-text">
+      <strong>Private Account:</strong> Others can't access all your active offers at once.<br /><br />
+      <strong>Dealership:</strong> All your active offers are visible to others in your profile.
+    </div>
+    }
   </div>
   <div>
     <button class="btn" (click)="handleEditBtn()">

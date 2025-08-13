@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { AccountType, CarOffer, CarOfferDetails } from '../../../models';
 import { CarOfferService, AuthService, UserService } from '../../../core/services';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-car-offer-details-container',
-  imports: [MatProgressSpinnerModule, DatePipe, MatIconModule],
+  imports: [MatProgressSpinnerModule, DatePipe, MatIconModule, RouterLink],
   templateUrl: './car-offer-details-container.html',
   styleUrl: './car-offer-details-container.scss',
 })
@@ -34,6 +34,7 @@ export class CarOfferDetailsContainer {
   protected isLoggedIn = this.authService.isLoggedIn;
   protected currentUser = this.authService.currentUser;
 
+  protected AccountType = AccountType;
   protected accountTypes = {
     [AccountType.DEALERSHIP]: 'Dealership',
     [AccountType.PRIVATE_ACCOUNT]: 'Private',
@@ -53,11 +54,13 @@ export class CarOfferDetailsContainer {
           this.carOffer = car;
           this.selectedImage = car.mainImage;
 
-          this.userService.getUserInfo().subscribe((user) => {
-            if (user.savedCarOffers.some((offer) => offer?._id === car._id)) {
-              this.isSaved = true;
-            }
-          });
+          if (this.currentUser()) {
+            this.userService.getUserInfo().subscribe((user) => {
+              if (user.savedCarOffers.some((offer) => offer?._id === car._id)) {
+                this.isSaved = true;
+              }
+            });
+          }
         },
         error: () => {
           this.errorMsg = 'Failed to load car offer.';
@@ -83,11 +86,11 @@ export class CarOfferDetailsContainer {
       next: () => {
         this.isSaved = !this.isSaved;
         this.toast.success(
-          this.isSaved ? 'Car offer added to favourites!' : 'Car offer removed from favourites!',
+          this.isSaved ? 'Car offer added to saved!' : 'Car offer removed from saved!',
         );
       },
       error: () => {
-        this.toast.error('Failed to update favourites');
+        this.toast.error('Failed to update saved');
       },
     });
   }

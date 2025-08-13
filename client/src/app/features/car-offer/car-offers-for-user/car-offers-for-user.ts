@@ -44,9 +44,11 @@ export class CarOffersForUser {
   protected isLoading = false;
   protected initialLoad = true;
   protected searchControl = new FormControl('');
+  protected canManage = true;
 
   ngOnInit(): void {
     const searchFromUrl = this.route.snapshot.queryParamMap.get('search') || '';
+
     this.searchControl.setValue(searchFromUrl, { emitEvent: false });
 
     this.searchControl.valueChanges
@@ -71,8 +73,20 @@ export class CarOffersForUser {
 
     if (this.initialLoad === true) this.initialLoad = false;
 
+    const id = this.route.snapshot.paramMap.get('id')!;
+    if (id) this.canManage = false;
+
+    const userId = id ? id : undefined;
+    const includeActive = id ? true : false;
+
     this.carOffersService
-      .getCarOffersForUser(this.itemsPerPage.toString(), this.page.toString(), searchTerm)
+      .getCarOffersForUser(
+        userId,
+        this.itemsPerPage.toString(),
+        this.page.toString(),
+        searchTerm,
+        includeActive,
+      )
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         finalize(() => {

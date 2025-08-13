@@ -47,9 +47,18 @@
           <p class="email">Email: {{ carOffer.creator.email }}</p>
           <p class="account-type">Account type: {{ accountTypes[carOffer.creator.accountType] }}</p>
         </div>
+        <div>
+          @if (isLoggedIn() && carOffer.creator._id != currentUser()?._id && carOffer.creator.accountType ===
+          AccountType.DEALERSHIP) {
+          <a [routerLink]="['/car-offers/user', carOffer.creator._id]">
+            View All Offers
+            <mat-icon>person</mat-icon>
+          </a>
+          }
+        </div>
         @if (isLoggedIn() && carOffer.creator._id != currentUser()?._id) {
         <button mat-icon-button (click)="toggleSave()" [disabled]="isSaving" aria-label="Save car offer">
-          {{ isSaved ? 'Saved car offer' : 'Save car offer' }}
+          {{ isSaved ? 'Remove From Saved' : 'Save Car Offer' }}
           <mat-icon>
             {{ isSaved ? 'favorite' : 'favorite_border' }}
           </mat-icon>

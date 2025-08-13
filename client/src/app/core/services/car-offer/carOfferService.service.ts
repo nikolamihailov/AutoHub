@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environments';
-import { CarOffer, CarOfferDetails } from '../../../models';
+import { CarOffer, CarOfferDetails, Status } from '../../../models';
 import { PaginatedCarOffersResponse } from '../../../models/car-offerResponse';
 import { Sort } from '../../../shared/enums/Sort.enum';
 import { AuthService } from '../user/authService.service';
@@ -65,26 +65,27 @@ export class CarOfferService {
   }
 
   public getCarOffersForUser(
+    id: string | undefined,
     limit?: string,
     page?: string,
     searchTerm?: string,
-    sort?: Sort | '',
+    active = true,
   ): Observable<PaginatedCarOffersResponse> {
     const currentUser = this.authService.currentUser();
     if (!currentUser?._id) {
       return throwError(() => new Error('No user logged in'));
     }
+
+    const userId = id ? id : currentUser._id;
+
     let params = new HttpParams();
     if (limit) params = params.set('limit', limit);
     if (page) params = params.set('page', page);
     if (searchTerm) params = params.set('searchTerm', searchTerm);
-    if (sort) params = params.set('sort', sort);
+    if (active) params = params.set('active', Status.ACTIVE);
 
-    return this.http.get<PaginatedCarOffersResponse>(
-      `${this.BASE_URL}/car-offers/user/${currentUser._id}`,
-      {
-        params,
-      },
-    );
+    return this.http.get<PaginatedCarOffersResponse>(`${this.BASE_URL}/car-offers/user/${userId}`, {
+      params,
+    });
   }
 }

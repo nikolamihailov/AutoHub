@@ -79,12 +79,17 @@ const getPaginatedCarOffersForUser = async (
   id: string,
   limit: string,
   page: string,
-  searchTerm: string
+  searchTerm: string,
+  active: string
 ) => {
   const carOffersPerPage = parseInt(limit, 10) || 6;
   const carOfferPage = parseInt(page, 10) || 1;
 
   const searchQuery: any = { creator: id };
+
+  if (active) {
+    searchQuery.status = Status.ACTIVE;
+  }
 
   if (searchTerm) {
     searchQuery.$or = [

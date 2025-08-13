@@ -14,11 +14,12 @@
     </button>
     }
   </div>
-
+  @if(canManage){
   <button mat-raised-button class="btn" (click)="goToAdd()">
     <mat-icon>add</mat-icon>
     Add Car Offer
   </button>
+  }
   <div class="car-offer-list-wrapper">
     <div
       class="car-offers-list"
@@ -31,6 +32,7 @@
       @for (carOffer of carOffers; track carOffer._id) {
       <div class="car-offer-card" [@cardAnimation]>
         <app-car-offer-card [offer]="carOffer"></app-car-offer-card>
+        @if(canManage){
         <div>
           <mat-icon
             style="color: #1976d2; margin-right: 10px; cursor: pointer"
@@ -45,6 +47,7 @@
             >delete</mat-icon
           >
         </div>
+        }
       </div>
       } @empty { @if(!isLoading && !initialLoad){
       <h3 class="car-offers-no-results">No results found</h3>
