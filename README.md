@@ -32,7 +32,7 @@ The app features **infinite scrolling for all pages, search, filtering, sorting,
 - [Features](#features)
 - [Running the Application](#running-the-application)
 - [Testing Data](#testing-data)
-- [Project Demo](#project-demo-picture)
+- [Project Demo](#project-demo)
 
 ---
 
@@ -133,6 +133,7 @@ npm run start
 [<img alt="Play Button" src="https://user-images.githubusercontent.com/114406139/211439129-37c7a037-dde4-49d6-bf62-4ffc4f315fa9.PNG" />](https://autohub-k.netlify.app/home)
 
 <img width="1545" height="1296" alt="Screenshot-80" src="https://github.com/user-attachments/assets/53c6de5e-dcb5-493d-a274-0d06102767d8" />
+
 
 
 
