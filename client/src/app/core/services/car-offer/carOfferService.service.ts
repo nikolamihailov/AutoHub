@@ -2,10 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environments';
-import { CarOffer, CarOfferDetails, Status } from '../../../models';
-import { PaginatedCarOffersResponse } from '../../../models/car-offerResponse';
-import { Sort } from '../../../shared/enums/Sort.enum';
 import { AuthService } from '../user/authService.service';
+import { Sort } from '../../../shared/enums';
+import { CarOffer, CarOfferDetails, PaginatedCarOffersResponse, Status } from '../../../models';
 
 @Injectable({ providedIn: 'root' })
 export class CarOfferService {

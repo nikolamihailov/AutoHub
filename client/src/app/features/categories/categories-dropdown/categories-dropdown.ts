@@ -1,11 +1,11 @@
 import { Component, DestroyRef, EventEmitter, inject, Input, Output } from '@angular/core';
-import { CategoryService } from '../../../core/services';
-import { Category } from '../../../models';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ToastrService } from 'ngx-toastr';
 import { RouterLink } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastrService } from 'ngx-toastr';
+import { CategoryService } from '../../../core/services';
+import { Category } from '../../../models';
 
 @Component({
   selector: 'app-categories-dropdown',

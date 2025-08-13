@@ -2,16 +2,16 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FormErrMessagesComponent } from '../../../../shared/components';
-import { ToastrService } from 'ngx-toastr';
-import { FORM_ERROR_MESSAGES } from '../../../../shared/constants/formErrMessages';
-import { FormHelper } from '../../../../shared/form-helper';
-import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import imageCompression from 'browser-image-compression';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from '../../../../models';
+import { finalize } from 'rxjs';
+import imageCompression from 'browser-image-compression';
+import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../../../../core/services';
+import { FormErrMessagesComponent } from '../../../../shared/components';
+import { FormHelper } from '../../../../shared/utils';
+import { FORM_ERROR_MESSAGES } from '../../../../shared/constants';
+import { Category } from '../../../../models';
 
 @Component({
   selector: 'app-category-edit-form',

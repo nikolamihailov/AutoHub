@@ -5,11 +5,17 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 2rem;
+  position: relative;
+
+  button {
+    position: absolute;
+    top: 60px;
+    left: 25px;
+  }
 }
 
 @media (max-width: 500px) {
   :host {
-    padding: 0;
+    padding: 4.6rem 0 0 0;
   }
 }

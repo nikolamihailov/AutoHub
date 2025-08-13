@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CarOfferDetailsContainer } from '../../features/car-offer/car-offer-details-container/car-offer-details-container';
+import { CarOfferDetailsContainer } from '../../features';
 import { BackBtn } from '../../shared/components';
 
 @Component({

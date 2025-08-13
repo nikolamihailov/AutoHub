@@ -3,16 +3,15 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
-import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
-import { CarOfferService } from '../../../core/services';
-import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CarOffer } from '../../../models';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router } from '@angular/router';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { CarOfferService } from '../../../core/services';
 import { CarOfferCard } from '../car-offer-card/car-offer-card';
-import { cardAnimation, listAnimation } from '../../../shared/constants/cardAnimations';
-import { Sort } from '../../../shared/enums/Sort.enum';
+import { cardAnimation, listAnimation } from '../../../shared/constants';
+import { CarOffer } from '../../../models';
 
 @Component({
   selector: 'app-car-offer-container',

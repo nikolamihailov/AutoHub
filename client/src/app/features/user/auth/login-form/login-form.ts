@@ -3,15 +3,15 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ToastrService } from 'ngx-toastr';
-import { FormHelper } from '../../../../shared/form-helper';
-import { FormErrMessagesComponent } from '../../../../shared/components';
-import { UserAuthErr, UserAuthResponse } from '../../../../models';
-import { FORM_ERROR_MESSAGES } from '../../../../shared/constants/formErrMessages';
 import { HttpErrorResponse } from '@angular/common/http';
-import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { FormHelper } from '../../../../shared/utils';
 import { AuthService } from '../../../../core/services';
+import { FormErrMessagesComponent } from '../../../../shared/components';
+import { FORM_ERROR_MESSAGES } from '../../../../shared/constants';
+import { UserAuthErr, UserAuthResponse } from '../../../../models';
 
 @Component({
   selector: 'app-login-form',

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AdminPageHeader } from '../../shared/components';
-import { CarOffersManagement } from '../../features/user/admin/car-offers-management/car-offers-management';
+import { CarOffersManagement } from '../../features';
 
 @Component({
   selector: 'app-admin-car-offers',

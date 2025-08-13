@@ -1,20 +1,20 @@
 import { Component, OnInit, DestroyRef, inject } from '@angular/core';
-import { User } from '../../../../models';
-import { ToastrService } from 'ngx-toastr';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { finalize } from 'rxjs';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, startWith } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
-import { cardAnimation, listAnimation } from '../../../../shared/constants/cardAnimations';
-import { ConfirmDialog, ConfirmDialogData } from '../../../../shared/components';
-import { Sort } from '../../../../shared/enums/Sort.enum';
+import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
+import { debounceTime, distinctUntilChanged, startWith } from 'rxjs/operators';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { UserService } from '../../../../core/services';
+import { ConfirmDialog, ConfirmDialogData } from '../../../../shared/components';
+import { cardAnimation, listAnimation } from '../../../../shared/constants';
+import { Sort } from '../../../../shared/enums';
+import { User } from '../../../../models';
 
 @Component({
   selector: 'app-users-info',

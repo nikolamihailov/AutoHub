@@ -1,17 +1,17 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { FormHelper } from '../../../../shared/form-helper';
-import { FormErrMessagesComponent } from '../../../../shared/components';
-import { AccountType, User, UserAuthErr, UserAuthResponse } from '../../../../models';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ToastrService } from 'ngx-toastr';
-import { FORM_ERROR_MESSAGES } from '../../../../shared/constants/formErrMessages';
 import { HttpErrorResponse } from '@angular/common/http';
-import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormHelper } from '../../../../shared/utils';
+import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../../core/services';
+import { FormErrMessagesComponent } from '../../../../shared/components';
+import { FORM_ERROR_MESSAGES } from '../../../../shared/constants';
+import { AccountType, User, UserAuthErr, UserAuthResponse } from '../../../../models';
 
 @Component({
   selector: 'app-register-form',

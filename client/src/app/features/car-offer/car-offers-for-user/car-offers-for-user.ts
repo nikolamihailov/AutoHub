@@ -3,17 +3,17 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
-import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
-import { CarOfferCard } from '../car-offer-card/car-offer-card';
-import { cardAnimation, listAnimation } from '../../../shared/constants/cardAnimations';
-import { CarOfferService } from '../../../core/services';
-import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { CarOffer } from '../../../models';
-import { debounceTime, distinctUntilChanged, finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { debounceTime, distinctUntilChanged, finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { CarOfferService } from '../../../core/services';
+import { CarOfferCard } from '../car-offer-card/car-offer-card';
 import { ConfirmDialog, ConfirmDialogData } from '../../../shared/components';
+import { cardAnimation, listAnimation } from '../../../shared/constants';
+import { CarOffer } from '../../../models';
 
 @Component({
   selector: 'app-car-offers-for-user',

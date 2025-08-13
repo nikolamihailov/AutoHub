@@ -1,4 +1,3 @@
-// app.routes.ts
 import { Routes } from '@angular/router';
 import { isAdminGuard, isAuthGuard, isCreatorOrAdminGuard, isGuestGuard } from './core/guards';
 
@@ -136,23 +135,3 @@ export const routes: Routes = [
   },
   { path: '**', redirectTo: 'not-found' },
 ];
-
-/*  ,
-  {
-    path: 'car-offers',
-    children: [
-      { path: '', component: CarOffers },
-      { path: 'add', component: CarOfferAddComponent },
-      { path: 'edit', component: CarOfferEditComponent },
-      { path: 'saved', component: CarOffersSavedComponent },
-      { path: 'user/:userId', component: CarOffersUserComponent },
-      { path: ':id', component: CarOfferComponent },
-    ],
-  },
-  {
-    path: 'categories',
-    children: [
-      { path: '', component: CategoriesComponent },
-      { path: ':id', component: CategoryComponent },
-    ],
-  }, */

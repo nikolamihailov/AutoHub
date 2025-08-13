@@ -3,14 +3,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormErrMessagesComponent } from '../../../../shared/components';
-import { ToastrService } from 'ngx-toastr';
-import { FORM_ERROR_MESSAGES } from '../../../../shared/constants/formErrMessages';
-import { FormHelper } from '../../../../shared/form-helper';
-import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import imageCompression from 'browser-image-compression';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import imageCompression from 'browser-image-compression';
 import { CategoryService } from '../../../../core/services';
+import { FormHelper } from '../../../../shared/utils';
+import { FORM_ERROR_MESSAGES } from '../../../../shared/constants';
 
 @Component({
   selector: 'app-category-add-form',

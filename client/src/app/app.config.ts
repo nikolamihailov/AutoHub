@@ -5,13 +5,11 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
-
-import { routes } from './app.routes';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-
-import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TokenInterceptor } from './core/interceptors/token.interceptor';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { routes } from './app.routes';
+import { TokenInterceptor } from './core/interceptors';
 
 export const appConfig: ApplicationConfig = {
   providers: [

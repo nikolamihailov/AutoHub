@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { CarOffer } from '../../../models';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CarOffer } from '../../../models';
 
 @Component({
   selector: 'app-car-offer-card',

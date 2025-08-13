@@ -3,16 +3,16 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
-import { FormErrMessagesComponent } from '../../../shared/components';
-import { FormHelper } from '../../../shared/form-helper';
-import { AccountType, User } from '../../../models';
-import { FORM_ERROR_MESSAGES } from '../../../shared/constants/formErrMessages';
-import imageCompression from 'browser-image-compression';
-import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import imageCompression from 'browser-image-compression';
 import { UserService } from '../../../core/services';
+import { FormErrMessagesComponent } from '../../../shared/components';
+import { FormHelper } from '../../../shared/utils';
+import { FORM_ERROR_MESSAGES } from '../../../shared/constants';
+import { AccountType, User } from '../../../models';
 
 @Component({
   selector: 'app-profile-edit-form',

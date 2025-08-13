@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environments';
-import { Sort } from '../../../shared/enums/Sort.enum';
+import { Sort } from '../../../shared/enums';
 import { Category, PaginatedCategoriesResponse } from '../../../models';
 
 @Injectable({ providedIn: 'root' })

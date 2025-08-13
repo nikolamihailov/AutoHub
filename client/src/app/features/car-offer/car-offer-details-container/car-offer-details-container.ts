@@ -1,13 +1,13 @@
-import { Component, DestroyRef, inject } from '@angular/core';
-import { AccountType, CarOffer, CarOfferDetails } from '../../../models';
-import { CarOfferService, AuthService, UserService } from '../../../core/services';
-import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
+import { CarOfferService, AuthService, UserService } from '../../../core/services';
+import { AccountType, CarOfferDetails } from '../../../models';
 
 @Component({
   selector: 'app-car-offer-details-container',

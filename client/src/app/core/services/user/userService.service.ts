@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { AuthService } from './authService.service';
 import { Observable, throwError } from 'rxjs';
+import { AuthService } from './authService.service';
+import { Sort } from '../../../shared/enums';
 import { CarOffer, PaginatedUsersResponse, User, UserDetails } from '../../../models';
-import { Sort } from '../../../shared/enums/Sort.enum';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {

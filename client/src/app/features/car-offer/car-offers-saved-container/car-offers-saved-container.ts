@@ -1,13 +1,13 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import { UserService } from '../../../core/services';
-import { ToastrService } from 'ngx-toastr';
-import { CarOffer } from '../../../models';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { finalize } from 'rxjs';
-import { CarOfferCard } from '../car-offer-card/car-offer-card';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
-import { cardAnimation, listAnimation } from '../../../shared/constants/cardAnimations';
+import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../../../core/services';
+import { CarOfferCard } from '../car-offer-card/car-offer-card';
+import { cardAnimation, listAnimation } from '../../../shared/constants';
+import { CarOffer } from '../../../models';
 
 @Component({
   selector: 'app-car-offers-saved-container',

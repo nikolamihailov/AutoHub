@@ -7,9 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { FormHelper } from '../../shared/form-helper';
-import { FORM_ERROR_MESSAGES } from '../../shared/constants/formErrMessages';
 import { FormErrMessagesComponent } from '../../shared/components';
+import { FormHelper } from '../../shared/utils';
+import { FORM_ERROR_MESSAGES } from '../../shared/constants';
 
 @Component({
   selector: 'app-contacts',
