@@ -32,7 +32,7 @@ The app features **infinite scrolling for all pages, search, filtering, sorting,
 - [Features](#features)
 - [Running the Application](#running-the-application)
 - [Testing Data](#testing-data)
-- [Project Demo & Video](#project-demo--video)
+- [Project Demo](#project-demo-picture)
 
 ---
 
@@ -116,4 +116,18 @@ npm install
 # Start client
 npm run start
 ```
+
+## Testing Data
+- when user is created he automatically has empty array for carOffers and savedCarOffers
+ - in the link you can find users, categories and car offers ready to use that you can import in the DB
+ - once you import all the db collections, you can login with:
+  email: koleto@abv.bg
+  password: 123456
+
+ - https://drive.google.com/drive/folders/1XC08Wk9idxa-n7C-BKALy13A8bZCKt2T?usp=drive_link
+
+## Project Demo Picture
+
+<img width="1545" height="1296" alt="Screenshot-80" src="https://github.com/user-attachments/assets/53c6de5e-dcb5-493d-a274-0d06102767d8" />
+
 
