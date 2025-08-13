@@ -6,7 +6,7 @@ import { Role, User, UserI } from '../models/User.model';
 import { Sort } from '../enums/Sort.enum';
 
 dotenv.config();
-const SECRET = process.env.JWT_SECRET;
+const SECRET = process.env.JWT_SECRET; // sample secret
 
 const register = async (data: UserI) => {
   const { email } = data;
