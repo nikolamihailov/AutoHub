@@ -12,6 +12,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs';
 import { CarOfferCard } from '../car-offer-card/car-offer-card';
 import { cardAnimation, listAnimation } from '../../../shared/constants/cardAnimations';
+import { Sort } from '../../../shared/enums/Sort.enum';
 
 @Component({
   selector: 'app-car-offer-container',
@@ -42,6 +43,8 @@ export class CarOfferContainer {
   protected initialLoad = true;
 
   protected searchControl = new FormControl('');
+
+  protected sortOrder: Sort = Sort.DESC;
 
   ngOnInit(): void {
     const searchFromUrl = this.route.snapshot.queryParamMap.get('search') || '';
@@ -86,7 +89,7 @@ export class CarOfferContainer {
         this.itemsPerPage.toString(),
         this.page.toString(),
         searchTerm,
-        undefined,
+        this.sortOrder,
         category,
       )
       .pipe(
@@ -106,6 +109,14 @@ export class CarOfferContainer {
           console.error(err);
         },
       });
+  }
+
+  onSortChange(newOrder: Sort) {
+    this.sortOrder = newOrder;
+    this.carOffers = [];
+    this.page = 1;
+    this.canLoadMore = true;
+    this.loadCarOffers(this.searchControl.value || '');
   }
 
   clearSearch() {

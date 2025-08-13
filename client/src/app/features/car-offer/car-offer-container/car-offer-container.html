@@ -14,6 +14,14 @@
     </button>
     }
   </div>
+
+  <mat-form-field appearance="fill" class="sort-dropdown">
+    <mat-select [(value)]="sortOrder" (valueChange)="onSortChange($event)" disableRipple [placeholder]="'Sort by name'">
+      <mat-option value="asc">Creation Date - Asc</mat-option>
+      <mat-option value="desc">Creation Date - Desc</mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <div class="car-offers-list-wrapper">
     <div
       class="car-offers-list"

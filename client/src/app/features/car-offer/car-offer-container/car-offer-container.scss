@@ -97,6 +97,54 @@
   }
 }
 
+.sort-dropdown {
+  min-width: 100px;
+
+  .mat-form-field-flex {
+    border-radius: 2rem;
+    background: #f7f7f7;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    padding: 0 1rem;
+  }
+
+  .mat-select-trigger {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #23262f;
+  }
+
+  .mat-select-placeholder,
+  .sort-placeholder {
+    color: #7d8590 !important;
+    font-weight: normal;
+    font-size: 1rem;
+    opacity: 1;
+  }
+
+  .mat-select-arrow {
+    color: #7d8590;
+  }
+}
+
+/* ::ng-deep .mat-mdc-form-field {
+  border-radius: 6px;
+  background: #fff !important;
+} */
+::ng-deep .mat-mdc-select-panel {
+  background: #fff !important;
+}
+
+::ng-deep .mat-mdc-option {
+  background: #fff !important;
+  color: #222;
+}
+
+// Optional: Make the placeholder also more visible
+::ng-deep .mat-mdc-select-placeholder {
+  color: #999 !important;
+  opacity: 1 !important;
+}
+
 .car-offers-no-results {
   text-align: center;
   grid-column: 1 / -1;
