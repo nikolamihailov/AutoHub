@@ -1,5 +1,5 @@
 footer {
-  background: #3071ff; // a nice blue, you can change to any shade
+  background: #3071ff;
   color: #fff;
   text-align: center;
   padding: 0.8rem 1.6rem;
@@ -23,7 +23,7 @@ footer {
       transition: color 0.2s;
 
       &:hover {
-        color: #000000; // lighter blue on hover
+        color: #000000;
       }
     }
   }

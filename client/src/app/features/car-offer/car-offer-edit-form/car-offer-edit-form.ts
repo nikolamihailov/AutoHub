@@ -83,7 +83,7 @@ export class CarOfferEditForm implements OnInit {
     mainImage: this.fb.nonNullable.control<string>('', {
       validators: [Validators.required, Validators.pattern(this.imgUrlRe)],
     }),
-    images: this.fb.array<FormControl<string>>([]), // make pushed controls nonNullable too
+    images: this.fb.array<FormControl<string>>([]),
   });
 
   newImageUrl = this.fb.nonNullable.control('', []);
