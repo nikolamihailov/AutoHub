@@ -6,4 +6,17 @@
   align-items: center;
   margin: 0 auto;
   padding: 2rem;
+  position: relative;
+
+  button {
+    position: absolute;
+    top: 60px;
+    left: 25px;
+  }
+}
+
+@media (max-width: 500px) {
+  :host {
+    padding-top: 4.2rem;
+  }
 }

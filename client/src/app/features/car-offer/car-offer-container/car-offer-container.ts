@@ -116,11 +116,33 @@ export class CarOfferContainer {
     this.carOffers = [];
     this.page = 1;
     this.canLoadMore = true;
-    this.loadCarOffers(this.searchControl.value || '');
+
+    const currentCategory = this.route.snapshot.queryParamMap.get('category') || '';
+    const currentSearch = this.searchControl.value || '';
+
+    this.router.navigate([], {
+      queryParams: {
+        search: currentSearch || null,
+        category: currentCategory || null,
+        sort: this.sortOption || null,
+      },
+      queryParamsHandling: 'merge',
+    });
+
+    this.loadCarOffers(currentSearch, currentCategory);
   }
 
   clearSearch() {
-    this.searchControl.setValue('');
+    const currentCategory = this.route.snapshot.queryParamMap.get('category') || '';
+    this.searchControl.setValue('', { emitEvent: false });
+    this.router.navigate([], {
+      queryParams: { search: null, category: currentCategory || null },
+      queryParamsHandling: 'merge',
+    });
+    this.carOffers = [];
+    this.page = 1;
+    this.canLoadMore = true;
+    this.loadCarOffers('', currentCategory);
   }
 
   onScroll() {

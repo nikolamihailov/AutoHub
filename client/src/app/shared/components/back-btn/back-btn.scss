@@ -1,0 +1,17 @@
+.back-btn {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 50%;
+  padding: 0.8rem;
+  outline: none;
+  border: none;
+  background-color: #046bc2;
+  color: #fff;
+  cursor: pointer;
+
+  position: absolute;
+  top: 20px;
+  left: 25px;
+}

@@ -1,4 +1,5 @@
 export * from './admin-page-header/admin-page-header';
+export * from './back-btn/back-btn';
 export * from './confirm-dialog/confirm-dialog';
 export * from './footer/footer';
 export * from './form-err-messages/form-err-messages';
@@ -7,3 +8,4 @@ export * from './header-desktop/header-desktop';
 export * from './header-mobile/header-mobile';
 export * from './layout/layout';
 export * from './logo/logo';
+export * from './statistics/statistics';
