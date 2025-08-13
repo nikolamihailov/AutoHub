@@ -51,14 +51,14 @@ export class CarOfferService {
     limit?: string,
     page?: string,
     searchTerm?: string,
-    sort?: Sort | '',
+    sortOption?: string,
     category?: string,
   ): Observable<PaginatedCarOffersResponse> {
     let params = new HttpParams();
     if (limit) params = params.set('limit', limit);
     if (page) params = params.set('page', page);
     if (searchTerm) params = params.set('searchTerm', searchTerm);
-    if (sort) params = params.set('sort', sort);
+    if (sortOption) params = params.set('sortOption', sortOption);
     if (category) params = params.set('category', category);
 
     return this.http.get<PaginatedCarOffersResponse>(`${this.BASE_URL}/car-offers`, { params });

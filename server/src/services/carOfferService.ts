@@ -41,7 +41,7 @@ const getPaginatedCarOffersActive = async (
   limit: string,
   page: string,
   searchTerm: string,
-  sort: Sort,
+  sortOption: string = 'date_desc', // default
   category?: string
 ) => {
   const carOffersPerPage = parseInt(limit, 10) || 6;
@@ -61,14 +61,27 @@ const getPaginatedCarOffersActive = async (
     if (categoryDoc) searchQuery.category = categoryDoc._id;
   }
 
-  let sortOrder = Sort.ASC;
-  if (sort === Sort.DESC) sortOrder = Sort.DESC;
+  let sortConfig: Record<string, 1 | -1> = {};
+  switch (sortOption) {
+    case 'price_asc':
+      sortConfig = { price: 1 };
+      break;
+    case 'price_desc':
+      sortConfig = { price: -1 };
+      break;
+    case 'date_asc':
+      sortConfig = { createdAt: 1 };
+      break;
+    case 'date_desc':
+    default:
+      sortConfig = { createdAt: -1 };
+  }
 
   const categoryCount = await CarOffer.countDocuments(searchQuery);
   const pageCount = Math.ceil(categoryCount / carOffersPerPage);
 
   const carOffers = await CarOffer.find(searchQuery)
-    .sort({ createdAt: sortOrder })
+    .sort(sortConfig)
     .skip((carOfferPage - 1) * carOffersPerPage)
     .limit(carOffersPerPage);
 

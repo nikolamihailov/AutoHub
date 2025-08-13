@@ -33,12 +33,12 @@ carOfferController.get('/admin', async (req: any, res) => {
 
 carOfferController.get('/', async (req: any, res) => {
   try {
-    const { page, limit, searchTerm, sort, category } = req.query;
+    const { page, limit, searchTerm, sortOption, category } = req.query;
     const data = await carOfferService.getPaginatedCarOffersActive(
       limit,
       page,
       searchTerm,
-      sort,
+      sortOption || 'date_desc',
       category
     );
     res.status(200).json(data);

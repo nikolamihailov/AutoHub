@@ -44,7 +44,7 @@ export class CarOfferContainer {
 
   protected searchControl = new FormControl('');
 
-  protected sortOrder: Sort = Sort.DESC;
+  protected sortOption = 'date_desc';
 
   ngOnInit(): void {
     const searchFromUrl = this.route.snapshot.queryParamMap.get('search') || '';
@@ -89,7 +89,7 @@ export class CarOfferContainer {
         this.itemsPerPage.toString(),
         this.page.toString(),
         searchTerm,
-        this.sortOrder,
+        this.sortOption,
         category,
       )
       .pipe(
@@ -111,8 +111,8 @@ export class CarOfferContainer {
       });
   }
 
-  onSortChange(newOrder: Sort) {
-    this.sortOrder = newOrder;
+  onSortChange(newOption: string) {
+    this.sortOption = newOption;
     this.carOffers = [];
     this.page = 1;
     this.canLoadMore = true;
