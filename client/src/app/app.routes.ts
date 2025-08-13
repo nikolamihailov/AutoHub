@@ -1,6 +1,6 @@
 // app.routes.ts
 import { Routes } from '@angular/router';
-import { isAdminGuard, isAuthGuard, isGuestGuard } from './core/guards';
+import { isAdminGuard, isAuthGuard, isCreatorOrAdminGuard, isGuestGuard } from './core/guards';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -73,7 +73,7 @@ export const routes: Routes = [
       },
       {
         path: 'edit/:id',
-        canActivate: [isAuthGuard],
+        canActivate: [isAuthGuard, isCreatorOrAdminGuard],
         loadComponent: () =>
           import('./pages/car-offers-edit/car-offers-edit').then((m) => m.CarOffersEdit),
       },
