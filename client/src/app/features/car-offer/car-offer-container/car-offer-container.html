@@ -1,8 +1,19 @@
 <div class="container">
-  <button mat-raised-button class="btn" (click)="goToAdd()">
-    <mat-icon>add</mat-icon>
-    Add Car Offer
-  </button>
+  <div class="search-wrapper">
+    <mat-icon class="search-icon" aria-hidden="true">search</mat-icon>
+    <input
+      type="text"
+      id="search"
+      name="search"
+      [formControl]="searchControl"
+      placeholder="Search by brand or model.."
+    />
+    @if (searchControl.value) {
+    <button class="clear-btn" type="button" (click)="clearSearch()" aria-label="Clear search">
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </div>
   <div class="car-offers-list-wrapper">
     <div
       class="car-offers-list"
@@ -17,7 +28,7 @@
         <app-car-offer-card [offer]="carOffer"></app-car-offer-card>
       </div>
       }@empty { @if(!isLoading && !initialLoad){
-      <h3 class="car-offer-no-results">No results found</h3>
+      <h3 class="car-offers-no-results">No results found</h3>
       } }
     </div>
   </div>

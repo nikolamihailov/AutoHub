@@ -33,8 +33,14 @@ carOfferController.get('/admin', async (req: any, res) => {
 
 carOfferController.get('/', async (req: any, res) => {
   try {
-    const { page, limit, searchTerm, sort } = req.query;
-    const data = await carOfferService.getPaginatedCarOffersActive(limit, page, searchTerm, sort);
+    const { page, limit, searchTerm, sort, category } = req.query;
+    const data = await carOfferService.getPaginatedCarOffersActive(
+      limit,
+      page,
+      searchTerm,
+      sort,
+      category
+    );
     res.status(200).json(data);
   } catch (error) {
     let errors = extractErrors(error);

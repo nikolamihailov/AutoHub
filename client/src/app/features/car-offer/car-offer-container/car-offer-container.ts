@@ -1,15 +1,15 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { CarOfferService } from '../../../core/services';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarOffer } from '../../../models';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { finalize } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize } from 'rxjs';
 import { CarOfferCard } from '../car-offer-card/car-offer-card';
 import { cardAnimation, listAnimation } from '../../../shared/constants/cardAnimations';
 
@@ -32,6 +32,7 @@ export class CarOfferContainer {
   private destroyRef = inject(DestroyRef);
   private toast = inject(ToastrService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   protected carOffers: CarOffer[] = [];
   protected page = 1;
@@ -40,18 +41,54 @@ export class CarOfferContainer {
   protected isLoading = false;
   protected initialLoad = true;
 
+  protected searchControl = new FormControl('');
+
   ngOnInit(): void {
-    this.loadCategories();
+    const searchFromUrl = this.route.snapshot.queryParamMap.get('search') || '';
+    const categoryFromUrl = this.route.snapshot.queryParamMap.get('category') || '';
+
+    this.searchControl.setValue(searchFromUrl, { emitEvent: false });
+
+    this.searchControl.valueChanges
+      .pipe(debounceTime(500), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
+      .subscribe((term) => {
+        const currentCategory = this.route.snapshot.queryParamMap.get('category') || '';
+        this.carOffers = [];
+        this.page = 1;
+        this.canLoadMore = true;
+        this.router.navigate([], {
+          queryParams: { search: term || null, category: currentCategory || null },
+          queryParamsHandling: 'merge',
+        });
+        this.loadCarOffers(term || '', categoryFromUrl);
+      });
+
+    this.loadCarOffers(searchFromUrl, categoryFromUrl);
+
+    this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+      const cat = params.get('category') || '';
+      const term = params.get('search') || '';
+      this.carOffers = [];
+      this.page = 1;
+      this.canLoadMore = true;
+      this.loadCarOffers(term, cat);
+    });
   }
 
-  loadCategories() {
+  loadCarOffers(searchTerm = '', category = '') {
     if (this.isLoading || !this.canLoadMore) return;
     this.isLoading = true;
 
     if (this.initialLoad === true) this.initialLoad = false;
 
     this.carOffersService
-      .getCarOffers(this.itemsPerPage.toString(), this.page.toString())
+      .getCarOffers(
+        this.itemsPerPage.toString(),
+        this.page.toString(),
+        searchTerm,
+        undefined,
+        category,
+      )
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         finalize(() => {
@@ -65,17 +102,17 @@ export class CarOfferContainer {
           this.canLoadMore = this.page <= res.pageCount;
         },
         error: (err) => {
-          this.toast?.error?.('Failed to load users.');
+          this.toast?.error?.('Failed to load car offers.');
           console.error(err);
         },
       });
   }
 
-  onScroll() {
-    this.loadCategories();
+  clearSearch() {
+    this.searchControl.setValue('');
   }
 
-  goToAdd() {
-    this.router.navigate(['/car-offers/add']);
+  onScroll() {
+    this.loadCarOffers(this.searchControl.value || '');
   }
 }

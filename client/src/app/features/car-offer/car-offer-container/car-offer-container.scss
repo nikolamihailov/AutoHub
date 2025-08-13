@@ -42,3 +42,64 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   }
 }
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 1.5rem;
+
+  input[type='text'] {
+    width: 100%;
+    padding: 1.4rem 2.5rem 1.4rem 3.6rem;
+    font-size: 1.2rem;
+    border-radius: 999px;
+    border: 1px solid #e0e0e0;
+    transition: box-shadow 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: #3182ce;
+      box-shadow: 0 4px 16px rgba(49, 130, 206, 0.06);
+    }
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 55%;
+    transform: translateY(-50%);
+    color: #757575;
+    font-size: 22px;
+    pointer-events: none;
+  }
+
+  .clear-btn {
+    position: absolute;
+    right: 0.3rem;
+    top: 55%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+    border-radius: 50%;
+    transition: background 0.2s;
+
+    mat-icon {
+      font-size: 22px;
+      color: #888;
+    }
+
+    &:hover mat-icon {
+      color: #e53e3e;
+    }
+  }
+}
+
+.car-offers-no-results {
+  text-align: center;
+  grid-column: 1 / -1;
+  justify-self: center;
+  align-self: center;
+}

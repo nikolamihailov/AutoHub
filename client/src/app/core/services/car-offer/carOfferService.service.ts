@@ -52,16 +52,16 @@ export class CarOfferService {
     page?: string,
     searchTerm?: string,
     sort?: Sort | '',
+    category?: string,
   ): Observable<PaginatedCarOffersResponse> {
     let params = new HttpParams();
     if (limit) params = params.set('limit', limit);
     if (page) params = params.set('page', page);
     if (searchTerm) params = params.set('searchTerm', searchTerm);
     if (sort) params = params.set('sort', sort);
+    if (category) params = params.set('category', category);
 
-    return this.http.get<PaginatedCarOffersResponse>(`${this.BASE_URL}/car-offers`, {
-      params,
-    });
+    return this.http.get<PaginatedCarOffersResponse>(`${this.BASE_URL}/car-offers`, { params });
   }
 
   public getCarOffersForUser(

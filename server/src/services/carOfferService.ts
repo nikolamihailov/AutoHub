@@ -1,5 +1,6 @@
 import { Sort } from '../enums/Sort.enum';
 import { CarOffer, CarOfferI, Status } from '../models/Car-offer.model';
+import { Category } from '../models/Category.model';
 import { User } from '../models/User.model';
 
 const createCarOffer = (data: Partial<CarOfferI>) => CarOffer.create(data);
@@ -40,12 +41,14 @@ const getPaginatedCarOffersActive = async (
   limit: string,
   page: string,
   searchTerm: string,
-  sort: Sort
+  sort: Sort,
+  category?: string
 ) => {
   const carOffersPerPage = parseInt(limit, 10) || 6;
   const carOfferPage = parseInt(page, 10) || 1;
 
   const searchQuery: any = { status: Status.ACTIVE };
+
   if (searchTerm) {
     searchQuery.$or = [
       { brand: { $regex: searchTerm, $options: 'i' } },
@@ -53,10 +56,15 @@ const getPaginatedCarOffersActive = async (
     ];
   }
 
+  if (category) {
+    const categoryDoc = await Category.findOne({ name: category });
+    if (categoryDoc) searchQuery.category = categoryDoc._id;
+  }
+
   let sortOrder = Sort.ASC;
   if (sort === Sort.DESC) sortOrder = Sort.DESC;
 
-  const categoryCount = await CarOffer.countDocuments();
+  const categoryCount = await CarOffer.countDocuments(searchQuery);
   const pageCount = Math.ceil(categoryCount / carOffersPerPage);
 
   const carOffers = await CarOffer.find(searchQuery)
