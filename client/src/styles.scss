@@ -250,3 +250,10 @@ button[type='submit']:disabled {
 textarea {
   resize: none;
 }
+
+.mat-expansion-panel-body {
+  padding-top: 2rem !important;
+  background-color: #2563eb;
+  color: #fff;
+  font-size: 1.4rem;
+}

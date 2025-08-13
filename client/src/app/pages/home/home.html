@@ -1,1 +1,84 @@
-<p>home works!</p>
+<section class="hero">
+  <div class="hero__content">
+    <h1 class="hero__title">Find your next car with ease</h1>
+    <p class="hero__subtitle">Browse verified listings, compare prices, and chose your next car.</p>
+
+    <div class="hero__ctas">
+      <div class="cta-buttons">
+        <a mat-stroked-button color="primary" routerLink="/car-offers" class="rounded-btn">
+          <mat-icon>directions_car</mat-icon>
+          Explore Car Offers
+        </a>
+
+        <a mat-stroked-button routerLink="/contacts" class="rounded-btn">
+          <mat-icon>support_agent</mat-icon>
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="latest">
+  <div class="latest__head">
+    <h2>Latest car offers</h2>
+    <a mat-button routerLink="/car-offers">
+      Browse all
+      <mat-icon style="font-size: 1.6rem; font-weight: bold">chevron_right</mat-icon>
+    </a>
+  </div>
+  <app-car-offers-latest></app-car-offers-latest>
+</section>
+
+<section class="perks">
+  <h2>Why choose AutoHub?</h2>
+  <div class="perks__grid">
+    <div class="perk">
+      <mat-icon>verified_user</mat-icon>
+      <h3>Trusted sellers</h3>
+      <p>We keep listings clean and transparent.</p>
+    </div>
+    <div class="perk">
+      <mat-icon>price_check</mat-icon>
+      <h3>Fair prices</h3>
+      <p>Compare across thousands of offers quickly.</p>
+    </div>
+    <div class="perk">
+      <mat-icon>schedule</mat-icon>
+      <h3>Fast search</h3>
+      <p>Smart filters help you find the right match.</p>
+    </div>
+    <div class="perk">
+      <mat-icon>favorite</mat-icon>
+      <h3>Save & track</h3>
+      <p>Save favourites and watch price changes.</p>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <h2>Frequently Asked Questions</h2>
+
+  <mat-accordion class="faq-accordion">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> How do I contact a seller? </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>Open the offer and use the email that is for the creator of the offer.</p>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Can I save car offers? </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>Yes—click the heart icon on any offer to add it to your saved list.</p>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Do you verify listings? </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>We monitor and remove suspicious posts to keep the marketplace clean.</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+</section>
