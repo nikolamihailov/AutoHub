@@ -147,7 +147,11 @@ export class CategoriesManagement {
         this.loadCategories(this.searchControl.value || '');
       },
       error: (err) => {
-        this.toast?.error?.('Failed to delete category.');
+        if (err.status === 400) {
+          this.toast.error(err.error.message);
+          return;
+        }
+        this.toast.error('Failed to delete category.');
         console.error(err);
       },
     });

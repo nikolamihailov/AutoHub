@@ -1,6 +1,14 @@
 <div class="latest-grid">
   @if (isLoading) {
-  <mat-progress-spinner diameter="42" mode="indeterminate" [strokeWidth]="4"></mat-progress-spinner>
+  <div class="latest-loading">
+    <mat-progress-spinner
+      diameter="80"
+      mode="indeterminate"
+      color="primary"
+      class="inline-spinner"
+      [strokeWidth]="5"
+    ></mat-progress-spinner>
+  </div>
   } @else {
   <div class="car-offer-list-wrapper">
     <div class="car-offers-list" [@listAnimation]>

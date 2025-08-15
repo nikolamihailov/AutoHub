@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import imageCompression from 'browser-image-compression';
-import { CategoryService } from '../../../../core/services';
+import { AuthService, CategoryService } from '../../../../core/services';
 import { FormHelper } from '../../../../shared/utils';
 import { FORM_ERROR_MESSAGES } from '../../../../shared/constants';
 
@@ -21,6 +21,7 @@ import { FORM_ERROR_MESSAGES } from '../../../../shared/constants';
 export class CategoryAddForm {
   private fb = inject(FormBuilder);
   private categoryService = inject(CategoryService);
+  private authService = inject(AuthService);
   private toast = inject(ToastrService);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
@@ -101,9 +102,19 @@ export class CategoryAddForm {
           this.categoryImageFile = null;
         },
         error: (err) => {
+          if (err.status === 401) {
+            this.handleExpiredSession();
+            return;
+          }
           this.toast.error('Failed to add category');
           this.errorMsg = err?.error?.message || 'Error occurred';
         },
       });
+  }
+
+  handleExpiredSession() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.toast.error('Your session has expired! Please login');
   }
 }

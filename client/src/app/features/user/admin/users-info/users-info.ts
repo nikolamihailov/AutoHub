@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 import { debounceTime, distinctUntilChanged, startWith } from 'rxjs/operators';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
-import { UserService } from '../../../../core/services';
+import { AuthService, UserService } from '../../../../core/services';
 import { ConfirmDialog, ConfirmDialogData } from '../../../../shared/components';
 import { cardAnimation, listAnimation } from '../../../../shared/constants';
 import { Sort } from '../../../../shared/enums';
@@ -31,6 +31,7 @@ import { User } from '../../../../models';
 })
 export class UsersInfo implements OnInit {
   private userService = inject(UserService);
+  private authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
   private toast = inject(ToastrService);
   private route = inject(ActivatedRoute);
@@ -91,6 +92,10 @@ export class UsersInfo implements OnInit {
           this.canLoadMore = this.page <= res.pageCount;
         },
         error: (err) => {
+          if (err.status === 401) {
+            this.handleExpiredSession();
+            return;
+          }
           this.toast?.error?.('Failed to load users.');
           console.error(err);
         },
@@ -117,7 +122,7 @@ export class UsersInfo implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialog, {
       data: {
         title: 'Delete User?',
-        message: `Are you sure you want to delete "${user.firstName} ${user.lastName}"?`,
+        message: `Are you sure you want to delete "${user.firstName} ${user.lastName}"? Deleting the user is dangerous operation which will remove also all his offers and the user's offers from the saved collections of others, please make sure you want to delete.`,
         confirmText: 'Delete',
         cancelText: 'Cancel',
       } as ConfirmDialogData,
@@ -144,5 +149,11 @@ export class UsersInfo implements OnInit {
         console.error(err);
       },
     });
+  }
+
+  handleExpiredSession() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.toast.error('Your session has expired! Please login');
   }
 }

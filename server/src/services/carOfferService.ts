@@ -171,11 +171,14 @@ export const deleteCarOfferAndCleanup = async (
   return { _id: offer._id };
 };
 
+const getAllFromCategory = (categoryId: string) => CarOffer.find({ category: categoryId });
+
 export const carOfferService = {
   getAllCarOffers,
   getPaginatedCarOffers,
   getPaginatedCarOffersActive,
   getPaginatedCarOffersForUser,
+  getAllFromCategory,
   getOneCarOffer,
   createCarOffer,
   getAllCount,

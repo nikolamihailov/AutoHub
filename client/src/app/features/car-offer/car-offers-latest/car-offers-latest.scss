@@ -35,3 +35,13 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   }
 }
+
+.latest-loading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  padding: 2rem 0;
+  color: #1976d2;
+  font-weight: 500;
+}
