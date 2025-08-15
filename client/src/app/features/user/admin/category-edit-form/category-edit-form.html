@@ -1,4 +1,14 @@
 <div class="category-form-wrapper">
+  @if (isLoading) {
+  <mat-progress-spinner
+    diameter="100"
+    mode="indeterminate"
+    color="primary"
+    class="inline-spinner"
+    [strokeWidth]="3"
+  ></mat-progress-spinner>
+  }@else {
+
   <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
     <div class="category-upload-group">
       <input
@@ -43,8 +53,8 @@
       <form-err-messages [form]="editForm" field="name" [messages]="errorMessages['name']!" />
     </div>
 
-    <button type="submit" [disabled]="editForm.invalid || isLoading">
-      @if (isLoading) {
+    <button type="submit" [disabled]="editForm.invalid || isSubmitting">
+      @if (isSubmitting) {
       <mat-progress-spinner
         diameter="20"
         mode="indeterminate"
@@ -55,4 +65,5 @@
       } @else { Save }
     </button>
   </form>
+  }
 </div>

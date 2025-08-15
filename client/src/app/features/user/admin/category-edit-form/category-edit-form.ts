@@ -39,7 +39,8 @@ export class CategoryEditForm {
 
   protected categoryPreview: string | null = null;
   protected categoryImageFile: File | null = null;
-  protected isLoading = false;
+  protected isLoading = true;
+  protected isSubmitting = false;
   protected errorMsg: string | null = null;
 
   errorMessages = FORM_ERROR_MESSAGES['categoryForm'];
@@ -128,7 +129,7 @@ export class CategoryEditForm {
   onSubmit() {
     if (this.editForm.invalid) return;
 
-    this.isLoading = true;
+    this.isSubmitting = true;
     const { name } = this.editForm.value;
 
     const categoryData = {
@@ -139,7 +140,7 @@ export class CategoryEditForm {
     this.categoryService
       .updateCategory(this.categoryId, categoryData)
       .pipe(
-        finalize(() => (this.isLoading = false)),
+        finalize(() => (this.isSubmitting = false)),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
