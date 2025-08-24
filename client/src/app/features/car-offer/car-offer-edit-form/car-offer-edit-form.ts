@@ -14,7 +14,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { CarOfferService, CategoryService } from '../../../core/services';
+import { AuthService, CarOfferService, CategoryService } from '../../../core/services';
 import { FormErrMessagesComponent } from '../../../shared/components';
 import { FormHelper } from '../../../shared/utils';
 import { FORM_ERROR_MESSAGES } from '../../../shared/constants';
@@ -36,6 +36,7 @@ import { CarOffer, Category, Gearbox, Status } from '../../../models';
 })
 export class CarOfferEditForm implements OnInit {
   private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
   private categoryService = inject(CategoryService);
   private carOfferService = inject(CarOfferService);
   private toast = inject(ToastrService);
@@ -108,6 +109,10 @@ export class CarOfferEditForm implements OnInit {
       .subscribe({
         next: (offer) => this.populateForm(offer),
         error: (err) => {
+          if (err.status === 401) {
+            this.handleExpiredSession();
+            return;
+          }
           if (err.status === 404) {
             this.router.navigate(['/not-found']);
             this.toast.error('No such car offer');
@@ -185,5 +190,11 @@ export class CarOfferEditForm implements OnInit {
           this.toast.error('Failed to update car offer');
         },
       });
+  }
+
+  handleExpiredSession() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.toast.error('Your session has expired! Please login');
   }
 }

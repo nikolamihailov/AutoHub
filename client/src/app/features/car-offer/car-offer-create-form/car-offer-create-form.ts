@@ -148,9 +148,19 @@ export class CarOfferCreateForm implements OnInit {
           this.carOfferForm.reset();
         },
         error: (err) => {
+          if (err.status === 401) {
+            this.handleExpiredSession();
+            return;
+          }
           console.log(err);
           this.toast.error('Failed to add car offer');
         },
       });
+  }
+
+  handleExpiredSession() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.toast.error('Your session has expired! Please login');
   }
 }

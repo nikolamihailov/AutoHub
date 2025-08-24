@@ -2,9 +2,10 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { UserService } from '../../../core/services';
+import { AuthService, UserService } from '../../../core/services';
 import { CarOfferCard } from '../car-offer-card/car-offer-card';
 import { cardAnimation, listAnimation } from '../../../shared/constants';
 import { CarOffer } from '../../../models';
@@ -18,8 +19,10 @@ import { CarOffer } from '../../../models';
 })
 export class CarOffersSavedContainer {
   private userService = inject(UserService);
+  private authService = inject(AuthService);
   private toast = inject(ToastrService);
   private destroyRef = inject(DestroyRef);
+  private router = inject(Router);
 
   protected savedOffers: CarOffer[] = [];
   protected isLoading = false;
@@ -45,6 +48,10 @@ export class CarOffersSavedContainer {
           this.savedOffers = offers;
         },
         error: (err) => {
+          if (err.status === 401) {
+            this.handleExpiredSession();
+            return;
+          }
           console.error(err);
           this.toast.error('Failed to load saved offers.');
         },
@@ -64,5 +71,11 @@ export class CarOffersSavedContainer {
           this.toast.error('Failed to remove offer.');
         },
       });
+  }
+
+  handleExpiredSession() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.toast.error('Your session has expired! Please login');
   }
 }
