@@ -6,6 +6,7 @@ import { extractErrors } from '../utils/errParse';
 import { categoryService } from '../services/categoryService';
 import mongoose from 'mongoose';
 import { Category } from '../models/Category.model';
+import { carOfferService } from '../services/carOfferService';
 
 export const categoryController = Router();
 
@@ -116,11 +117,12 @@ categoryController.delete('/:id', isAuthenticated, isAdmin, async (req: any, res
     if (!categoryExists) {
       return res.status(404).json({ error: 'Category not found.' });
     }
-    /*    const products = await productService.getAllFromCategory(req.params.id);
-    if (products.length > 0)
+    const products = await carOfferService.getAllFromCategory(req.params.id);
+    if (products.length > 0) {
       return res
         .status(400)
-        .json({ hasProducts: 'Category cannot be deleted because it has products in it!' }); */
+        .json({ message: 'Category cannot be deleted because it has car offers in it!' });
+    }
     const deletedCategory = await categoryService.deleteCategory(req.params.id);
     res.status(200).json(deletedCategory);
   } catch (error: any) {

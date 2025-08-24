@@ -4,8 +4,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
-import { UserService } from '../../../core/services';
+import { AuthService, UserService } from '../../../core/services';
 import { AccountType, User } from '../../../models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile-info',
@@ -15,8 +16,10 @@ import { AccountType, User } from '../../../models';
 })
 export class ProfileInfo implements OnInit {
   private userService = inject(UserService);
+  private authService = inject(AuthService);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
+  private toast = inject(ToastrService);
 
   protected user: User | null = null;
   protected isLoading = true;
@@ -40,9 +43,13 @@ export class ProfileInfo implements OnInit {
         next: (response: User) => {
           this.user = response;
         },
-        error: (err: any) => {
-          console.log(err);
+        error: (err) => {
+          if (err.status === 401) {
+            this.handleExpiredSession();
+            return;
+          }
           this.errorMsg = 'Failed to load user profile.';
+          this.toast.error('Failed to load user data');
         },
       });
   }
@@ -53,5 +60,11 @@ export class ProfileInfo implements OnInit {
 
   handleEditBtn() {
     this.router.navigate(['/profile-edit']);
+  }
+
+  handleExpiredSession() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.toast.error('Your session has expired! Please login');
   }
 }

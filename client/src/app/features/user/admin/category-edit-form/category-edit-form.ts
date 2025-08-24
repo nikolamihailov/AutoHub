@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import imageCompression from 'browser-image-compression';
 import { ToastrService } from 'ngx-toastr';
-import { CategoryService } from '../../../../core/services';
+import { AuthService, CategoryService } from '../../../../core/services';
 import { FormErrMessagesComponent } from '../../../../shared/components';
 import { FormHelper } from '../../../../shared/utils';
 import { FORM_ERROR_MESSAGES } from '../../../../shared/constants';
@@ -22,6 +22,7 @@ import { Category } from '../../../../models';
 export class CategoryEditForm {
   private fb = inject(FormBuilder);
   private categoryService = inject(CategoryService);
+  private authService = inject(AuthService);
   private toast = inject(ToastrService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -38,7 +39,8 @@ export class CategoryEditForm {
 
   protected categoryPreview: string | null = null;
   protected categoryImageFile: File | null = null;
-  protected isLoading = false;
+  protected isLoading = true;
+  protected isSubmitting = false;
   protected errorMsg: string | null = null;
 
   errorMessages = FORM_ERROR_MESSAGES['categoryForm'];
@@ -79,6 +81,10 @@ export class CategoryEditForm {
           }
         },
         error: (err) => {
+          if (err.status === 401) {
+            this.handleExpiredSession();
+            return;
+          }
           if (err.status === 404) {
             this.router.navigate(['/not-found']);
             this.toast.error('No such category');
@@ -123,7 +129,7 @@ export class CategoryEditForm {
   onSubmit() {
     if (this.editForm.invalid) return;
 
-    this.isLoading = true;
+    this.isSubmitting = true;
     const { name } = this.editForm.value;
 
     const categoryData = {
@@ -134,7 +140,7 @@ export class CategoryEditForm {
     this.categoryService
       .updateCategory(this.categoryId, categoryData)
       .pipe(
-        finalize(() => (this.isLoading = false)),
+        finalize(() => (this.isSubmitting = false)),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
@@ -146,6 +152,10 @@ export class CategoryEditForm {
           this.categoryImageFile = null;
         },
         error: (err) => {
+          if (err.status === 401) {
+            this.handleExpiredSession();
+            return;
+          }
           if (err.status === 404) {
             this.router.navigate(['/not-found']);
             this.toast.error('No such category');
@@ -155,5 +165,11 @@ export class CategoryEditForm {
           this.errorMsg = err?.error?.message || 'Error occurred';
         },
       });
+  }
+
+  handleExpiredSession() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.toast.error('Your session has expired! Please login');
   }
 }

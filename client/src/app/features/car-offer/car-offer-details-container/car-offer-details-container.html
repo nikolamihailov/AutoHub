@@ -1,7 +1,13 @@
 <div class="details-wrapper">
   @if (isLoading) {
-  <div class="loading">
-    <mat-progress-spinner mode="indeterminate" diameter="56" [strokeWidth]="4"></mat-progress-spinner>
+  <div class="details-loading">
+    <mat-progress-spinner
+      diameter="100"
+      mode="indeterminate"
+      color="primary"
+      class="inline-spinner"
+      [strokeWidth]="5"
+    ></mat-progress-spinner>
   </div>
   } @else if (errorMsg) {
   <div class="error">{{ errorMsg }}</div>
