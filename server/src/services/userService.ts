@@ -4,6 +4,7 @@ import { jwt } from '../utils/jwt';
 import bcrypt from 'bcrypt';
 import { Role, User, UserI } from '../models/User.model';
 import { Sort } from '../enums/Sort.enum';
+import { CarOffer } from '../models/Car-offer.model';
 
 dotenv.config();
 const SECRET = process.env.JWT_SECRET; // sample secret
@@ -143,7 +144,29 @@ const getPaginatedUsers = async (limit: string, page: string, searchTerm: string
 
 const deleteUser = async (id: string) => {
   const user = await User.findById(id);
-  return User.findByIdAndDelete(id);
+  if (!user) throw new Error('User not found');
+
+  const offers = await CarOffer.find({ creator: user._id }, { _id: 1 }).lean();
+  const offerIds = offers.map((o) => o._id);
+
+  if (offerIds.length > 0) {
+    await CarOffer.deleteMany({ _id: { $in: offerIds } });
+
+    await Promise.all([
+      User.updateMany(
+        { savedCarOffers: { $in: offerIds } },
+        { $pull: { savedCarOffers: { $in: offerIds } } }
+      ),
+      User.updateMany(
+        { carOffers: { $in: offerIds } },
+        { $pull: { carOffers: { $in: offerIds } } }
+      ),
+    ]);
+  }
+
+  await User.deleteOne({ _id: user._id });
+
+  return { deletedUserId: String(user._id), deletedOffersCount: offerIds.length };
 };
 
 const getAllCount = () => User.estimatedDocumentCount();

@@ -9,7 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { CarOfferService } from '../../../../core/services';
+import { AuthService, CarOfferService } from '../../../../core/services';
 import { ConfirmDialog, ConfirmDialogData } from '../../../../shared/components';
 import { CarOfferCard } from '../../../car-offer/car-offer-card/car-offer-card';
 import { cardAnimation, listAnimation } from '../../../../shared/constants';
@@ -32,6 +32,7 @@ import { CarOffer } from '../../../../models';
 })
 export class CarOffersManagement {
   private carOffersService = inject(CarOfferService);
+  private authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
   private toast = inject(ToastrService);
   private route = inject(ActivatedRoute);
@@ -94,6 +95,10 @@ export class CarOffersManagement {
           this.canLoadMore = this.page <= res.pageCount;
         },
         error: (err) => {
+          if (err.status === 401) {
+            this.handleExpiredSession();
+            return;
+          }
           this.toast?.error?.('Failed to load car offers.');
           console.error(err);
         },
@@ -159,5 +164,11 @@ export class CarOffersManagement {
         console.error(err);
       },
     });
+  }
+
+  handleExpiredSession() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.toast.error('Your session has expired! Please login');
   }
 }

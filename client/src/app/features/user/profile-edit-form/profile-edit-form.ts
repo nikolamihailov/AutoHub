@@ -8,7 +8,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import imageCompression from 'browser-image-compression';
-import { UserService } from '../../../core/services';
+import { AuthService, UserService } from '../../../core/services';
 import { FormErrMessagesComponent } from '../../../shared/components';
 import { FormHelper } from '../../../shared/utils';
 import { FORM_ERROR_MESSAGES } from '../../../shared/constants';
@@ -29,6 +29,7 @@ import { AccountType, User } from '../../../models';
 export class ProfileEditForm implements OnInit {
   private fb = inject(FormBuilder);
   private userService = inject(UserService);
+  private authService = inject(AuthService);
   private router = inject(Router);
   private toast = inject(ToastrService);
   private destroyRef = inject(DestroyRef);
@@ -69,7 +70,11 @@ export class ProfileEditForm implements OnInit {
         this.avatarPreview = user.avatar || null;
         this.isLoading = false;
       },
-      error: () => {
+      error: (err) => {
+        if (err.status === 401) {
+          this.handleExpiredSession();
+          return;
+        }
         this.errorMsg = 'Failed to load profile info.';
         this.isLoading = false;
       },
@@ -123,9 +128,19 @@ export class ProfileEditForm implements OnInit {
           this.router.navigate(['/profile']);
         },
         error: (err) => {
+          if (err.status === 401) {
+            this.handleExpiredSession();
+            return;
+          }
           console.log(err);
           this.toast.error('Failed to update profile');
         },
       });
+  }
+
+  handleExpiredSession() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.toast.error('Your session has expired! Please login');
   }
 }

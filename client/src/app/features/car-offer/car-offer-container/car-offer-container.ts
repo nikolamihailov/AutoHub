@@ -46,56 +46,62 @@ export class CarOfferContainer {
   protected sortOption = 'date_desc';
 
   ngOnInit(): void {
-    const searchFromUrl = this.route.snapshot.queryParamMap.get('search') || '';
-    const categoryFromUrl = this.route.snapshot.queryParamMap.get('category') || '';
+    const params = this.route.snapshot.queryParamMap;
+    const searchFromUrl = params.get('search') || '';
+    const categoryFromUrl = params.get('category') || '';
+    const sortFromUrl = params.get('sort') || this.sortOption;
 
+    this.sortOption = sortFromUrl;
     this.searchControl.setValue(searchFromUrl, { emitEvent: false });
 
     this.searchControl.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
       .subscribe((term) => {
         const currentCategory = this.route.snapshot.queryParamMap.get('category') || '';
-        this.carOffers = [];
-        this.page = 1;
-        this.canLoadMore = true;
+        const currentSort = this.route.snapshot.queryParamMap.get('sort') || this.sortOption;
+
+        this.resetList();
         this.router.navigate([], {
-          queryParams: { search: term || null, category: currentCategory || null },
+          queryParams: {
+            search: term || null,
+            category: currentCategory || null,
+            sort: currentSort || null,
+          },
           queryParamsHandling: 'merge',
         });
-        this.loadCarOffers(term || '', categoryFromUrl);
+        this.loadCarOffers(term || '', currentCategory, currentSort);
       });
 
-    this.loadCarOffers(searchFromUrl, categoryFromUrl);
+    this.loadCarOffers(searchFromUrl, categoryFromUrl, sortFromUrl);
 
-    this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
-      const cat = params.get('category') || '';
-      const term = params.get('search') || '';
-      this.carOffers = [];
-      this.page = 1;
-      this.canLoadMore = true;
-      this.loadCarOffers(term, cat);
+    this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((qp) => {
+      const cat = qp.get('category') || '';
+      const term = qp.get('search') || '';
+      const sort = qp.get('sort') || this.sortOption;
+
+      if (sort !== this.sortOption) this.sortOption = sort;
+
+      this.resetList();
+      this.loadCarOffers(term, cat, sort);
     });
   }
 
-  loadCarOffers(searchTerm = '', category = '') {
+  private resetList() {
+    this.carOffers = [];
+    this.page = 1;
+    this.canLoadMore = true;
+  }
+
+  loadCarOffers(searchTerm = '', category = '', sort = this.sortOption) {
     if (this.isLoading || !this.canLoadMore) return;
     this.isLoading = true;
-
-    if (this.initialLoad === true) this.initialLoad = false;
+    if (this.initialLoad) this.initialLoad = false;
 
     this.carOffersService
-      .getCarOffers(
-        this.itemsPerPage.toString(),
-        this.page.toString(),
-        searchTerm,
-        this.sortOption,
-        category,
-      )
+      .getCarOffers(this.itemsPerPage.toString(), this.page.toString(), searchTerm, sort, category)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        finalize(() => {
-          this.isLoading = false;
-        }),
+        finalize(() => (this.isLoading = false)),
       )
       .subscribe({
         next: (res) => {
@@ -103,10 +109,7 @@ export class CarOfferContainer {
           this.page++;
           this.canLoadMore = this.page <= res.pageCount;
         },
-        error: (err) => {
-          this.toast?.error?.('Failed to load car offers.');
-          console.error(err);
-        },
+        error: () => this.toast?.error?.('Failed to load car offers.'),
       });
   }
 
@@ -133,15 +136,17 @@ export class CarOfferContainer {
 
   clearSearch() {
     const currentCategory = this.route.snapshot.queryParamMap.get('category') || '';
+    const currentSort = this.route.snapshot.queryParamMap.get('sort') || this.sortOption;
+
     this.searchControl.setValue('', { emitEvent: false });
+    this.resetList();
+
     this.router.navigate([], {
-      queryParams: { search: null, category: currentCategory || null },
+      queryParams: { search: null, category: currentCategory || null, sort: currentSort || null },
       queryParamsHandling: 'merge',
     });
-    this.carOffers = [];
-    this.page = 1;
-    this.canLoadMore = true;
-    this.loadCarOffers('', currentCategory);
+
+    this.loadCarOffers('', currentCategory, currentSort);
   }
 
   onScroll() {
