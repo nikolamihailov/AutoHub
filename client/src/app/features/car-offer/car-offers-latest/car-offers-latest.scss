@@ -53,3 +53,10 @@
   color: #1976d2;
   font-weight: 500;
 }
+
+@media (max-width: 600px) {
+  .car-offer-card {
+    gap: 1rem;
+    padding: 0rem;
+  }
+}
