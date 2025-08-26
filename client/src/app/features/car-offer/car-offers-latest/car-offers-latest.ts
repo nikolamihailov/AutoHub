@@ -21,7 +21,7 @@ export class CarOffersLatest {
   protected isLoading = true;
   protected offers: CarOffer[] = [];
   ngOnInit() {
-    const LIMIT = '3';
+    const LIMIT = '4';
     const PAGE = '1';
     const SEARCH = '';
     const SORT = 'date_desc';

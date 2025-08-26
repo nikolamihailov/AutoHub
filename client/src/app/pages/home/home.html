@@ -20,18 +20,22 @@
 </section>
 
 <section class="latest">
-  <div class="latest__head">
-    <h2>Latest car offers</h2>
-    <a mat-button routerLink="/car-offers">
-      Browse all
-      <mat-icon style="font-size: 1.6rem; font-weight: bold">chevron_right</mat-icon>
-    </a>
+  <div>
+    <span class="heading-sub">Cars</span>
+    <h2 class="heading-secondary">Latest car offers</h2>
   </div>
+  <a mat-button routerLink="/car-offers">
+    <mat-icon>directions_car</mat-icon>
+    View All
+  </a>
   <app-car-offers-latest></app-car-offers-latest>
 </section>
 
 <section class="perks">
-  <h2>Why choose AutoHub?</h2>
+  <div>
+    <span class="heading-sub">Perks</span>
+    <h2 class="heading-secondary">Why choose AutoHub?</h2>
+  </div>
   <div class="perks__grid">
     <div class="perk">
       <mat-icon>verified_user</mat-icon>
@@ -57,8 +61,10 @@
 </section>
 
 <section class="faq">
-  <h2>Frequently Asked Questions</h2>
-
+  <div>
+    <span class="heading-sub">F&Q</span>
+    <h2 class="heading-secondary">Frequently Asked Questions</h2>
+  </div>
   <mat-accordion class="faq-accordion">
     <mat-expansion-panel>
       <mat-expansion-panel-header>

@@ -19,9 +19,18 @@
   width: 100%;
 }
 
-@media (max-width: 500px) {
-  .categories-list {
+@media (max-width: 650px) {
+  .car-offers-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 1rem 0.4rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .car-offers-list {
     grid-template-columns: 1fr;
+    padding: 1rem;
   }
 }
 
